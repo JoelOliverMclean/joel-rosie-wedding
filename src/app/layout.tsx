@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 
 const metamorphous = Metamorphous({
   weight: "400",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
