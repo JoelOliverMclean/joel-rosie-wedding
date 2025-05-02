@@ -36,3 +36,15 @@ body {
 h1 {
   @apply text-6xl lg:text-7xl;
 }
+
+h2 {
+  @apply text-4xl lg:text-5xl;
+}
+
+.toggleOff {
+  transition: transform 0.3s ease;
+}
+
+.toggleOn {
+  transform: translateX(38px);
+}
