@@ -211,8 +211,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0
-   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+   * Prisma Client JS version: 6.12.0
+   * Query Engine version: 8047c96bbd92db98a2abc7c9323ce77c02c89dbc
    */
   export type PrismaVersion = {
     client: string
@@ -884,10 +884,11 @@ export namespace Prisma {
     name: string | null
     plusOne: string | null
     email: string | null
-    passphrase: string | null
     rsvp: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    answer: string | null
+    question: string | null
   }
 
   export type GuestMaxAggregateOutputType = {
@@ -895,10 +896,11 @@ export namespace Prisma {
     name: string | null
     plusOne: string | null
     email: string | null
-    passphrase: string | null
     rsvp: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    answer: string | null
+    question: string | null
   }
 
   export type GuestCountAggregateOutputType = {
@@ -906,10 +908,11 @@ export namespace Prisma {
     name: number
     plusOne: number
     email: number
-    passphrase: number
     rsvp: number
     createdAt: number
     updatedAt: number
+    answer: number
+    question: number
     _all: number
   }
 
@@ -919,10 +922,11 @@ export namespace Prisma {
     name?: true
     plusOne?: true
     email?: true
-    passphrase?: true
     rsvp?: true
     createdAt?: true
     updatedAt?: true
+    answer?: true
+    question?: true
   }
 
   export type GuestMaxAggregateInputType = {
@@ -930,10 +934,11 @@ export namespace Prisma {
     name?: true
     plusOne?: true
     email?: true
-    passphrase?: true
     rsvp?: true
     createdAt?: true
     updatedAt?: true
+    answer?: true
+    question?: true
   }
 
   export type GuestCountAggregateInputType = {
@@ -941,10 +946,11 @@ export namespace Prisma {
     name?: true
     plusOne?: true
     email?: true
-    passphrase?: true
     rsvp?: true
     createdAt?: true
     updatedAt?: true
+    answer?: true
+    question?: true
     _all?: true
   }
 
@@ -1025,10 +1031,11 @@ export namespace Prisma {
     name: string
     plusOne: string | null
     email: string
-    passphrase: string
     rsvp: boolean
     createdAt: Date
     updatedAt: Date
+    answer: string
+    question: string
     _count: GuestCountAggregateOutputType | null
     _min: GuestMinAggregateOutputType | null
     _max: GuestMaxAggregateOutputType | null
@@ -1053,10 +1060,11 @@ export namespace Prisma {
     name?: boolean
     plusOne?: boolean
     email?: boolean
-    passphrase?: boolean
     rsvp?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    answer?: boolean
+    question?: boolean
   }, ExtArgs["result"]["guest"]>
 
   export type GuestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1064,10 +1072,11 @@ export namespace Prisma {
     name?: boolean
     plusOne?: boolean
     email?: boolean
-    passphrase?: boolean
     rsvp?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    answer?: boolean
+    question?: boolean
   }, ExtArgs["result"]["guest"]>
 
   export type GuestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1075,10 +1084,11 @@ export namespace Prisma {
     name?: boolean
     plusOne?: boolean
     email?: boolean
-    passphrase?: boolean
     rsvp?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    answer?: boolean
+    question?: boolean
   }, ExtArgs["result"]["guest"]>
 
   export type GuestSelectScalar = {
@@ -1086,13 +1096,14 @@ export namespace Prisma {
     name?: boolean
     plusOne?: boolean
     email?: boolean
-    passphrase?: boolean
     rsvp?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    answer?: boolean
+    question?: boolean
   }
 
-  export type GuestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "plusOne" | "email" | "passphrase" | "rsvp" | "createdAt" | "updatedAt", ExtArgs["result"]["guest"]>
+  export type GuestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "plusOne" | "email" | "rsvp" | "createdAt" | "updatedAt" | "answer" | "question", ExtArgs["result"]["guest"]>
 
   export type $GuestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Guest"
@@ -1102,10 +1113,11 @@ export namespace Prisma {
       name: string
       plusOne: string | null
       email: string
-      passphrase: string
       rsvp: boolean
       createdAt: Date
       updatedAt: Date
+      answer: string
+      question: string
     }, ExtArgs["result"]["guest"]>
     composites: {}
   }
@@ -1533,10 +1545,11 @@ export namespace Prisma {
     readonly name: FieldRef<"Guest", 'String'>
     readonly plusOne: FieldRef<"Guest", 'String'>
     readonly email: FieldRef<"Guest", 'String'>
-    readonly passphrase: FieldRef<"Guest", 'String'>
     readonly rsvp: FieldRef<"Guest", 'Boolean'>
     readonly createdAt: FieldRef<"Guest", 'DateTime'>
     readonly updatedAt: FieldRef<"Guest", 'DateTime'>
+    readonly answer: FieldRef<"Guest", 'String'>
+    readonly question: FieldRef<"Guest", 'String'>
   }
     
 
@@ -1922,10 +1935,11 @@ export namespace Prisma {
     name: 'name',
     plusOne: 'plusOne',
     email: 'email',
-    passphrase: 'passphrase',
     rsvp: 'rsvp',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    answer: 'answer',
+    question: 'question'
   };
 
   export type GuestScalarFieldEnum = (typeof GuestScalarFieldEnum)[keyof typeof GuestScalarFieldEnum]
@@ -2020,10 +2034,11 @@ export namespace Prisma {
     name?: StringFilter<"Guest"> | string
     plusOne?: StringNullableFilter<"Guest"> | string | null
     email?: StringFilter<"Guest"> | string
-    passphrase?: StringFilter<"Guest"> | string
     rsvp?: BoolFilter<"Guest"> | boolean
     createdAt?: DateTimeFilter<"Guest"> | Date | string
     updatedAt?: DateTimeFilter<"Guest"> | Date | string
+    answer?: StringFilter<"Guest"> | string
+    question?: StringFilter<"Guest"> | string
   }
 
   export type GuestOrderByWithRelationInput = {
@@ -2031,10 +2046,11 @@ export namespace Prisma {
     name?: SortOrder
     plusOne?: SortOrderInput | SortOrder
     email?: SortOrder
-    passphrase?: SortOrder
     rsvp?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    answer?: SortOrder
+    question?: SortOrder
   }
 
   export type GuestWhereUniqueInput = Prisma.AtLeast<{
@@ -2045,10 +2061,11 @@ export namespace Prisma {
     NOT?: GuestWhereInput | GuestWhereInput[]
     name?: StringFilter<"Guest"> | string
     plusOne?: StringNullableFilter<"Guest"> | string | null
-    passphrase?: StringFilter<"Guest"> | string
     rsvp?: BoolFilter<"Guest"> | boolean
     createdAt?: DateTimeFilter<"Guest"> | Date | string
     updatedAt?: DateTimeFilter<"Guest"> | Date | string
+    answer?: StringFilter<"Guest"> | string
+    question?: StringFilter<"Guest"> | string
   }, "id" | "email">
 
   export type GuestOrderByWithAggregationInput = {
@@ -2056,10 +2073,11 @@ export namespace Prisma {
     name?: SortOrder
     plusOne?: SortOrderInput | SortOrder
     email?: SortOrder
-    passphrase?: SortOrder
     rsvp?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    answer?: SortOrder
+    question?: SortOrder
     _count?: GuestCountOrderByAggregateInput
     _max?: GuestMaxOrderByAggregateInput
     _min?: GuestMinOrderByAggregateInput
@@ -2073,10 +2091,11 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Guest"> | string
     plusOne?: StringNullableWithAggregatesFilter<"Guest"> | string | null
     email?: StringWithAggregatesFilter<"Guest"> | string
-    passphrase?: StringWithAggregatesFilter<"Guest"> | string
     rsvp?: BoolWithAggregatesFilter<"Guest"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Guest"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Guest"> | Date | string
+    answer?: StringWithAggregatesFilter<"Guest"> | string
+    question?: StringWithAggregatesFilter<"Guest"> | string
   }
 
   export type GuestCreateInput = {
@@ -2084,10 +2103,11 @@ export namespace Prisma {
     name: string
     plusOne?: string | null
     email: string
-    passphrase: string
     rsvp: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    answer: string
+    question: string
   }
 
   export type GuestUncheckedCreateInput = {
@@ -2095,10 +2115,11 @@ export namespace Prisma {
     name: string
     plusOne?: string | null
     email: string
-    passphrase: string
     rsvp: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    answer: string
+    question: string
   }
 
   export type GuestUpdateInput = {
@@ -2106,10 +2127,11 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     plusOne?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    passphrase?: StringFieldUpdateOperationsInput | string
     rsvp?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    answer?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
   }
 
   export type GuestUncheckedUpdateInput = {
@@ -2117,10 +2139,11 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     plusOne?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    passphrase?: StringFieldUpdateOperationsInput | string
     rsvp?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    answer?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
   }
 
   export type GuestCreateManyInput = {
@@ -2128,10 +2151,11 @@ export namespace Prisma {
     name: string
     plusOne?: string | null
     email: string
-    passphrase: string
     rsvp: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    answer: string
+    question: string
   }
 
   export type GuestUpdateManyMutationInput = {
@@ -2139,10 +2163,11 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     plusOne?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    passphrase?: StringFieldUpdateOperationsInput | string
     rsvp?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    answer?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
   }
 
   export type GuestUncheckedUpdateManyInput = {
@@ -2150,10 +2175,11 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     plusOne?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    passphrase?: StringFieldUpdateOperationsInput | string
     rsvp?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    answer?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2212,10 +2238,11 @@ export namespace Prisma {
     name?: SortOrder
     plusOne?: SortOrder
     email?: SortOrder
-    passphrase?: SortOrder
     rsvp?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    answer?: SortOrder
+    question?: SortOrder
   }
 
   export type GuestMaxOrderByAggregateInput = {
@@ -2223,10 +2250,11 @@ export namespace Prisma {
     name?: SortOrder
     plusOne?: SortOrder
     email?: SortOrder
-    passphrase?: SortOrder
     rsvp?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    answer?: SortOrder
+    question?: SortOrder
   }
 
   export type GuestMinOrderByAggregateInput = {
@@ -2234,10 +2262,11 @@ export namespace Prisma {
     name?: SortOrder
     plusOne?: SortOrder
     email?: SortOrder
-    passphrase?: SortOrder
     rsvp?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    answer?: SortOrder
+    question?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
