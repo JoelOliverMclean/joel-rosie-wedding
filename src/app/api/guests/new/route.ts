@@ -1,8 +1,8 @@
-import { cookies } from "next/headers";
-import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: NextResponse) {
+export async function POST(request: NextRequest) {
+  const prisma = await import("@/lib/prisma").then((mod) => mod.prisma);
+
   const data = await request.json();
 
   const newGuest: {
