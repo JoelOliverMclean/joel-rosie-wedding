@@ -9,7 +9,7 @@ function GuestForm() {
   ) => {
     apiPost("/api/guests/new", data).then(({ response, data }) => {
       if (response.status === 200) {
-        // clear error
+        console.log(data);
         form?.reset();
       } else {
         // set error
