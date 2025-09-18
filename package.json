@@ -10,9 +10,12 @@
     "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
-    "prisma": "^6.12.0",
-    "@prisma/client": "^6.12.0",
+    "@prisma/client": "^6.16.2",
+    "@prisma/extension-accelerate": "^2.0.2",
+    "lucide-react": "^0.544.0",
     "next": "15.3.1",
+    "prisma": "^6.16.2",
+    "random-string-generator": "^1.0.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

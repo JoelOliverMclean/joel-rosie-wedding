@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.12.0
- * Query Engine version: 8047c96bbd92db98a2abc7c9323ce77c02c89dbc
+ * Prisma Client JS version: 6.16.2
+ * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
  */
 Prisma.prismaVersion = {
-  client: "6.12.0",
-  engine: "8047c96bbd92db98a2abc7c9323ce77c02c89dbc"
+  client: "6.16.2",
+  engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -120,16 +120,35 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.UserScalarFieldEnum = {
+  username: 'username',
+  hashedPassword: 'hashedPassword'
+};
+
+exports.Prisma.FamilyScalarFieldEnum = {
+  id: 'id',
+  familyName: 'familyName',
+  rsvpCode: 'rsvpCode',
+  rsvpQuestion: 'rsvpQuestion',
+  rsvpAnswer: 'rsvpAnswer',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.GuestScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  plusOne: 'plusOne',
-  email: 'email',
-  rsvp: 'rsvp',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  child: 'child',
+  familyId: 'familyId',
+  invitedDay: 'invitedDay',
+  invitedEvening: 'invitedEvening',
+  attendingDay: 'attendingDay',
+  attendingEvening: 'attendingEvening',
+  allergies: 'allergies',
+  foodPreference: 'foodPreference',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  answer: 'answer',
-  question: 'question'
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -146,9 +165,15 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.FoodPreference = exports.$Enums.FoodPreference = {
+  MEAT: 'MEAT',
+  VEGETARIAN: 'VEGETARIAN',
+  VEGAN: 'VEGAN'
+};
 
 exports.Prisma.ModelName = {
+  User: 'User',
+  Family: 'Family',
   Guest: 'Guest'
 };
 

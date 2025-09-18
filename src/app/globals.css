@@ -58,5 +58,5 @@ input[type="text"],
 input[type="number"],
 select,
 textarea {
-  @apply rounded-lg bg-green-950/75 px-2 py-1 focus:outline-none;
+  @apply rounded-lg bg-green-900 px-2 py-1 focus:outline-none;
 }

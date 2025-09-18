@@ -14,10 +14,38 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
+ * Model User
+ * 
+ */
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
+ * Model Family
+ * 
+ */
+export type Family = $Result.DefaultSelection<Prisma.$FamilyPayload>
+/**
  * Model Guest
  * 
  */
 export type Guest = $Result.DefaultSelection<Prisma.$GuestPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const FoodPreference: {
+  MEAT: 'MEAT',
+  VEGETARIAN: 'VEGETARIAN',
+  VEGAN: 'VEGAN'
+};
+
+export type FoodPreference = (typeof FoodPreference)[keyof typeof FoodPreference]
+
+}
+
+export type FoodPreference = $Enums.FoodPreference
+
+export const FoodPreference: typeof $Enums.FoodPreference
 
 /**
  * ##  Prisma Client ʲˢ
@@ -26,8 +54,8 @@ export type Guest = $Result.DefaultSelection<Prisma.$GuestPayload>
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Guests
- * const guests = await prisma.guest.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  *
  *
@@ -35,7 +63,7 @@ export type Guest = $Result.DefaultSelection<Prisma.$GuestPayload>
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -47,8 +75,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Guests
-   * const guests = await prisma.guest.findMany()
+   * // Fetch zero or more Users
+   * const users = await prisma.user.findMany()
    * ```
    *
    *
@@ -67,13 +95,6 @@ export class PrismaClient<
    * Disconnect from the database
    */
   $disconnect(): $Utils.JsPromise<void>;
-
-  /**
-   * Add a middleware
-   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
-   * @see https://pris.ly/d/extensions
-   */
-  $use(cb: Prisma.Middleware): void
 
 /**
    * Executes a prepared raw query and returns the number of affected rows.
@@ -145,6 +166,26 @@ export class PrismaClient<
   }>>
 
       /**
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.family`: Exposes CRUD operations for the **Family** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Families
+    * const families = await prisma.family.findMany()
+    * ```
+    */
+  get family(): Prisma.FamilyDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.guest`: Exposes CRUD operations for the **Guest** model.
     * Example usage:
     * ```ts
@@ -211,8 +252,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.12.0
-   * Query Engine version: 8047c96bbd92db98a2abc7c9323ce77c02c89dbc
+   * Prisma Client JS version: 6.16.2
+   * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
    */
   export type PrismaVersion = {
     client: string
@@ -593,6 +634,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
+    User: 'User',
+    Family: 'Family',
     Guest: 'Guest'
   };
 
@@ -612,10 +655,158 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "guest"
+      modelProps: "user" | "family" | "guest"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findFirst: {
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findMany: {
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          create: {
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          createMany: {
+            args: Prisma.UserCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          delete: {
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          update: {
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          aggregate: {
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
+          }
+          groupBy: {
+            args: Prisma.UserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Family: {
+        payload: Prisma.$FamilyPayload<ExtArgs>
+        fields: Prisma.FamilyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FamilyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FamilyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FamilyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FamilyPayload>
+          }
+          findFirst: {
+            args: Prisma.FamilyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FamilyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FamilyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FamilyPayload>
+          }
+          findMany: {
+            args: Prisma.FamilyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FamilyPayload>[]
+          }
+          create: {
+            args: Prisma.FamilyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FamilyPayload>
+          }
+          createMany: {
+            args: Prisma.FamilyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FamilyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FamilyPayload>[]
+          }
+          delete: {
+            args: Prisma.FamilyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FamilyPayload>
+          }
+          update: {
+            args: Prisma.FamilyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FamilyPayload>
+          }
+          deleteMany: {
+            args: Prisma.FamilyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FamilyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FamilyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FamilyPayload>[]
+          }
+          upsert: {
+            args: Prisma.FamilyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FamilyPayload>
+          }
+          aggregate: {
+            args: Prisma.FamilyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFamily>
+          }
+          groupBy: {
+            args: Prisma.FamilyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FamilyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FamilyCountArgs<ExtArgs>
+            result: $Utils.Optional<FamilyCountAggregateOutputType> | number
+          }
+        }
+      }
       Guest: {
         payload: Prisma.$GuestPayload<ExtArgs>
         fields: Prisma.GuestFieldRefs
@@ -733,16 +924,24 @@ export namespace Prisma {
     /**
      * @example
      * ```
-     * // Defaults to stdout
+     * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
      * 
-     * // Emit as events
+     * // Emit as events only
      * log: [
-     *   { emit: 'stdout', level: 'query' },
-     *   { emit: 'stdout', level: 'info' },
-     *   { emit: 'stdout', level: 'warn' }
-     *   { emit: 'stdout', level: 'error' }
+     *   { emit: 'event', level: 'query' },
+     *   { emit: 'event', level: 'info' },
+     *   { emit: 'event', level: 'warn' }
+     *   { emit: 'event', level: 'error' }
      * ]
+     * 
+     * / Emit as events and log to stdout
+     * og: [
+     *  { emit: 'stdout', level: 'query' },
+     *  { emit: 'stdout', level: 'info' },
+     *  { emit: 'stdout', level: 'warn' }
+     *  { emit: 'stdout', level: 'error' }
+     * 
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
@@ -757,6 +956,10 @@ export namespace Prisma {
       timeout?: number
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
+    /**
+     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     */
+    adapter?: runtime.SqlDriverAdapterFactory | null
     /**
      * Global configuration for omitting model fields by default.
      * 
@@ -774,6 +977,8 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
+    user?: UserOmit
+    family?: FamilyOmit
     guest?: GuestOmit
   }
 
@@ -784,10 +989,15 @@ export namespace Prisma {
     emit: 'stdout' | 'event'
   }
 
-  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
-  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
-    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
-    : never
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+
+  export type GetLogType<T> = CheckIsLogLevel<
+    T extends LogDefinition ? T['level'] : T
+  >;
+
+  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
+    ? GetLogType<T[number]>
+    : never;
 
   export type QueryEvent = {
     timestamp: Date
@@ -828,25 +1038,6 @@ export namespace Prisma {
     | 'findRaw'
     | 'groupBy'
 
-  /**
-   * These options are being passed into the middleware as "params"
-   */
-  export type MiddlewareParams = {
-    model?: ModelName
-    action: PrismaAction
-    args: any
-    dataPath: string[]
-    runInTransaction: boolean
-  }
-
-  /**
-   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
-   */
-  export type Middleware<T = any> = (
-    params: MiddlewareParams,
-    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
-  ) => $Utils.JsPromise<T>
-
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
 
@@ -864,10 +1055,2126 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type FamilyCountOutputType
+   */
+
+  export type FamilyCountOutputType = {
+    guests: number
+  }
+
+  export type FamilyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    guests?: boolean | FamilyCountOutputTypeCountGuestsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FamilyCountOutputType without action
+   */
+  export type FamilyCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FamilyCountOutputType
+     */
+    select?: FamilyCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FamilyCountOutputType without action
+   */
+  export type FamilyCountOutputTypeCountGuestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GuestWhereInput
+  }
+
 
   /**
    * Models
    */
+
+  /**
+   * Model User
+   */
+
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserMinAggregateOutputType = {
+    username: string | null
+    hashedPassword: string | null
+  }
+
+  export type UserMaxAggregateOutputType = {
+    username: string | null
+    hashedPassword: string | null
+  }
+
+  export type UserCountAggregateOutputType = {
+    username: number
+    hashedPassword: number
+    _all: number
+  }
+
+
+  export type UserMinAggregateInputType = {
+    username?: true
+    hashedPassword?: true
+  }
+
+  export type UserMaxAggregateInputType = {
+    username?: true
+    hashedPassword?: true
+  }
+
+  export type UserCountAggregateInputType = {
+    username?: true
+    hashedPassword?: true
+    _all?: true
+  }
+
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which User to aggregate.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Users
+    **/
+    _count?: true | UserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
+  }
+
+
+
+
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: UserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserCountAggregateInputType | true
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type UserGroupByOutputType = {
+    username: string
+    hashedPassword: string
+    _count: UserCountAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    username?: boolean
+    hashedPassword?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    username?: boolean
+    hashedPassword?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    username?: boolean
+    hashedPassword?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectScalar = {
+    username?: boolean
+    hashedPassword?: boolean
+  }
+
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"username" | "hashedPassword", ExtArgs["result"]["user"]>
+
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      username: string
+      hashedPassword: string
+    }, ExtArgs["result"]["user"]>
+    composites: {}
+  }
+
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
+
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCountAggregateInputType | true
+    }
+
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
+    /**
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Users that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Users
+     * const users = await prisma.user.findMany()
+     * 
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
+     * 
+     * // Only select the `username`
+     * const userWithUsernameOnly = await prisma.user.findMany({ select: { username: true } })
+     * 
+     */
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
+     * @example
+     * // Create one User
+     * const User = await prisma.user.create({
+     *   data: {
+     *     // ... data to create a User
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Users and returns the data saved in the database.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Users and only return the `username`
+     * const userWithUsernameOnly = await prisma.user.createManyAndReturn({
+     *   select: { username: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
+     * @example
+     * // Delete one User
+     * const User = await prisma.user.delete({
+     *   where: {
+     *     // ... filter to delete one User
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
+     * @example
+     * // Update one User
+     * const user = await prisma.user.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @example
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Users and only return the `username`
+     * const userWithUsernameOnly = await prisma.user.updateManyAndReturn({
+     *   select: { username: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
+     * @example
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
+     *   create: {
+     *     // ... data to create a User
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
+     * @example
+     * // Count the number of Users
+     * const count = await prisma.user.count({
+     *   where: {
+     *     // ... the filter for the Users we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
+
+    /**
+     * Group by User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the User model
+   */
+  readonly fields: UserFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for User.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the User model
+   */
+  interface UserFieldRefs {
+    readonly username: FieldRef<"User", 'String'>
+    readonly hashedPassword: FieldRef<"User", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * User findUnique
+   */
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findUniqueOrThrow
+   */
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findFirst
+   */
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findFirstOrThrow
+   */
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findMany
+   */
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User create
+   */
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data needed to create a User.
+     */
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+  }
+
+  /**
+   * User createMany
+   */
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User createManyAndReturn
+   */
+  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User update
+   */
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data needed to update a User.
+     */
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    /**
+     * Choose, which User to update.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User updateMany
+   */
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User updateManyAndReturn
+   */
+  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User upsert
+   */
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The filter to search for the User to update in case it exists.
+     */
+    where: UserWhereUniqueInput
+    /**
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     */
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+  }
+
+  /**
+   * User delete
+   */
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Filter which User to delete.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User deleteMany
+   */
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * User without action
+   */
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Family
+   */
+
+  export type AggregateFamily = {
+    _count: FamilyCountAggregateOutputType | null
+    _avg: FamilyAvgAggregateOutputType | null
+    _sum: FamilySumAggregateOutputType | null
+    _min: FamilyMinAggregateOutputType | null
+    _max: FamilyMaxAggregateOutputType | null
+  }
+
+  export type FamilyAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FamilySumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FamilyMinAggregateOutputType = {
+    id: number | null
+    familyName: string | null
+    rsvpCode: string | null
+    rsvpQuestion: string | null
+    rsvpAnswer: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FamilyMaxAggregateOutputType = {
+    id: number | null
+    familyName: string | null
+    rsvpCode: string | null
+    rsvpQuestion: string | null
+    rsvpAnswer: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FamilyCountAggregateOutputType = {
+    id: number
+    familyName: number
+    rsvpCode: number
+    rsvpQuestion: number
+    rsvpAnswer: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FamilyAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type FamilySumAggregateInputType = {
+    id?: true
+  }
+
+  export type FamilyMinAggregateInputType = {
+    id?: true
+    familyName?: true
+    rsvpCode?: true
+    rsvpQuestion?: true
+    rsvpAnswer?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FamilyMaxAggregateInputType = {
+    id?: true
+    familyName?: true
+    rsvpCode?: true
+    rsvpQuestion?: true
+    rsvpAnswer?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FamilyCountAggregateInputType = {
+    id?: true
+    familyName?: true
+    rsvpCode?: true
+    rsvpQuestion?: true
+    rsvpAnswer?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FamilyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Family to aggregate.
+     */
+    where?: FamilyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Families to fetch.
+     */
+    orderBy?: FamilyOrderByWithRelationInput | FamilyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FamilyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Families from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Families.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Families
+    **/
+    _count?: true | FamilyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FamilyAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FamilySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FamilyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FamilyMaxAggregateInputType
+  }
+
+  export type GetFamilyAggregateType<T extends FamilyAggregateArgs> = {
+        [P in keyof T & keyof AggregateFamily]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFamily[P]>
+      : GetScalarType<T[P], AggregateFamily[P]>
+  }
+
+
+
+
+  export type FamilyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FamilyWhereInput
+    orderBy?: FamilyOrderByWithAggregationInput | FamilyOrderByWithAggregationInput[]
+    by: FamilyScalarFieldEnum[] | FamilyScalarFieldEnum
+    having?: FamilyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FamilyCountAggregateInputType | true
+    _avg?: FamilyAvgAggregateInputType
+    _sum?: FamilySumAggregateInputType
+    _min?: FamilyMinAggregateInputType
+    _max?: FamilyMaxAggregateInputType
+  }
+
+  export type FamilyGroupByOutputType = {
+    id: number
+    familyName: string
+    rsvpCode: string
+    rsvpQuestion: string
+    rsvpAnswer: string
+    createdAt: Date
+    updatedAt: Date
+    _count: FamilyCountAggregateOutputType | null
+    _avg: FamilyAvgAggregateOutputType | null
+    _sum: FamilySumAggregateOutputType | null
+    _min: FamilyMinAggregateOutputType | null
+    _max: FamilyMaxAggregateOutputType | null
+  }
+
+  type GetFamilyGroupByPayload<T extends FamilyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FamilyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FamilyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FamilyGroupByOutputType[P]>
+            : GetScalarType<T[P], FamilyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FamilySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    familyName?: boolean
+    rsvpCode?: boolean
+    rsvpQuestion?: boolean
+    rsvpAnswer?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    guests?: boolean | Family$guestsArgs<ExtArgs>
+    _count?: boolean | FamilyCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["family"]>
+
+  export type FamilySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    familyName?: boolean
+    rsvpCode?: boolean
+    rsvpQuestion?: boolean
+    rsvpAnswer?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["family"]>
+
+  export type FamilySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    familyName?: boolean
+    rsvpCode?: boolean
+    rsvpQuestion?: boolean
+    rsvpAnswer?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["family"]>
+
+  export type FamilySelectScalar = {
+    id?: boolean
+    familyName?: boolean
+    rsvpCode?: boolean
+    rsvpQuestion?: boolean
+    rsvpAnswer?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type FamilyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "familyName" | "rsvpCode" | "rsvpQuestion" | "rsvpAnswer" | "createdAt" | "updatedAt", ExtArgs["result"]["family"]>
+  export type FamilyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    guests?: boolean | Family$guestsArgs<ExtArgs>
+    _count?: boolean | FamilyCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type FamilyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type FamilyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $FamilyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Family"
+    objects: {
+      guests: Prisma.$GuestPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      familyName: string
+      rsvpCode: string
+      rsvpQuestion: string
+      rsvpAnswer: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["family"]>
+    composites: {}
+  }
+
+  type FamilyGetPayload<S extends boolean | null | undefined | FamilyDefaultArgs> = $Result.GetResult<Prisma.$FamilyPayload, S>
+
+  type FamilyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FamilyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FamilyCountAggregateInputType | true
+    }
+
+  export interface FamilyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Family'], meta: { name: 'Family' } }
+    /**
+     * Find zero or one Family that matches the filter.
+     * @param {FamilyFindUniqueArgs} args - Arguments to find a Family
+     * @example
+     * // Get one Family
+     * const family = await prisma.family.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FamilyFindUniqueArgs>(args: SelectSubset<T, FamilyFindUniqueArgs<ExtArgs>>): Prisma__FamilyClient<$Result.GetResult<Prisma.$FamilyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Family that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FamilyFindUniqueOrThrowArgs} args - Arguments to find a Family
+     * @example
+     * // Get one Family
+     * const family = await prisma.family.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FamilyFindUniqueOrThrowArgs>(args: SelectSubset<T, FamilyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FamilyClient<$Result.GetResult<Prisma.$FamilyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Family that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FamilyFindFirstArgs} args - Arguments to find a Family
+     * @example
+     * // Get one Family
+     * const family = await prisma.family.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FamilyFindFirstArgs>(args?: SelectSubset<T, FamilyFindFirstArgs<ExtArgs>>): Prisma__FamilyClient<$Result.GetResult<Prisma.$FamilyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Family that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FamilyFindFirstOrThrowArgs} args - Arguments to find a Family
+     * @example
+     * // Get one Family
+     * const family = await prisma.family.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FamilyFindFirstOrThrowArgs>(args?: SelectSubset<T, FamilyFindFirstOrThrowArgs<ExtArgs>>): Prisma__FamilyClient<$Result.GetResult<Prisma.$FamilyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Families that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FamilyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Families
+     * const families = await prisma.family.findMany()
+     * 
+     * // Get first 10 Families
+     * const families = await prisma.family.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const familyWithIdOnly = await prisma.family.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FamilyFindManyArgs>(args?: SelectSubset<T, FamilyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FamilyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Family.
+     * @param {FamilyCreateArgs} args - Arguments to create a Family.
+     * @example
+     * // Create one Family
+     * const Family = await prisma.family.create({
+     *   data: {
+     *     // ... data to create a Family
+     *   }
+     * })
+     * 
+     */
+    create<T extends FamilyCreateArgs>(args: SelectSubset<T, FamilyCreateArgs<ExtArgs>>): Prisma__FamilyClient<$Result.GetResult<Prisma.$FamilyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Families.
+     * @param {FamilyCreateManyArgs} args - Arguments to create many Families.
+     * @example
+     * // Create many Families
+     * const family = await prisma.family.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FamilyCreateManyArgs>(args?: SelectSubset<T, FamilyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Families and returns the data saved in the database.
+     * @param {FamilyCreateManyAndReturnArgs} args - Arguments to create many Families.
+     * @example
+     * // Create many Families
+     * const family = await prisma.family.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Families and only return the `id`
+     * const familyWithIdOnly = await prisma.family.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FamilyCreateManyAndReturnArgs>(args?: SelectSubset<T, FamilyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FamilyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Family.
+     * @param {FamilyDeleteArgs} args - Arguments to delete one Family.
+     * @example
+     * // Delete one Family
+     * const Family = await prisma.family.delete({
+     *   where: {
+     *     // ... filter to delete one Family
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FamilyDeleteArgs>(args: SelectSubset<T, FamilyDeleteArgs<ExtArgs>>): Prisma__FamilyClient<$Result.GetResult<Prisma.$FamilyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Family.
+     * @param {FamilyUpdateArgs} args - Arguments to update one Family.
+     * @example
+     * // Update one Family
+     * const family = await prisma.family.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FamilyUpdateArgs>(args: SelectSubset<T, FamilyUpdateArgs<ExtArgs>>): Prisma__FamilyClient<$Result.GetResult<Prisma.$FamilyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Families.
+     * @param {FamilyDeleteManyArgs} args - Arguments to filter Families to delete.
+     * @example
+     * // Delete a few Families
+     * const { count } = await prisma.family.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FamilyDeleteManyArgs>(args?: SelectSubset<T, FamilyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Families.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FamilyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Families
+     * const family = await prisma.family.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FamilyUpdateManyArgs>(args: SelectSubset<T, FamilyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Families and returns the data updated in the database.
+     * @param {FamilyUpdateManyAndReturnArgs} args - Arguments to update many Families.
+     * @example
+     * // Update many Families
+     * const family = await prisma.family.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Families and only return the `id`
+     * const familyWithIdOnly = await prisma.family.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FamilyUpdateManyAndReturnArgs>(args: SelectSubset<T, FamilyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FamilyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Family.
+     * @param {FamilyUpsertArgs} args - Arguments to update or create a Family.
+     * @example
+     * // Update or create a Family
+     * const family = await prisma.family.upsert({
+     *   create: {
+     *     // ... data to create a Family
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Family we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FamilyUpsertArgs>(args: SelectSubset<T, FamilyUpsertArgs<ExtArgs>>): Prisma__FamilyClient<$Result.GetResult<Prisma.$FamilyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Families.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FamilyCountArgs} args - Arguments to filter Families to count.
+     * @example
+     * // Count the number of Families
+     * const count = await prisma.family.count({
+     *   where: {
+     *     // ... the filter for the Families we want to count
+     *   }
+     * })
+    **/
+    count<T extends FamilyCountArgs>(
+      args?: Subset<T, FamilyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FamilyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Family.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FamilyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FamilyAggregateArgs>(args: Subset<T, FamilyAggregateArgs>): Prisma.PrismaPromise<GetFamilyAggregateType<T>>
+
+    /**
+     * Group by Family.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FamilyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FamilyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FamilyGroupByArgs['orderBy'] }
+        : { orderBy?: FamilyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FamilyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFamilyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Family model
+   */
+  readonly fields: FamilyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Family.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FamilyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    guests<T extends Family$guestsArgs<ExtArgs> = {}>(args?: Subset<T, Family$guestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Family model
+   */
+  interface FamilyFieldRefs {
+    readonly id: FieldRef<"Family", 'Int'>
+    readonly familyName: FieldRef<"Family", 'String'>
+    readonly rsvpCode: FieldRef<"Family", 'String'>
+    readonly rsvpQuestion: FieldRef<"Family", 'String'>
+    readonly rsvpAnswer: FieldRef<"Family", 'String'>
+    readonly createdAt: FieldRef<"Family", 'DateTime'>
+    readonly updatedAt: FieldRef<"Family", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Family findUnique
+   */
+  export type FamilyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Family
+     */
+    select?: FamilySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Family
+     */
+    omit?: FamilyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FamilyInclude<ExtArgs> | null
+    /**
+     * Filter, which Family to fetch.
+     */
+    where: FamilyWhereUniqueInput
+  }
+
+  /**
+   * Family findUniqueOrThrow
+   */
+  export type FamilyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Family
+     */
+    select?: FamilySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Family
+     */
+    omit?: FamilyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FamilyInclude<ExtArgs> | null
+    /**
+     * Filter, which Family to fetch.
+     */
+    where: FamilyWhereUniqueInput
+  }
+
+  /**
+   * Family findFirst
+   */
+  export type FamilyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Family
+     */
+    select?: FamilySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Family
+     */
+    omit?: FamilyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FamilyInclude<ExtArgs> | null
+    /**
+     * Filter, which Family to fetch.
+     */
+    where?: FamilyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Families to fetch.
+     */
+    orderBy?: FamilyOrderByWithRelationInput | FamilyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Families.
+     */
+    cursor?: FamilyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Families from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Families.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Families.
+     */
+    distinct?: FamilyScalarFieldEnum | FamilyScalarFieldEnum[]
+  }
+
+  /**
+   * Family findFirstOrThrow
+   */
+  export type FamilyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Family
+     */
+    select?: FamilySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Family
+     */
+    omit?: FamilyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FamilyInclude<ExtArgs> | null
+    /**
+     * Filter, which Family to fetch.
+     */
+    where?: FamilyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Families to fetch.
+     */
+    orderBy?: FamilyOrderByWithRelationInput | FamilyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Families.
+     */
+    cursor?: FamilyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Families from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Families.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Families.
+     */
+    distinct?: FamilyScalarFieldEnum | FamilyScalarFieldEnum[]
+  }
+
+  /**
+   * Family findMany
+   */
+  export type FamilyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Family
+     */
+    select?: FamilySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Family
+     */
+    omit?: FamilyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FamilyInclude<ExtArgs> | null
+    /**
+     * Filter, which Families to fetch.
+     */
+    where?: FamilyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Families to fetch.
+     */
+    orderBy?: FamilyOrderByWithRelationInput | FamilyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Families.
+     */
+    cursor?: FamilyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Families from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Families.
+     */
+    skip?: number
+    distinct?: FamilyScalarFieldEnum | FamilyScalarFieldEnum[]
+  }
+
+  /**
+   * Family create
+   */
+  export type FamilyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Family
+     */
+    select?: FamilySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Family
+     */
+    omit?: FamilyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FamilyInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Family.
+     */
+    data: XOR<FamilyCreateInput, FamilyUncheckedCreateInput>
+  }
+
+  /**
+   * Family createMany
+   */
+  export type FamilyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Families.
+     */
+    data: FamilyCreateManyInput | FamilyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Family createManyAndReturn
+   */
+  export type FamilyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Family
+     */
+    select?: FamilySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Family
+     */
+    omit?: FamilyOmit<ExtArgs> | null
+    /**
+     * The data used to create many Families.
+     */
+    data: FamilyCreateManyInput | FamilyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Family update
+   */
+  export type FamilyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Family
+     */
+    select?: FamilySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Family
+     */
+    omit?: FamilyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FamilyInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Family.
+     */
+    data: XOR<FamilyUpdateInput, FamilyUncheckedUpdateInput>
+    /**
+     * Choose, which Family to update.
+     */
+    where: FamilyWhereUniqueInput
+  }
+
+  /**
+   * Family updateMany
+   */
+  export type FamilyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Families.
+     */
+    data: XOR<FamilyUpdateManyMutationInput, FamilyUncheckedUpdateManyInput>
+    /**
+     * Filter which Families to update
+     */
+    where?: FamilyWhereInput
+    /**
+     * Limit how many Families to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Family updateManyAndReturn
+   */
+  export type FamilyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Family
+     */
+    select?: FamilySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Family
+     */
+    omit?: FamilyOmit<ExtArgs> | null
+    /**
+     * The data used to update Families.
+     */
+    data: XOR<FamilyUpdateManyMutationInput, FamilyUncheckedUpdateManyInput>
+    /**
+     * Filter which Families to update
+     */
+    where?: FamilyWhereInput
+    /**
+     * Limit how many Families to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Family upsert
+   */
+  export type FamilyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Family
+     */
+    select?: FamilySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Family
+     */
+    omit?: FamilyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FamilyInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Family to update in case it exists.
+     */
+    where: FamilyWhereUniqueInput
+    /**
+     * In case the Family found by the `where` argument doesn't exist, create a new Family with this data.
+     */
+    create: XOR<FamilyCreateInput, FamilyUncheckedCreateInput>
+    /**
+     * In case the Family was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FamilyUpdateInput, FamilyUncheckedUpdateInput>
+  }
+
+  /**
+   * Family delete
+   */
+  export type FamilyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Family
+     */
+    select?: FamilySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Family
+     */
+    omit?: FamilyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FamilyInclude<ExtArgs> | null
+    /**
+     * Filter which Family to delete.
+     */
+    where: FamilyWhereUniqueInput
+  }
+
+  /**
+   * Family deleteMany
+   */
+  export type FamilyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Families to delete
+     */
+    where?: FamilyWhereInput
+    /**
+     * Limit how many Families to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Family.guests
+   */
+  export type Family$guestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: GuestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: GuestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestInclude<ExtArgs> | null
+    where?: GuestWhereInput
+    orderBy?: GuestOrderByWithRelationInput | GuestOrderByWithRelationInput[]
+    cursor?: GuestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GuestScalarFieldEnum | GuestScalarFieldEnum[]
+  }
+
+  /**
+   * Family without action
+   */
+  export type FamilyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Family
+     */
+    select?: FamilySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Family
+     */
+    omit?: FamilyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FamilyInclude<ExtArgs> | null
+  }
+
 
   /**
    * Model Guest
@@ -875,82 +3182,128 @@ export namespace Prisma {
 
   export type AggregateGuest = {
     _count: GuestCountAggregateOutputType | null
+    _avg: GuestAvgAggregateOutputType | null
+    _sum: GuestSumAggregateOutputType | null
     _min: GuestMinAggregateOutputType | null
     _max: GuestMaxAggregateOutputType | null
   }
 
+  export type GuestAvgAggregateOutputType = {
+    id: number | null
+    familyId: number | null
+  }
+
+  export type GuestSumAggregateOutputType = {
+    id: number | null
+    familyId: number | null
+  }
+
   export type GuestMinAggregateOutputType = {
-    id: string | null
-    name: string | null
-    plusOne: string | null
-    email: string | null
-    rsvp: boolean | null
+    id: number | null
+    firstName: string | null
+    lastName: string | null
+    child: boolean | null
+    familyId: number | null
+    invitedDay: boolean | null
+    invitedEvening: boolean | null
+    attendingDay: boolean | null
+    attendingEvening: boolean | null
+    allergies: string | null
+    foodPreference: $Enums.FoodPreference | null
     createdAt: Date | null
     updatedAt: Date | null
-    answer: string | null
-    question: string | null
   }
 
   export type GuestMaxAggregateOutputType = {
-    id: string | null
-    name: string | null
-    plusOne: string | null
-    email: string | null
-    rsvp: boolean | null
+    id: number | null
+    firstName: string | null
+    lastName: string | null
+    child: boolean | null
+    familyId: number | null
+    invitedDay: boolean | null
+    invitedEvening: boolean | null
+    attendingDay: boolean | null
+    attendingEvening: boolean | null
+    allergies: string | null
+    foodPreference: $Enums.FoodPreference | null
     createdAt: Date | null
     updatedAt: Date | null
-    answer: string | null
-    question: string | null
   }
 
   export type GuestCountAggregateOutputType = {
     id: number
-    name: number
-    plusOne: number
-    email: number
-    rsvp: number
+    firstName: number
+    lastName: number
+    child: number
+    familyId: number
+    invitedDay: number
+    invitedEvening: number
+    attendingDay: number
+    attendingEvening: number
+    allergies: number
+    foodPreference: number
     createdAt: number
     updatedAt: number
-    answer: number
-    question: number
     _all: number
   }
 
 
+  export type GuestAvgAggregateInputType = {
+    id?: true
+    familyId?: true
+  }
+
+  export type GuestSumAggregateInputType = {
+    id?: true
+    familyId?: true
+  }
+
   export type GuestMinAggregateInputType = {
     id?: true
-    name?: true
-    plusOne?: true
-    email?: true
-    rsvp?: true
+    firstName?: true
+    lastName?: true
+    child?: true
+    familyId?: true
+    invitedDay?: true
+    invitedEvening?: true
+    attendingDay?: true
+    attendingEvening?: true
+    allergies?: true
+    foodPreference?: true
     createdAt?: true
     updatedAt?: true
-    answer?: true
-    question?: true
   }
 
   export type GuestMaxAggregateInputType = {
     id?: true
-    name?: true
-    plusOne?: true
-    email?: true
-    rsvp?: true
+    firstName?: true
+    lastName?: true
+    child?: true
+    familyId?: true
+    invitedDay?: true
+    invitedEvening?: true
+    attendingDay?: true
+    attendingEvening?: true
+    allergies?: true
+    foodPreference?: true
     createdAt?: true
     updatedAt?: true
-    answer?: true
-    question?: true
   }
 
   export type GuestCountAggregateInputType = {
     id?: true
-    name?: true
-    plusOne?: true
-    email?: true
-    rsvp?: true
+    firstName?: true
+    lastName?: true
+    child?: true
+    familyId?: true
+    invitedDay?: true
+    invitedEvening?: true
+    attendingDay?: true
+    attendingEvening?: true
+    allergies?: true
+    foodPreference?: true
     createdAt?: true
     updatedAt?: true
-    answer?: true
-    question?: true
     _all?: true
   }
 
@@ -992,6 +3345,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: GuestAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GuestSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: GuestMinAggregateInputType
@@ -1022,21 +3387,29 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: GuestCountAggregateInputType | true
+    _avg?: GuestAvgAggregateInputType
+    _sum?: GuestSumAggregateInputType
     _min?: GuestMinAggregateInputType
     _max?: GuestMaxAggregateInputType
   }
 
   export type GuestGroupByOutputType = {
-    id: string
-    name: string
-    plusOne: string | null
-    email: string
-    rsvp: boolean
+    id: number
+    firstName: string
+    lastName: string
+    child: boolean
+    familyId: number
+    invitedDay: boolean
+    invitedEvening: boolean
+    attendingDay: boolean
+    attendingEvening: boolean
+    allergies: string
+    foodPreference: $Enums.FoodPreference | null
     createdAt: Date
     updatedAt: Date
-    answer: string
-    question: string
     _count: GuestCountAggregateOutputType | null
+    _avg: GuestAvgAggregateOutputType | null
+    _sum: GuestSumAggregateOutputType | null
     _min: GuestMinAggregateOutputType | null
     _max: GuestMaxAggregateOutputType | null
   }
@@ -1057,67 +3430,101 @@ export namespace Prisma {
 
   export type GuestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
-    plusOne?: boolean
-    email?: boolean
-    rsvp?: boolean
+    firstName?: boolean
+    lastName?: boolean
+    child?: boolean
+    familyId?: boolean
+    invitedDay?: boolean
+    invitedEvening?: boolean
+    attendingDay?: boolean
+    attendingEvening?: boolean
+    allergies?: boolean
+    foodPreference?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    answer?: boolean
-    question?: boolean
+    family?: boolean | FamilyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["guest"]>
 
   export type GuestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
-    plusOne?: boolean
-    email?: boolean
-    rsvp?: boolean
+    firstName?: boolean
+    lastName?: boolean
+    child?: boolean
+    familyId?: boolean
+    invitedDay?: boolean
+    invitedEvening?: boolean
+    attendingDay?: boolean
+    attendingEvening?: boolean
+    allergies?: boolean
+    foodPreference?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    answer?: boolean
-    question?: boolean
+    family?: boolean | FamilyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["guest"]>
 
   export type GuestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
-    plusOne?: boolean
-    email?: boolean
-    rsvp?: boolean
+    firstName?: boolean
+    lastName?: boolean
+    child?: boolean
+    familyId?: boolean
+    invitedDay?: boolean
+    invitedEvening?: boolean
+    attendingDay?: boolean
+    attendingEvening?: boolean
+    allergies?: boolean
+    foodPreference?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    answer?: boolean
-    question?: boolean
+    family?: boolean | FamilyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["guest"]>
 
   export type GuestSelectScalar = {
     id?: boolean
-    name?: boolean
-    plusOne?: boolean
-    email?: boolean
-    rsvp?: boolean
+    firstName?: boolean
+    lastName?: boolean
+    child?: boolean
+    familyId?: boolean
+    invitedDay?: boolean
+    invitedEvening?: boolean
+    attendingDay?: boolean
+    attendingEvening?: boolean
+    allergies?: boolean
+    foodPreference?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    answer?: boolean
-    question?: boolean
   }
 
-  export type GuestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "plusOne" | "email" | "rsvp" | "createdAt" | "updatedAt" | "answer" | "question", ExtArgs["result"]["guest"]>
+  export type GuestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "child" | "familyId" | "invitedDay" | "invitedEvening" | "attendingDay" | "attendingEvening" | "allergies" | "foodPreference" | "createdAt" | "updatedAt", ExtArgs["result"]["guest"]>
+  export type GuestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    family?: boolean | FamilyDefaultArgs<ExtArgs>
+  }
+  export type GuestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    family?: boolean | FamilyDefaultArgs<ExtArgs>
+  }
+  export type GuestIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    family?: boolean | FamilyDefaultArgs<ExtArgs>
+  }
 
   export type $GuestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Guest"
-    objects: {}
+    objects: {
+      family: Prisma.$FamilyPayload<ExtArgs>
+    }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
-      name: string
-      plusOne: string | null
-      email: string
-      rsvp: boolean
+      id: number
+      firstName: string
+      lastName: string
+      child: boolean
+      familyId: number
+      invitedDay: boolean
+      invitedEvening: boolean
+      attendingDay: boolean
+      attendingEvening: boolean
+      allergies: string
+      foodPreference: $Enums.FoodPreference | null
       createdAt: Date
       updatedAt: Date
-      answer: string
-      question: string
     }, ExtArgs["result"]["guest"]>
     composites: {}
   }
@@ -1512,6 +3919,7 @@ export namespace Prisma {
    */
   export interface Prisma__GuestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    family<T extends FamilyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FamilyDefaultArgs<ExtArgs>>): Prisma__FamilyClient<$Result.GetResult<Prisma.$FamilyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1541,15 +3949,19 @@ export namespace Prisma {
    * Fields of the Guest model
    */
   interface GuestFieldRefs {
-    readonly id: FieldRef<"Guest", 'String'>
-    readonly name: FieldRef<"Guest", 'String'>
-    readonly plusOne: FieldRef<"Guest", 'String'>
-    readonly email: FieldRef<"Guest", 'String'>
-    readonly rsvp: FieldRef<"Guest", 'Boolean'>
+    readonly id: FieldRef<"Guest", 'Int'>
+    readonly firstName: FieldRef<"Guest", 'String'>
+    readonly lastName: FieldRef<"Guest", 'String'>
+    readonly child: FieldRef<"Guest", 'Boolean'>
+    readonly familyId: FieldRef<"Guest", 'Int'>
+    readonly invitedDay: FieldRef<"Guest", 'Boolean'>
+    readonly invitedEvening: FieldRef<"Guest", 'Boolean'>
+    readonly attendingDay: FieldRef<"Guest", 'Boolean'>
+    readonly attendingEvening: FieldRef<"Guest", 'Boolean'>
+    readonly allergies: FieldRef<"Guest", 'String'>
+    readonly foodPreference: FieldRef<"Guest", 'FoodPreference'>
     readonly createdAt: FieldRef<"Guest", 'DateTime'>
     readonly updatedAt: FieldRef<"Guest", 'DateTime'>
-    readonly answer: FieldRef<"Guest", 'String'>
-    readonly question: FieldRef<"Guest", 'String'>
   }
     
 
@@ -1566,6 +3978,10 @@ export namespace Prisma {
      * Omit specific fields from the Guest
      */
     omit?: GuestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestInclude<ExtArgs> | null
     /**
      * Filter, which Guest to fetch.
      */
@@ -1585,6 +4001,10 @@ export namespace Prisma {
      */
     omit?: GuestOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestInclude<ExtArgs> | null
+    /**
      * Filter, which Guest to fetch.
      */
     where: GuestWhereUniqueInput
@@ -1602,6 +4022,10 @@ export namespace Prisma {
      * Omit specific fields from the Guest
      */
     omit?: GuestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestInclude<ExtArgs> | null
     /**
      * Filter, which Guest to fetch.
      */
@@ -1651,6 +4075,10 @@ export namespace Prisma {
      */
     omit?: GuestOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestInclude<ExtArgs> | null
+    /**
      * Filter, which Guest to fetch.
      */
     where?: GuestWhereInput
@@ -1699,6 +4127,10 @@ export namespace Prisma {
      */
     omit?: GuestOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestInclude<ExtArgs> | null
+    /**
      * Filter, which Guests to fetch.
      */
     where?: GuestWhereInput
@@ -1742,6 +4174,10 @@ export namespace Prisma {
      */
     omit?: GuestOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestInclude<ExtArgs> | null
+    /**
      * The data needed to create a Guest.
      */
     data: XOR<GuestCreateInput, GuestUncheckedCreateInput>
@@ -1775,6 +4211,10 @@ export namespace Prisma {
      */
     data: GuestCreateManyInput | GuestCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -1789,6 +4229,10 @@ export namespace Prisma {
      * Omit specific fields from the Guest
      */
     omit?: GuestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestInclude<ExtArgs> | null
     /**
      * The data needed to update a Guest.
      */
@@ -1841,6 +4285,10 @@ export namespace Prisma {
      * Limit how many Guests to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -1855,6 +4303,10 @@ export namespace Prisma {
      * Omit specific fields from the Guest
      */
     omit?: GuestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestInclude<ExtArgs> | null
     /**
      * The filter to search for the Guest to update in case it exists.
      */
@@ -1881,6 +4333,10 @@ export namespace Prisma {
      * Omit specific fields from the Guest
      */
     omit?: GuestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestInclude<ExtArgs> | null
     /**
      * Filter which Guest to delete.
      */
@@ -1913,6 +4369,10 @@ export namespace Prisma {
      * Omit specific fields from the Guest
      */
     omit?: GuestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestInclude<ExtArgs> | null
   }
 
 
@@ -1930,16 +4390,41 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+  export const UserScalarFieldEnum: {
+    username: 'username',
+    hashedPassword: 'hashedPassword'
+  };
+
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const FamilyScalarFieldEnum: {
+    id: 'id',
+    familyName: 'familyName',
+    rsvpCode: 'rsvpCode',
+    rsvpQuestion: 'rsvpQuestion',
+    rsvpAnswer: 'rsvpAnswer',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FamilyScalarFieldEnum = (typeof FamilyScalarFieldEnum)[keyof typeof FamilyScalarFieldEnum]
+
+
   export const GuestScalarFieldEnum: {
     id: 'id',
-    name: 'name',
-    plusOne: 'plusOne',
-    email: 'email',
-    rsvp: 'rsvp',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    child: 'child',
+    familyId: 'familyId',
+    invitedDay: 'invitedDay',
+    invitedEvening: 'invitedEvening',
+    attendingDay: 'attendingDay',
+    attendingEvening: 'attendingEvening',
+    allergies: 'allergies',
+    foodPreference: 'foodPreference',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    answer: 'answer',
-    question: 'question'
+    updatedAt: 'updatedAt'
   };
 
   export type GuestScalarFieldEnum = (typeof GuestScalarFieldEnum)[keyof typeof GuestScalarFieldEnum]
@@ -1989,9 +4474,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
+   * Reference to a field of type 'Int'
    */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -2010,176 +4502,456 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'Boolean'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
   /**
-   * Reference to a field of type 'Int[]'
+   * Reference to a field of type 'FoodPreference'
    */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+  export type EnumFoodPreferenceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FoodPreference'>
+    
+
+
+  /**
+   * Reference to a field of type 'FoodPreference[]'
+   */
+  export type ListEnumFoodPreferenceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FoodPreference[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
    */
 
 
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    username?: StringFilter<"User"> | string
+    hashedPassword?: StringFilter<"User"> | string
+  }
+
+  export type UserOrderByWithRelationInput = {
+    username?: SortOrder
+    hashedPassword?: SortOrder
+  }
+
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
+    username?: string
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    hashedPassword?: StringFilter<"User"> | string
+  }, "username">
+
+  export type UserOrderByWithAggregationInput = {
+    username?: SortOrder
+    hashedPassword?: SortOrder
+    _count?: UserCountOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+  }
+
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    username?: StringWithAggregatesFilter<"User"> | string
+    hashedPassword?: StringWithAggregatesFilter<"User"> | string
+  }
+
+  export type FamilyWhereInput = {
+    AND?: FamilyWhereInput | FamilyWhereInput[]
+    OR?: FamilyWhereInput[]
+    NOT?: FamilyWhereInput | FamilyWhereInput[]
+    id?: IntFilter<"Family"> | number
+    familyName?: StringFilter<"Family"> | string
+    rsvpCode?: StringFilter<"Family"> | string
+    rsvpQuestion?: StringFilter<"Family"> | string
+    rsvpAnswer?: StringFilter<"Family"> | string
+    createdAt?: DateTimeFilter<"Family"> | Date | string
+    updatedAt?: DateTimeFilter<"Family"> | Date | string
+    guests?: GuestListRelationFilter
+  }
+
+  export type FamilyOrderByWithRelationInput = {
+    id?: SortOrder
+    familyName?: SortOrder
+    rsvpCode?: SortOrder
+    rsvpQuestion?: SortOrder
+    rsvpAnswer?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    guests?: GuestOrderByRelationAggregateInput
+  }
+
+  export type FamilyWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: FamilyWhereInput | FamilyWhereInput[]
+    OR?: FamilyWhereInput[]
+    NOT?: FamilyWhereInput | FamilyWhereInput[]
+    familyName?: StringFilter<"Family"> | string
+    rsvpCode?: StringFilter<"Family"> | string
+    rsvpQuestion?: StringFilter<"Family"> | string
+    rsvpAnswer?: StringFilter<"Family"> | string
+    createdAt?: DateTimeFilter<"Family"> | Date | string
+    updatedAt?: DateTimeFilter<"Family"> | Date | string
+    guests?: GuestListRelationFilter
+  }, "id">
+
+  export type FamilyOrderByWithAggregationInput = {
+    id?: SortOrder
+    familyName?: SortOrder
+    rsvpCode?: SortOrder
+    rsvpQuestion?: SortOrder
+    rsvpAnswer?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FamilyCountOrderByAggregateInput
+    _avg?: FamilyAvgOrderByAggregateInput
+    _max?: FamilyMaxOrderByAggregateInput
+    _min?: FamilyMinOrderByAggregateInput
+    _sum?: FamilySumOrderByAggregateInput
+  }
+
+  export type FamilyScalarWhereWithAggregatesInput = {
+    AND?: FamilyScalarWhereWithAggregatesInput | FamilyScalarWhereWithAggregatesInput[]
+    OR?: FamilyScalarWhereWithAggregatesInput[]
+    NOT?: FamilyScalarWhereWithAggregatesInput | FamilyScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Family"> | number
+    familyName?: StringWithAggregatesFilter<"Family"> | string
+    rsvpCode?: StringWithAggregatesFilter<"Family"> | string
+    rsvpQuestion?: StringWithAggregatesFilter<"Family"> | string
+    rsvpAnswer?: StringWithAggregatesFilter<"Family"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Family"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Family"> | Date | string
+  }
+
   export type GuestWhereInput = {
     AND?: GuestWhereInput | GuestWhereInput[]
     OR?: GuestWhereInput[]
     NOT?: GuestWhereInput | GuestWhereInput[]
-    id?: StringFilter<"Guest"> | string
-    name?: StringFilter<"Guest"> | string
-    plusOne?: StringNullableFilter<"Guest"> | string | null
-    email?: StringFilter<"Guest"> | string
-    rsvp?: BoolFilter<"Guest"> | boolean
+    id?: IntFilter<"Guest"> | number
+    firstName?: StringFilter<"Guest"> | string
+    lastName?: StringFilter<"Guest"> | string
+    child?: BoolFilter<"Guest"> | boolean
+    familyId?: IntFilter<"Guest"> | number
+    invitedDay?: BoolFilter<"Guest"> | boolean
+    invitedEvening?: BoolFilter<"Guest"> | boolean
+    attendingDay?: BoolFilter<"Guest"> | boolean
+    attendingEvening?: BoolFilter<"Guest"> | boolean
+    allergies?: StringFilter<"Guest"> | string
+    foodPreference?: EnumFoodPreferenceNullableFilter<"Guest"> | $Enums.FoodPreference | null
     createdAt?: DateTimeFilter<"Guest"> | Date | string
     updatedAt?: DateTimeFilter<"Guest"> | Date | string
-    answer?: StringFilter<"Guest"> | string
-    question?: StringFilter<"Guest"> | string
+    family?: XOR<FamilyScalarRelationFilter, FamilyWhereInput>
   }
 
   export type GuestOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
-    plusOne?: SortOrderInput | SortOrder
-    email?: SortOrder
-    rsvp?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    child?: SortOrder
+    familyId?: SortOrder
+    invitedDay?: SortOrder
+    invitedEvening?: SortOrder
+    attendingDay?: SortOrder
+    attendingEvening?: SortOrder
+    allergies?: SortOrder
+    foodPreference?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    answer?: SortOrder
-    question?: SortOrder
+    family?: FamilyOrderByWithRelationInput
   }
 
   export type GuestWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    email?: string
+    id?: number
     AND?: GuestWhereInput | GuestWhereInput[]
     OR?: GuestWhereInput[]
     NOT?: GuestWhereInput | GuestWhereInput[]
-    name?: StringFilter<"Guest"> | string
-    plusOne?: StringNullableFilter<"Guest"> | string | null
-    rsvp?: BoolFilter<"Guest"> | boolean
+    firstName?: StringFilter<"Guest"> | string
+    lastName?: StringFilter<"Guest"> | string
+    child?: BoolFilter<"Guest"> | boolean
+    familyId?: IntFilter<"Guest"> | number
+    invitedDay?: BoolFilter<"Guest"> | boolean
+    invitedEvening?: BoolFilter<"Guest"> | boolean
+    attendingDay?: BoolFilter<"Guest"> | boolean
+    attendingEvening?: BoolFilter<"Guest"> | boolean
+    allergies?: StringFilter<"Guest"> | string
+    foodPreference?: EnumFoodPreferenceNullableFilter<"Guest"> | $Enums.FoodPreference | null
     createdAt?: DateTimeFilter<"Guest"> | Date | string
     updatedAt?: DateTimeFilter<"Guest"> | Date | string
-    answer?: StringFilter<"Guest"> | string
-    question?: StringFilter<"Guest"> | string
-  }, "id" | "email">
+    family?: XOR<FamilyScalarRelationFilter, FamilyWhereInput>
+  }, "id">
 
   export type GuestOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
-    plusOne?: SortOrderInput | SortOrder
-    email?: SortOrder
-    rsvp?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    child?: SortOrder
+    familyId?: SortOrder
+    invitedDay?: SortOrder
+    invitedEvening?: SortOrder
+    attendingDay?: SortOrder
+    attendingEvening?: SortOrder
+    allergies?: SortOrder
+    foodPreference?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    answer?: SortOrder
-    question?: SortOrder
     _count?: GuestCountOrderByAggregateInput
+    _avg?: GuestAvgOrderByAggregateInput
     _max?: GuestMaxOrderByAggregateInput
     _min?: GuestMinOrderByAggregateInput
+    _sum?: GuestSumOrderByAggregateInput
   }
 
   export type GuestScalarWhereWithAggregatesInput = {
     AND?: GuestScalarWhereWithAggregatesInput | GuestScalarWhereWithAggregatesInput[]
     OR?: GuestScalarWhereWithAggregatesInput[]
     NOT?: GuestScalarWhereWithAggregatesInput | GuestScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Guest"> | string
-    name?: StringWithAggregatesFilter<"Guest"> | string
-    plusOne?: StringNullableWithAggregatesFilter<"Guest"> | string | null
-    email?: StringWithAggregatesFilter<"Guest"> | string
-    rsvp?: BoolWithAggregatesFilter<"Guest"> | boolean
+    id?: IntWithAggregatesFilter<"Guest"> | number
+    firstName?: StringWithAggregatesFilter<"Guest"> | string
+    lastName?: StringWithAggregatesFilter<"Guest"> | string
+    child?: BoolWithAggregatesFilter<"Guest"> | boolean
+    familyId?: IntWithAggregatesFilter<"Guest"> | number
+    invitedDay?: BoolWithAggregatesFilter<"Guest"> | boolean
+    invitedEvening?: BoolWithAggregatesFilter<"Guest"> | boolean
+    attendingDay?: BoolWithAggregatesFilter<"Guest"> | boolean
+    attendingEvening?: BoolWithAggregatesFilter<"Guest"> | boolean
+    allergies?: StringWithAggregatesFilter<"Guest"> | string
+    foodPreference?: EnumFoodPreferenceNullableWithAggregatesFilter<"Guest"> | $Enums.FoodPreference | null
     createdAt?: DateTimeWithAggregatesFilter<"Guest"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Guest"> | Date | string
-    answer?: StringWithAggregatesFilter<"Guest"> | string
-    question?: StringWithAggregatesFilter<"Guest"> | string
+  }
+
+  export type UserCreateInput = {
+    username: string
+    hashedPassword: string
+  }
+
+  export type UserUncheckedCreateInput = {
+    username: string
+    hashedPassword: string
+  }
+
+  export type UserUpdateInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    hashedPassword?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUncheckedUpdateInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    hashedPassword?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserCreateManyInput = {
+    username: string
+    hashedPassword: string
+  }
+
+  export type UserUpdateManyMutationInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    hashedPassword?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUncheckedUpdateManyInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    hashedPassword?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FamilyCreateInput = {
+    familyName: string
+    rsvpCode: string
+    rsvpQuestion: string
+    rsvpAnswer: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    guests?: GuestCreateNestedManyWithoutFamilyInput
+  }
+
+  export type FamilyUncheckedCreateInput = {
+    id?: number
+    familyName: string
+    rsvpCode: string
+    rsvpQuestion: string
+    rsvpAnswer: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    guests?: GuestUncheckedCreateNestedManyWithoutFamilyInput
+  }
+
+  export type FamilyUpdateInput = {
+    familyName?: StringFieldUpdateOperationsInput | string
+    rsvpCode?: StringFieldUpdateOperationsInput | string
+    rsvpQuestion?: StringFieldUpdateOperationsInput | string
+    rsvpAnswer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    guests?: GuestUpdateManyWithoutFamilyNestedInput
+  }
+
+  export type FamilyUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    familyName?: StringFieldUpdateOperationsInput | string
+    rsvpCode?: StringFieldUpdateOperationsInput | string
+    rsvpQuestion?: StringFieldUpdateOperationsInput | string
+    rsvpAnswer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    guests?: GuestUncheckedUpdateManyWithoutFamilyNestedInput
+  }
+
+  export type FamilyCreateManyInput = {
+    id?: number
+    familyName: string
+    rsvpCode: string
+    rsvpQuestion: string
+    rsvpAnswer: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FamilyUpdateManyMutationInput = {
+    familyName?: StringFieldUpdateOperationsInput | string
+    rsvpCode?: StringFieldUpdateOperationsInput | string
+    rsvpQuestion?: StringFieldUpdateOperationsInput | string
+    rsvpAnswer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FamilyUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    familyName?: StringFieldUpdateOperationsInput | string
+    rsvpCode?: StringFieldUpdateOperationsInput | string
+    rsvpQuestion?: StringFieldUpdateOperationsInput | string
+    rsvpAnswer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type GuestCreateInput = {
-    id?: string
-    name: string
-    plusOne?: string | null
-    email: string
-    rsvp: boolean
+    firstName: string
+    lastName: string
+    child?: boolean
+    invitedDay?: boolean
+    invitedEvening?: boolean
+    attendingDay?: boolean
+    attendingEvening?: boolean
+    allergies?: string
+    foodPreference?: $Enums.FoodPreference | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    answer: string
-    question: string
+    family: FamilyCreateNestedOneWithoutGuestsInput
   }
 
   export type GuestUncheckedCreateInput = {
-    id?: string
-    name: string
-    plusOne?: string | null
-    email: string
-    rsvp: boolean
+    id?: number
+    firstName: string
+    lastName: string
+    child?: boolean
+    familyId: number
+    invitedDay?: boolean
+    invitedEvening?: boolean
+    attendingDay?: boolean
+    attendingEvening?: boolean
+    allergies?: string
+    foodPreference?: $Enums.FoodPreference | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    answer: string
-    question: string
   }
 
   export type GuestUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    plusOne?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    rsvp?: BoolFieldUpdateOperationsInput | boolean
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    child?: BoolFieldUpdateOperationsInput | boolean
+    invitedDay?: BoolFieldUpdateOperationsInput | boolean
+    invitedEvening?: BoolFieldUpdateOperationsInput | boolean
+    attendingDay?: BoolFieldUpdateOperationsInput | boolean
+    attendingEvening?: BoolFieldUpdateOperationsInput | boolean
+    allergies?: StringFieldUpdateOperationsInput | string
+    foodPreference?: NullableEnumFoodPreferenceFieldUpdateOperationsInput | $Enums.FoodPreference | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    answer?: StringFieldUpdateOperationsInput | string
-    question?: StringFieldUpdateOperationsInput | string
+    family?: FamilyUpdateOneRequiredWithoutGuestsNestedInput
   }
 
   export type GuestUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    plusOne?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    rsvp?: BoolFieldUpdateOperationsInput | boolean
+    id?: IntFieldUpdateOperationsInput | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    child?: BoolFieldUpdateOperationsInput | boolean
+    familyId?: IntFieldUpdateOperationsInput | number
+    invitedDay?: BoolFieldUpdateOperationsInput | boolean
+    invitedEvening?: BoolFieldUpdateOperationsInput | boolean
+    attendingDay?: BoolFieldUpdateOperationsInput | boolean
+    attendingEvening?: BoolFieldUpdateOperationsInput | boolean
+    allergies?: StringFieldUpdateOperationsInput | string
+    foodPreference?: NullableEnumFoodPreferenceFieldUpdateOperationsInput | $Enums.FoodPreference | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    answer?: StringFieldUpdateOperationsInput | string
-    question?: StringFieldUpdateOperationsInput | string
   }
 
   export type GuestCreateManyInput = {
-    id?: string
-    name: string
-    plusOne?: string | null
-    email: string
-    rsvp: boolean
+    id?: number
+    firstName: string
+    lastName: string
+    child?: boolean
+    familyId: number
+    invitedDay?: boolean
+    invitedEvening?: boolean
+    attendingDay?: boolean
+    attendingEvening?: boolean
+    allergies?: string
+    foodPreference?: $Enums.FoodPreference | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    answer: string
-    question: string
   }
 
   export type GuestUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    plusOne?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    rsvp?: BoolFieldUpdateOperationsInput | boolean
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    child?: BoolFieldUpdateOperationsInput | boolean
+    invitedDay?: BoolFieldUpdateOperationsInput | boolean
+    invitedEvening?: BoolFieldUpdateOperationsInput | boolean
+    attendingDay?: BoolFieldUpdateOperationsInput | boolean
+    attendingEvening?: BoolFieldUpdateOperationsInput | boolean
+    allergies?: StringFieldUpdateOperationsInput | string
+    foodPreference?: NullableEnumFoodPreferenceFieldUpdateOperationsInput | $Enums.FoodPreference | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    answer?: StringFieldUpdateOperationsInput | string
-    question?: StringFieldUpdateOperationsInput | string
   }
 
   export type GuestUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    plusOne?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    rsvp?: BoolFieldUpdateOperationsInput | boolean
+    id?: IntFieldUpdateOperationsInput | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    child?: BoolFieldUpdateOperationsInput | boolean
+    familyId?: IntFieldUpdateOperationsInput | number
+    invitedDay?: BoolFieldUpdateOperationsInput | boolean
+    invitedEvening?: BoolFieldUpdateOperationsInput | boolean
+    attendingDay?: BoolFieldUpdateOperationsInput | boolean
+    attendingEvening?: BoolFieldUpdateOperationsInput | boolean
+    allergies?: StringFieldUpdateOperationsInput | string
+    foodPreference?: NullableEnumFoodPreferenceFieldUpdateOperationsInput | $Enums.FoodPreference | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    answer?: StringFieldUpdateOperationsInput | string
-    question?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2197,76 +4969,19 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  export type UserCountOrderByAggregateInput = {
+    username?: SortOrder
+    hashedPassword?: SortOrder
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+  export type UserMaxOrderByAggregateInput = {
+    username?: SortOrder
+    hashedPassword?: SortOrder
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
-  }
-
-  export type GuestCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    plusOne?: SortOrder
-    email?: SortOrder
-    rsvp?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    answer?: SortOrder
-    question?: SortOrder
-  }
-
-  export type GuestMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    plusOne?: SortOrder
-    email?: SortOrder
-    rsvp?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    answer?: SortOrder
-    question?: SortOrder
-  }
-
-  export type GuestMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    plusOne?: SortOrder
-    email?: SortOrder
-    rsvp?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    answer?: SortOrder
-    question?: SortOrder
+  export type UserMinOrderByAggregateInput = {
+    username?: SortOrder
+    hashedPassword?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2287,30 +5002,90 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type GuestListRelationFilter = {
+    every?: GuestWhereInput
+    some?: GuestWhereInput
+    none?: GuestWhereInput
+  }
+
+  export type GuestOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FamilyCountOrderByAggregateInput = {
+    id?: SortOrder
+    familyName?: SortOrder
+    rsvpCode?: SortOrder
+    rsvpQuestion?: SortOrder
+    rsvpAnswer?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FamilyAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FamilyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    familyName?: SortOrder
+    rsvpCode?: SortOrder
+    rsvpQuestion?: SortOrder
+    rsvpAnswer?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FamilyMinOrderByAggregateInput = {
+    id?: SortOrder
+    familyName?: SortOrder
+    rsvpCode?: SortOrder
+    rsvpQuestion?: SortOrder
+    rsvpAnswer?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FamilySumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -2327,20 +5102,182 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type EnumFoodPreferenceNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.FoodPreference | EnumFoodPreferenceFieldRefInput<$PrismaModel> | null
+    in?: $Enums.FoodPreference[] | ListEnumFoodPreferenceFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.FoodPreference[] | ListEnumFoodPreferenceFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumFoodPreferenceNullableFilter<$PrismaModel> | $Enums.FoodPreference | null
+  }
+
+  export type FamilyScalarRelationFilter = {
+    is?: FamilyWhereInput
+    isNot?: FamilyWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type GuestCountOrderByAggregateInput = {
+    id?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    child?: SortOrder
+    familyId?: SortOrder
+    invitedDay?: SortOrder
+    invitedEvening?: SortOrder
+    attendingDay?: SortOrder
+    attendingEvening?: SortOrder
+    allergies?: SortOrder
+    foodPreference?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GuestAvgOrderByAggregateInput = {
+    id?: SortOrder
+    familyId?: SortOrder
+  }
+
+  export type GuestMaxOrderByAggregateInput = {
+    id?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    child?: SortOrder
+    familyId?: SortOrder
+    invitedDay?: SortOrder
+    invitedEvening?: SortOrder
+    attendingDay?: SortOrder
+    attendingEvening?: SortOrder
+    allergies?: SortOrder
+    foodPreference?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GuestMinOrderByAggregateInput = {
+    id?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    child?: SortOrder
+    familyId?: SortOrder
+    invitedDay?: SortOrder
+    invitedEvening?: SortOrder
+    attendingDay?: SortOrder
+    attendingEvening?: SortOrder
+    allergies?: SortOrder
+    foodPreference?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GuestSumOrderByAggregateInput = {
+    id?: SortOrder
+    familyId?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type EnumFoodPreferenceNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.FoodPreference | EnumFoodPreferenceFieldRefInput<$PrismaModel> | null
+    in?: $Enums.FoodPreference[] | ListEnumFoodPreferenceFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.FoodPreference[] | ListEnumFoodPreferenceFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumFoodPreferenceNullableWithAggregatesFilter<$PrismaModel> | $Enums.FoodPreference | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumFoodPreferenceNullableFilter<$PrismaModel>
+    _max?: NestedEnumFoodPreferenceNullableFilter<$PrismaModel>
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
+  export type GuestCreateNestedManyWithoutFamilyInput = {
+    create?: XOR<GuestCreateWithoutFamilyInput, GuestUncheckedCreateWithoutFamilyInput> | GuestCreateWithoutFamilyInput[] | GuestUncheckedCreateWithoutFamilyInput[]
+    connectOrCreate?: GuestCreateOrConnectWithoutFamilyInput | GuestCreateOrConnectWithoutFamilyInput[]
+    createMany?: GuestCreateManyFamilyInputEnvelope
+    connect?: GuestWhereUniqueInput | GuestWhereUniqueInput[]
+  }
+
+  export type GuestUncheckedCreateNestedManyWithoutFamilyInput = {
+    create?: XOR<GuestCreateWithoutFamilyInput, GuestUncheckedCreateWithoutFamilyInput> | GuestCreateWithoutFamilyInput[] | GuestUncheckedCreateWithoutFamilyInput[]
+    connectOrCreate?: GuestCreateOrConnectWithoutFamilyInput | GuestCreateOrConnectWithoutFamilyInput[]
+    createMany?: GuestCreateManyFamilyInputEnvelope
+    connect?: GuestWhereUniqueInput | GuestWhereUniqueInput[]
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type GuestUpdateManyWithoutFamilyNestedInput = {
+    create?: XOR<GuestCreateWithoutFamilyInput, GuestUncheckedCreateWithoutFamilyInput> | GuestCreateWithoutFamilyInput[] | GuestUncheckedCreateWithoutFamilyInput[]
+    connectOrCreate?: GuestCreateOrConnectWithoutFamilyInput | GuestCreateOrConnectWithoutFamilyInput[]
+    upsert?: GuestUpsertWithWhereUniqueWithoutFamilyInput | GuestUpsertWithWhereUniqueWithoutFamilyInput[]
+    createMany?: GuestCreateManyFamilyInputEnvelope
+    set?: GuestWhereUniqueInput | GuestWhereUniqueInput[]
+    disconnect?: GuestWhereUniqueInput | GuestWhereUniqueInput[]
+    delete?: GuestWhereUniqueInput | GuestWhereUniqueInput[]
+    connect?: GuestWhereUniqueInput | GuestWhereUniqueInput[]
+    update?: GuestUpdateWithWhereUniqueWithoutFamilyInput | GuestUpdateWithWhereUniqueWithoutFamilyInput[]
+    updateMany?: GuestUpdateManyWithWhereWithoutFamilyInput | GuestUpdateManyWithWhereWithoutFamilyInput[]
+    deleteMany?: GuestScalarWhereInput | GuestScalarWhereInput[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type GuestUncheckedUpdateManyWithoutFamilyNestedInput = {
+    create?: XOR<GuestCreateWithoutFamilyInput, GuestUncheckedCreateWithoutFamilyInput> | GuestCreateWithoutFamilyInput[] | GuestUncheckedCreateWithoutFamilyInput[]
+    connectOrCreate?: GuestCreateOrConnectWithoutFamilyInput | GuestCreateOrConnectWithoutFamilyInput[]
+    upsert?: GuestUpsertWithWhereUniqueWithoutFamilyInput | GuestUpsertWithWhereUniqueWithoutFamilyInput[]
+    createMany?: GuestCreateManyFamilyInputEnvelope
+    set?: GuestWhereUniqueInput | GuestWhereUniqueInput[]
+    disconnect?: GuestWhereUniqueInput | GuestWhereUniqueInput[]
+    delete?: GuestWhereUniqueInput | GuestWhereUniqueInput[]
+    connect?: GuestWhereUniqueInput | GuestWhereUniqueInput[]
+    update?: GuestUpdateWithWhereUniqueWithoutFamilyInput | GuestUpdateWithWhereUniqueWithoutFamilyInput[]
+    updateMany?: GuestUpdateManyWithWhereWithoutFamilyInput | GuestUpdateManyWithWhereWithoutFamilyInput[]
+    deleteMany?: GuestScalarWhereInput | GuestScalarWhereInput[]
+  }
+
+  export type FamilyCreateNestedOneWithoutGuestsInput = {
+    create?: XOR<FamilyCreateWithoutGuestsInput, FamilyUncheckedCreateWithoutGuestsInput>
+    connectOrCreate?: FamilyCreateOrConnectWithoutGuestsInput
+    connect?: FamilyWhereUniqueInput
   }
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
+  export type NullableEnumFoodPreferenceFieldUpdateOperationsInput = {
+    set?: $Enums.FoodPreference | null
+  }
+
+  export type FamilyUpdateOneRequiredWithoutGuestsNestedInput = {
+    create?: XOR<FamilyCreateWithoutGuestsInput, FamilyUncheckedCreateWithoutGuestsInput>
+    connectOrCreate?: FamilyCreateOrConnectWithoutGuestsInput
+    upsert?: FamilyUpsertWithoutGuestsInput
+    connect?: FamilyWhereUniqueInput
+    update?: XOR<XOR<FamilyUpdateToOneWithWhereWithoutGuestsInput, FamilyUpdateWithoutGuestsInput>, FamilyUncheckedUpdateWithoutGuestsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2355,36 +5292,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2415,40 +5322,42 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -2463,6 +5372,234 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedEnumFoodPreferenceNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.FoodPreference | EnumFoodPreferenceFieldRefInput<$PrismaModel> | null
+    in?: $Enums.FoodPreference[] | ListEnumFoodPreferenceFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.FoodPreference[] | ListEnumFoodPreferenceFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumFoodPreferenceNullableFilter<$PrismaModel> | $Enums.FoodPreference | null
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedEnumFoodPreferenceNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.FoodPreference | EnumFoodPreferenceFieldRefInput<$PrismaModel> | null
+    in?: $Enums.FoodPreference[] | ListEnumFoodPreferenceFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.FoodPreference[] | ListEnumFoodPreferenceFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumFoodPreferenceNullableWithAggregatesFilter<$PrismaModel> | $Enums.FoodPreference | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumFoodPreferenceNullableFilter<$PrismaModel>
+    _max?: NestedEnumFoodPreferenceNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type GuestCreateWithoutFamilyInput = {
+    firstName: string
+    lastName: string
+    child?: boolean
+    invitedDay?: boolean
+    invitedEvening?: boolean
+    attendingDay?: boolean
+    attendingEvening?: boolean
+    allergies?: string
+    foodPreference?: $Enums.FoodPreference | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GuestUncheckedCreateWithoutFamilyInput = {
+    id?: number
+    firstName: string
+    lastName: string
+    child?: boolean
+    invitedDay?: boolean
+    invitedEvening?: boolean
+    attendingDay?: boolean
+    attendingEvening?: boolean
+    allergies?: string
+    foodPreference?: $Enums.FoodPreference | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GuestCreateOrConnectWithoutFamilyInput = {
+    where: GuestWhereUniqueInput
+    create: XOR<GuestCreateWithoutFamilyInput, GuestUncheckedCreateWithoutFamilyInput>
+  }
+
+  export type GuestCreateManyFamilyInputEnvelope = {
+    data: GuestCreateManyFamilyInput | GuestCreateManyFamilyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GuestUpsertWithWhereUniqueWithoutFamilyInput = {
+    where: GuestWhereUniqueInput
+    update: XOR<GuestUpdateWithoutFamilyInput, GuestUncheckedUpdateWithoutFamilyInput>
+    create: XOR<GuestCreateWithoutFamilyInput, GuestUncheckedCreateWithoutFamilyInput>
+  }
+
+  export type GuestUpdateWithWhereUniqueWithoutFamilyInput = {
+    where: GuestWhereUniqueInput
+    data: XOR<GuestUpdateWithoutFamilyInput, GuestUncheckedUpdateWithoutFamilyInput>
+  }
+
+  export type GuestUpdateManyWithWhereWithoutFamilyInput = {
+    where: GuestScalarWhereInput
+    data: XOR<GuestUpdateManyMutationInput, GuestUncheckedUpdateManyWithoutFamilyInput>
+  }
+
+  export type GuestScalarWhereInput = {
+    AND?: GuestScalarWhereInput | GuestScalarWhereInput[]
+    OR?: GuestScalarWhereInput[]
+    NOT?: GuestScalarWhereInput | GuestScalarWhereInput[]
+    id?: IntFilter<"Guest"> | number
+    firstName?: StringFilter<"Guest"> | string
+    lastName?: StringFilter<"Guest"> | string
+    child?: BoolFilter<"Guest"> | boolean
+    familyId?: IntFilter<"Guest"> | number
+    invitedDay?: BoolFilter<"Guest"> | boolean
+    invitedEvening?: BoolFilter<"Guest"> | boolean
+    attendingDay?: BoolFilter<"Guest"> | boolean
+    attendingEvening?: BoolFilter<"Guest"> | boolean
+    allergies?: StringFilter<"Guest"> | string
+    foodPreference?: EnumFoodPreferenceNullableFilter<"Guest"> | $Enums.FoodPreference | null
+    createdAt?: DateTimeFilter<"Guest"> | Date | string
+    updatedAt?: DateTimeFilter<"Guest"> | Date | string
+  }
+
+  export type FamilyCreateWithoutGuestsInput = {
+    familyName: string
+    rsvpCode: string
+    rsvpQuestion: string
+    rsvpAnswer: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FamilyUncheckedCreateWithoutGuestsInput = {
+    id?: number
+    familyName: string
+    rsvpCode: string
+    rsvpQuestion: string
+    rsvpAnswer: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FamilyCreateOrConnectWithoutGuestsInput = {
+    where: FamilyWhereUniqueInput
+    create: XOR<FamilyCreateWithoutGuestsInput, FamilyUncheckedCreateWithoutGuestsInput>
+  }
+
+  export type FamilyUpsertWithoutGuestsInput = {
+    update: XOR<FamilyUpdateWithoutGuestsInput, FamilyUncheckedUpdateWithoutGuestsInput>
+    create: XOR<FamilyCreateWithoutGuestsInput, FamilyUncheckedCreateWithoutGuestsInput>
+    where?: FamilyWhereInput
+  }
+
+  export type FamilyUpdateToOneWithWhereWithoutGuestsInput = {
+    where?: FamilyWhereInput
+    data: XOR<FamilyUpdateWithoutGuestsInput, FamilyUncheckedUpdateWithoutGuestsInput>
+  }
+
+  export type FamilyUpdateWithoutGuestsInput = {
+    familyName?: StringFieldUpdateOperationsInput | string
+    rsvpCode?: StringFieldUpdateOperationsInput | string
+    rsvpQuestion?: StringFieldUpdateOperationsInput | string
+    rsvpAnswer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FamilyUncheckedUpdateWithoutGuestsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    familyName?: StringFieldUpdateOperationsInput | string
+    rsvpCode?: StringFieldUpdateOperationsInput | string
+    rsvpQuestion?: StringFieldUpdateOperationsInput | string
+    rsvpAnswer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GuestCreateManyFamilyInput = {
+    id?: number
+    firstName: string
+    lastName: string
+    child?: boolean
+    invitedDay?: boolean
+    invitedEvening?: boolean
+    attendingDay?: boolean
+    attendingEvening?: boolean
+    allergies?: string
+    foodPreference?: $Enums.FoodPreference | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GuestUpdateWithoutFamilyInput = {
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    child?: BoolFieldUpdateOperationsInput | boolean
+    invitedDay?: BoolFieldUpdateOperationsInput | boolean
+    invitedEvening?: BoolFieldUpdateOperationsInput | boolean
+    attendingDay?: BoolFieldUpdateOperationsInput | boolean
+    attendingEvening?: BoolFieldUpdateOperationsInput | boolean
+    allergies?: StringFieldUpdateOperationsInput | string
+    foodPreference?: NullableEnumFoodPreferenceFieldUpdateOperationsInput | $Enums.FoodPreference | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GuestUncheckedUpdateWithoutFamilyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    child?: BoolFieldUpdateOperationsInput | boolean
+    invitedDay?: BoolFieldUpdateOperationsInput | boolean
+    invitedEvening?: BoolFieldUpdateOperationsInput | boolean
+    attendingDay?: BoolFieldUpdateOperationsInput | boolean
+    attendingEvening?: BoolFieldUpdateOperationsInput | boolean
+    allergies?: StringFieldUpdateOperationsInput | string
+    foodPreference?: NullableEnumFoodPreferenceFieldUpdateOperationsInput | $Enums.FoodPreference | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GuestUncheckedUpdateManyWithoutFamilyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    child?: BoolFieldUpdateOperationsInput | boolean
+    invitedDay?: BoolFieldUpdateOperationsInput | boolean
+    invitedEvening?: BoolFieldUpdateOperationsInput | boolean
+    attendingDay?: BoolFieldUpdateOperationsInput | boolean
+    attendingEvening?: BoolFieldUpdateOperationsInput | boolean
+    allergies?: StringFieldUpdateOperationsInput | string
+    foodPreference?: NullableEnumFoodPreferenceFieldUpdateOperationsInput | $Enums.FoodPreference | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

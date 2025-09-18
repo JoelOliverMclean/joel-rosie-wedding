@@ -8,14 +8,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  username       String @id
+  hashedPassword String
+}
+
+model Family {
+  id           Int      @id @default(autoincrement())
+  familyName   String
+  rsvpCode     String
+  rsvpQuestion String
+  rsvpAnswer   String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  guests Guest[]
+}
+
 model Guest {
-  id        String   @id @default(cuid())
-  name      String
-  plusOne   String?
-  email     String   @unique
-  rsvp      Boolean
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  answer    String
-  question  String
+  id               Int             @id @default(autoincrement())
+  firstName        String
+  lastName         String
+  child            Boolean         @default(false)
+  familyId         Int
+  invitedDay       Boolean         @default(false)
+  invitedEvening   Boolean         @default(false)
+  attendingDay     Boolean         @default(false)
+  attendingEvening Boolean         @default(false)
+  allergies        String          @default("")
+  foodPreference   FoodPreference?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  family Family @relation(fields: [familyId], references: [id])
+}
+
+enum FoodPreference {
+  MEAT
+  VEGETARIAN
+  VEGAN
 }
