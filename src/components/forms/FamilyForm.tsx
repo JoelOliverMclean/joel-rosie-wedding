@@ -126,7 +126,7 @@ function FamilyForm() {
             />
             <p>Is child?</p>
             <div
-              className="rounded-xl bg-green-900 p-2"
+              className="checkbox"
               onClick={(e) => updateGuestIsChild(index, !guest.isChild)}
             >
               <Check
@@ -144,7 +144,7 @@ function FamilyForm() {
           <div className="flex flex-row items-center justify-center gap-3">
             <p>Invited day?</p>
             <div
-              className="rounded-xl bg-green-900 p-2"
+              className="checkbox"
               onClick={(e) => updateGuestIsInvitedDay(index, !guest.invitedDay)}
             >
               <Check
@@ -153,7 +153,7 @@ function FamilyForm() {
             </div>
             <p>Invited evening?</p>
             <div
-              className="rounded-xl bg-green-900 p-2"
+              className="checkbox"
               onClick={(e) =>
                 updateGuestIsInvitedEvening(index, !guest.invitedEvening)
               }

@@ -69,3 +69,7 @@ textarea {
 .panel-green {
   @apply max-w-[500px] rounded-xl bg-green-900/90 p-4 shadow-lg shadow-black;
 }
+
+.checkbox {
+  @apply cursor-pointer rounded-xl border-1 border-white bg-green-900 p-1;
+}
