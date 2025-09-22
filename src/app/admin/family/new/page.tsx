@@ -3,12 +3,12 @@ import React from "react";
 
 function NewFamilyPage() {
   return (
-    <div className="flex flex-col gap-5 p-10 text-xl">
-      <h2>Add new family</h2>
-      <div className="w-[500px] rounded-md bg-black/50 p-5">
+    <>
+      <h2 className="font-bold text-shadow-lg">Add new family</h2>
+      <div className="panel w-[500px]">
         <FamilyForm />
       </div>
-    </div>
+    </>
   );
 }
 

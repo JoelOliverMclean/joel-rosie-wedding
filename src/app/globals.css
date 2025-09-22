@@ -51,12 +51,21 @@ h2 {
 
 input[type="submit"],
 .primary-button {
-  @apply cursor-pointer rounded-full bg-green-700 p-2 shadow-md shadow-black/50 select-none hover:bg-green-600;
+  @apply cursor-pointer rounded-full bg-green-700 px-3 py-2 shadow-md shadow-black/50 duration-300 select-none hover:bg-green-600;
 }
 
 input[type="text"],
 input[type="number"],
+input[type="password"],
 select,
 textarea {
   @apply rounded-lg bg-green-900 px-2 py-1 focus:outline-none;
+}
+
+.panel {
+  @apply max-w-[500px] rounded-xl bg-black/70 p-4 shadow-lg shadow-black;
+}
+
+.panel-green {
+  @apply max-w-[500px] rounded-xl bg-green-900/90 p-4 shadow-lg shadow-black;
 }
