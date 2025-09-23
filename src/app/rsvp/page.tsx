@@ -51,13 +51,13 @@ function RSVPCodePage() {
     console.log(attendingDay);
     let guest = guests[index];
     guest.attendingDay = attendingDay;
-    var newGuests = [...guests];
+    let newGuests = [...guests];
     newGuests[index] = guest;
     setGuests(newGuests);
   };
 
   const guestPanelContent = () => {
-    var guest: Guest = guests[selectedGuest];
+    let guest: Guest = guests[selectedGuest];
     return (
       <>
         {guest.invitedDay && (

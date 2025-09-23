@@ -46,7 +46,7 @@ function FamilyForm() {
   const updateGuestFirstName = (index: number, firstName: string) => {
     let guest = guests[index];
     guest.firstName = firstName;
-    var newGuests = [...guests];
+    let newGuests = [...guests];
     newGuests[index] = guest;
     setGuests(newGuests);
   };
@@ -54,7 +54,7 @@ function FamilyForm() {
   const updateGuestLastName = (index: number, lastName: string) => {
     let guest = guests[index];
     guest.lastName = lastName;
-    var newGuests = [...guests];
+    let newGuests = [...guests];
     newGuests[index] = guest;
     setGuests(newGuests);
   };
@@ -62,7 +62,7 @@ function FamilyForm() {
   const updateGuestIsChild = (index: number, isChild: boolean) => {
     let guest = guests[index];
     guest.isChild = isChild;
-    var newGuests = [...guests];
+    let newGuests = [...guests];
     newGuests[index] = guest;
     setGuests(newGuests);
   };
@@ -70,7 +70,7 @@ function FamilyForm() {
   const updateGuestIsInvitedDay = (index: number, invitedDay: boolean) => {
     let guest = guests[index];
     guest.invitedDay = invitedDay;
-    var newGuests = [...guests];
+    let newGuests = [...guests];
     newGuests[index] = guest;
     setGuests(newGuests);
   };
@@ -81,7 +81,7 @@ function FamilyForm() {
   ) => {
     let guest = guests[index];
     guest.invitedEvening = invitedEvening;
-    var newGuests = [...guests];
+    let newGuests = [...guests];
     newGuests[index] = guest;
     setGuests(newGuests);
   };
