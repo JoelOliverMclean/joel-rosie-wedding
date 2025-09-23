@@ -49,15 +49,15 @@ function RSVPCodePage() {
 
   const updateGuestIsAttendingDay = (index: number, attendingDay: boolean) => {
     console.log(attendingDay);
-    let guest = guests[index];
+    const guest = guests[index];
     guest.attendingDay = attendingDay;
-    let newGuests = [...guests];
+    const newGuests = [...guests];
     newGuests[index] = guest;
     setGuests(newGuests);
   };
 
   const guestPanelContent = () => {
-    let guest: Guest = guests[selectedGuest];
+    const guest: Guest = guests[selectedGuest];
     return (
       <>
         {guest.invitedDay && (
@@ -92,7 +92,7 @@ function RSVPCodePage() {
       <div className="panel-green flex flex-col gap-3 text-center">
         <div className="text-2xl font-bold">Hello there</div>
         <div className="font-semibold">
-          We can't wait for you to join us on Saturday 31st October 2026.
+          We cannot wait for you to join us on Saturday 31st October 2026.
         </div>
         <div className="font-semibold">
           We just need you to answer a few Qs!

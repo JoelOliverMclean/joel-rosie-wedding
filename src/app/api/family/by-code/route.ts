@@ -2,11 +2,11 @@ import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-  let searchParams = request.nextUrl.searchParams;
+  const searchParams = request.nextUrl.searchParams;
 
   console.log(searchParams);
 
-  let code: string = searchParams.get("code") ?? "";
+  const code: string = searchParams.get("code") ?? "";
 
   console.log(code);
 
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  let family = await prisma.family.findFirst({
+  const family = await prisma.family.findFirst({
     where: {
       rsvpCode: code,
     },

@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 
   const guests = extractGuestsFromData(data);
 
-  let family = await prisma.family.create({
+  const family = await prisma.family.create({
     data: newFamily,
   });
 

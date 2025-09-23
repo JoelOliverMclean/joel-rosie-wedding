@@ -33,7 +33,7 @@ function FamilyForm() {
   };
 
   const addGuestRow = () => {
-    let newGuest = {
+    const newGuest = {
       firstName: "",
       lastName: "",
       isChild: false,
@@ -44,33 +44,33 @@ function FamilyForm() {
   };
 
   const updateGuestFirstName = (index: number, firstName: string) => {
-    let guest = guests[index];
+    const guest = guests[index];
     guest.firstName = firstName;
-    let newGuests = [...guests];
+    const newGuests = [...guests];
     newGuests[index] = guest;
     setGuests(newGuests);
   };
 
   const updateGuestLastName = (index: number, lastName: string) => {
-    let guest = guests[index];
+    const guest = guests[index];
     guest.lastName = lastName;
-    let newGuests = [...guests];
+    const newGuests = [...guests];
     newGuests[index] = guest;
     setGuests(newGuests);
   };
 
   const updateGuestIsChild = (index: number, isChild: boolean) => {
-    let guest = guests[index];
+    const guest = guests[index];
     guest.isChild = isChild;
-    let newGuests = [...guests];
+    const newGuests = [...guests];
     newGuests[index] = guest;
     setGuests(newGuests);
   };
 
   const updateGuestIsInvitedDay = (index: number, invitedDay: boolean) => {
-    let guest = guests[index];
+    const guest = guests[index];
     guest.invitedDay = invitedDay;
-    let newGuests = [...guests];
+    const newGuests = [...guests];
     newGuests[index] = guest;
     setGuests(newGuests);
   };
@@ -79,9 +79,9 @@ function FamilyForm() {
     index: number,
     invitedEvening: boolean,
   ) => {
-    let guest = guests[index];
+    const guest = guests[index];
     guest.invitedEvening = invitedEvening;
-    let newGuests = [...guests];
+    const newGuests = [...guests];
     newGuests[index] = guest;
     setGuests(newGuests);
   };
