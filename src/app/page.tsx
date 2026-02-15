@@ -1,86 +1,111 @@
-"use client";
-import RSVPPopover from "@/components/popovers/RSVPPopover";
+import { Map } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
 
-interface UnlockFormData {
-  password: string;
-}
-
-function HomePage() {
-  const [unlocked, setUnlocked] = useState(false);
-
-  const submitUnlock = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    const data: UnlockFormData = {
-      password: formData.get("password") as string,
-    };
-
-    if (data.password === "mellon") {
-      setUnlocked(true);
-    } else {
-      alert("Incorrect password");
-      setUnlocked(false);
-    }
-    form.reset();
-  };
-
+export default function HomePage() {
   return (
-    <>
-      {unlocked ? (
-        <div className="panel self-start">
-          <div className="flex flex-col gap-2 text-xl">
-            <Link
-              href={"/rsvp"}
-              className="cursor-pointer border-b-3 border-transparent py-1 pe-2 duration-300 select-none hover:border-green-700 hover:ps-2 hover:pe-0"
-            >
-              RSVP
-            </Link>
-            <Link
-              href={"/about"}
-              className="cursor-pointer border-b-3 border-transparent py-1 pe-2 duration-300 select-none hover:border-green-700 hover:ps-2 hover:pe-0"
-            >
-              About Us
-            </Link>
-            <Link
-              href={"/info"}
-              className="cursor-pointer border-b-3 border-transparent py-1 pe-2 duration-300 select-none hover:border-green-700 hover:ps-2 hover:pe-0"
-            >
-              Important Info
-            </Link>
-            <Link
-              href={"/gallery"}
-              className="cursor-pointer border-b-3 border-transparent py-1 pe-2 duration-300 select-none hover:border-green-700 hover:ps-2 hover:pe-0"
-            >
-              Gallery
-            </Link>
-            <Link
-              href={"/guestbook"}
-              className="cursor-pointer border-b-3 border-transparent py-1 pe-2 duration-300 select-none hover:border-green-700 hover:ps-2 hover:pe-0"
-            >
-              Guestbook
-            </Link>
-          </div>
-        </div>
-      ) : (
-        <div className="panel">
-          <form onSubmit={submitUnlock}>
-            <div className="flex flex-col gap-4">
-              <label htmlFor="password" className="text-center select-none">
-                Enter guest password
-              </label>
-              <input type="password" name="password" />
-              <input type="submit" value={"Enter"} />
+    <div className="stack">
+      {/* Hero */}
+      <section className="hero">
+        {/*<div className="pill">*/}
+        {/*  Autumn • Lanternlight • Cosy Evening*/}
+        {/*</div>*/}
+
+        <div className="hero__grid">
+          <div className="hero__left text-center">
+            <h1 className="h1">
+              You are invited
+              <span className="h1__sub">to celebrate with us</span>
+            </h1>
+
+            {/*<p className="lead">*/}
+            {/*  Join us beneath turning leaves for an evening of warmth,*/}
+            {/*  candlelight, and quiet storybook magic.*/}
+            {/*</p>*/}
+
+            {/*<div className="actions">*/}
+            {/*  <a className="btn btn--ghost" href="#info">*/}
+            {/*    Day details*/}
+            {/*  </a>*/}
+            {/*  <a className="btn btn--ghost" href="#gallery">*/}
+            {/*    Photos*/}
+            {/*  </a>*/}
+            {/*</div>*/}
+
+            <div className="quote">
+              <span className="quote__line" />
+              <p className="quote__text">
+                {/*“All we have to decide is what to do with the time that is given us.”*/}
+                {'"There and back again... together"'}
+              </p>
+              <span className="quote__line" />
             </div>
-          </form>
+          </div>
+
+          {/* Storybook card */}
+          <aside className="card card--hero">
+            <div className="eyebrow">The Gathering</div>
+            <h2 className="h2">Saturday 31st October 2026</h2>
+            <p className="small muted">
+              Ceremony at <strong>1:00pm</strong> <br />
+              Food &amp; drinks to follow <br />
+              Party starts at <strong>7:00pm</strong>
+            </p>
+
+            <div className="card__grid">
+              <div className="panel">
+                <div className="panel__title">Location</div>
+                <div className="small muted flex items-center gap-5">
+                  <div className={"flex-1"}>
+                    <strong>Rufford Mill Wedding Venue, Nottinghamshire</strong>
+                  </div>
+                  <a
+                    href="https://maps.app.goo.gl/MUXG9KmrqbtSbXqL7"
+                    target={"_blank"}
+                  >
+                    <div className={"btn btn--primary"}>
+                      <Map />
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div className="panel">
+                <div className="panel__title">Dress</div>
+                <div className="small muted">
+                  Day: <strong>Formal</strong> <br />
+                  Evening: <strong>Optional Fancy Dress</strong>
+                </div>
+              </div>
+            </div>
+
+            <a className="btn btn--primary card__cta" href="#rsvp">
+              RSVP here
+            </a>
+
+            <span className="seal" aria-hidden="true" />
+          </aside>
         </div>
-      )}
-    </>
+      </section>
+
+      <section id="links" className={"section"}>
+        <div
+          className={
+            "flex flex-col justify-center gap-5 text-center sm:flex-row sm:justify-around sm:gap-0"
+          }
+        >
+          <Link href={""}>
+            <h2 className="h2 nav__link glow-hover-soft">Our Story</h2>
+          </Link>
+          <Link href={""}>
+            <h2 className="h2 nav__link glow-hover-soft">Information</h2>
+          </Link>
+          <Link href={""}>
+            <h2 className="h2 nav__link glow-hover-soft">RSVP</h2>
+          </Link>
+          <Link href={""}>
+            <h2 className="h2 nav__link glow-hover-soft">Photos</h2>
+          </Link>
+        </div>
+      </section>
+    </div>
   );
 }
-
-export default HomePage;
