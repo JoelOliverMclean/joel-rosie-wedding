@@ -1,5 +1,14 @@
 // app/gallery/page.tsx
 import GalleryClient from "./GalleryClient";
+import { headers } from "next/headers";
+
+async function getOrigin() {
+  const h = await headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host");
+  const proto = h.get("x-forwarded-proto") ?? "http";
+  if (!host) throw new Error("Missing Host header");
+  return `${proto}://${host}`;
+}
 
 type PixabayHit = {
   id: number;
@@ -9,8 +18,8 @@ type PixabayHit = {
 };
 
 async function getInitialImages(): Promise<PixabayHit[]> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/api/pixabay?q=wedding&page=1&per_page=17`,
+  const origin = await getOrigin();
+  const res = await fetch(`${origin}/api/pixabay?q=wedding&page=1&per_page=17`,
     { cache: "no-store" }
   );
 
