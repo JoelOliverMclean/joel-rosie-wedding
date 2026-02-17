@@ -37,9 +37,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const links = [
-    { href: "#story", label: "Our Story" },
-    { href: "#info", label: "Details" },
-    { href: "#gallery", label: "Photos" },
+    { href: "/story", label: "Our Story" },
+    { href: "/info", label: "Details" },
+    { href: "/gallery", label: "Photos" },
   ];
 
   return (
@@ -69,15 +69,15 @@ export default function RootLayout({
               </Link>
 
               <nav className="nav nav--desktop" aria-label="Primary">
-                <a className="nav__link glow-hover-soft" href="#story">
-                  Our Story
-                </a>
-                <a className="nav__link glow-hover-soft" href="#info">
-                  Details
-                </a>
-                <a className="nav__link glow-hover-soft" href="#gallery">
-                  Photos
-                </a>
+                {links.map((l) => (
+                  <a
+                    key={l.href}
+                    className={"nav__link glow-hover-soft"}
+                    href={l.href}
+                  >
+                    {l.label}
+                  </a>
+                ))}
               </nav>
 
               <div className="header__actions">
@@ -85,7 +85,7 @@ export default function RootLayout({
 
                 <ThemeToggle />
 
-                <a className="btn btn--primary rsvp--desktop" href="#rsvp">
+                <a className="btn btn--primary rsvp--desktop" href="/rsvp">
                   RSVP
                 </a>
               </div>
@@ -98,8 +98,10 @@ export default function RootLayout({
           {/* Footer (persistent) */}
           <footer className="footer">
             <div className="footer__inner container">
-              <span className="muted">More details coming soon.</span>
-              <span className="muted">© {new Date().getFullYear()}</span>
+              <span className="muted">Joel & Rosie Wedding</span>
+              <span className="muted">
+                © 2026 Joel Mclean
+              </span>
             </div>
           </footer>
         </div>

@@ -1,7 +1,7 @@
 import React from "react";
 
 function GuestBookPage() {
-  return <div>GuestBookPage</div>;
+  return <div>Guestbook Coming Soon</div>;
 }
 
 export default GuestBookPage;

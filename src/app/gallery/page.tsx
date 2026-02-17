@@ -1,7 +1,7 @@
 import React from "react";
 
 function GalleryPage() {
-  return <div>GalleryPage</div>;
+  return <div>Gallery Coming Soon</div>;
 }
 
 export default GalleryPage;
