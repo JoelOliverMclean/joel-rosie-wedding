@@ -13,7 +13,7 @@
 // // declare global {
 // //   // Allow globalThis.prisma in development without type errors
 // //   // eslint-disable-next-line no-var
-// //   var prisma: PrismaClient | undefined;
+// //   let prisma: PrismaClient | undefined;
 // // }
 
 // // const connectionString: string = process.env.DATABASE_URL ?? "";
@@ -35,11 +35,12 @@
 
 // if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
-import { PrismaClient } from '../../generated/prisma/client'
-import { withAccelerate } from '@prisma/extension-accelerate'
+import { PrismaClient } from "../../generated/prisma/client";
+import { withAccelerate } from "@prisma/extension-accelerate";
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
-export const prisma: PrismaClient = globalForPrisma.prisma || new PrismaClient().$extends(withAccelerate());
+export const prisma: PrismaClient =
+  globalForPrisma.prisma || new PrismaClient().$extends(withAccelerate());
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;

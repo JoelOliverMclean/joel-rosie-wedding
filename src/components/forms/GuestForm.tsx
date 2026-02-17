@@ -10,10 +10,9 @@ interface Family {
 }
 
 function GuestForm() {
-
-  const [families, setFamilies] = useState<Family[]>([])
-  const [family, setFamily] = useState(null)
-  const [isChild, setIsChild] = useState(false)
+  const [families, setFamilies] = useState<Family[]>([]);
+  const [family, setFamily] = useState(null);
+  const [isChild, setIsChild] = useState(false);
 
   const submitNewGuestForm = (
     data: BaseFormData,
@@ -30,14 +29,14 @@ function GuestForm() {
   };
 
   useEffect(() => {
-    apiGet("/api/family/all").then(({response, data}) => {
+    apiGet("/api/family/all").then(({ response, data }) => {
       if (response.status === 200) {
-        setFamilies(data.families)
+        setFamilies(data.families);
       } else {
-        setFamilies([])
+        setFamilies([]);
       }
     });
-  }, [])
+  }, []);
 
   if (families.length === 0) {
     return;
@@ -48,18 +47,30 @@ function GuestForm() {
       <select name="familyId">
         <option value={undefined}>Please select a family</option>
         {families.map((family) => (
-          <option key={family.id} value={family.id}>{family.familyName}</option>
+          <option key={family.id} value={family.id}>
+            {family.familyName}
+          </option>
         ))}
       </select>
       <input type="text" name="firstName" placeholder="First name" />
       <input type="text" name="lastName" placeholder="Last name" />
-      <div className="flex flex-row gap-2 items-center justify-center">
+      <div className="flex flex-row items-center justify-center gap-2">
         <p>Guest is child?</p>
-        <div className="p-2 bg-green-900 rounded-xl" onClick={(e) => setIsChild(!isChild)}>
-          <Check className={`${isChild ? "opacity-100" : "opacity-0"} duration-300`} />
+        <div
+          className="rounded-xl bg-green-900 p-2"
+          onClick={(e) => setIsChild(!isChild)}
+        >
+          <Check
+            className={`${isChild ? "opacity-100" : "opacity-0"} duration-300`}
+          />
         </div>
       </div>
-      <input hidden type="text" name="child" value={isChild ? "true" : "false"} />
+      <input
+        hidden
+        type="text"
+        name="child"
+        value={isChild ? "true" : "false"}
+      />
     </BaseForm>
   );
 }

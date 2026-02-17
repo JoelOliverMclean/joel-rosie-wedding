@@ -1,9 +1,5 @@
 import { getFormJson } from "@/utils/formUtils";
-import React, {
-  FormEvent,
-  ReactNode,
-  useRef,
-} from "react";
+import React, { FormEvent, ReactNode, useRef } from "react";
 
 export type BaseFormData = {
   [k: string]: FormDataEntryValue;
@@ -13,10 +9,12 @@ export function BaseForm({
   children,
   onSubmitData,
   error,
+  submitText,
 }: Readonly<{
   children?: ReactNode;
   onSubmitData: (data: BaseFormData, form: HTMLFormElement | null) => void;
-  error: string | null | undefined;
+  error?: string | null | undefined;
+  submitText?: string | null | undefined;
 }>) {
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -31,7 +29,7 @@ export function BaseForm({
       <div className="flex flex-col gap-4">
         {children}
         {error && <p className="font-bold text-red-600">{error}</p>}
-        <input type="submit" />
+        <input type="submit" value={submitText ?? "Submit"} />
       </div>
     </form>
   );
