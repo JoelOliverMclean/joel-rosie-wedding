@@ -28,8 +28,8 @@ export function BaseForm({
     <form onSubmit={submitForm} ref={formRef}>
       <div className="flex flex-col gap-4">
         {children}
-        {error && <p className="font-bold text-red-600">{error}</p>}
-        <input type="submit" value={submitText ?? "Submit"} />
+        {error && <p className="font-bold text-center text-orange-600">{error}</p>}
+        <input className={"btn btn--primary"} type="submit" value={submitText ?? "Submit"} />
       </div>
     </form>
   );

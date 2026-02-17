@@ -77,7 +77,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <a className="btn btn--primary card__cta" href="#rsvp">
+            <a className="btn btn--primary card__cta" href="/rsvp">
               RSVP here
             </a>
 
