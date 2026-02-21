@@ -267,7 +267,7 @@ body {
 }
 
 /* Typography */
-.h1 {
+h1, .h1 {
     margin: 0;
     font-size: clamp(40px, 5.2vw, 64px);
     letter-spacing: -0.03em;
@@ -281,7 +281,7 @@ body {
     color: var(--muted);
     font-weight: 600;
 }
-.h2 {
+h2, .h2 {
     margin: 0;
     font-size: 22px;
     letter-spacing: -0.015em;
@@ -314,6 +314,7 @@ body {
 }
 
 .btn {
+    @apply cursor-pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -528,4 +529,15 @@ input[type="password"],
 select,
 textarea {
     @apply focus:outline-none px-4 py-2 rounded-full focus:ring-2 hover:bg-[var(--surface)] focus:bg-[var(--surface)] bg-[var(--surface)]/80 ring-[var(--primary)] duration-200;
+}
+
+textarea {
+    @apply rounded-lg;
+}
+
+select {
+    appearance: none;
+    padding-right: 32px;
+    background: url("down-arrow.png") no-repeat right #fff;
+    background-position-x: 92%;
 }

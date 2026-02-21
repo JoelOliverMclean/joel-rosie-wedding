@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { FamilyWithGuests } from "@/lib/prisma-types";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -21,12 +22,16 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const family = await prisma.family.findFirst({
+  const family: FamilyWithGuests | null = await prisma.family.findFirst({
     where: {
       rsvpCode: code,
     },
     include: {
-      guests: true,
+      guests: {
+        orderBy: {
+          id: "asc",
+        },
+      },
     },
   });
 
