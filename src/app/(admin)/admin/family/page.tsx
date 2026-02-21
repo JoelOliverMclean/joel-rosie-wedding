@@ -25,7 +25,7 @@ export default async function FamilyAdminPage() {
         >
           {families.map((family) => (
             <div key={family.id} className={"pill flex flex-col gap-2"}>
-              <h2 className={"h2"}>{family.familyName}</h2>
+              <h2 className={"h2 text-center"}>{family.familyName}</h2>
               <div className={"flex flex-wrap justify-center gap-2"}>
                 <div>-</div>
                 {family.guests.map((guest) => (
