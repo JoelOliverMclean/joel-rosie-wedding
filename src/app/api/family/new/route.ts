@@ -22,18 +22,18 @@ export async function POST(request: NextRequest) {
     data: newFamily,
   });
 
-  guests.forEach(async (guest) => {
+  for (const guest of guests) {
     await prisma.guest.create({
       data: {
         firstName: guest.firstName,
-        lastName: guest.lastName,
+        lastName: guest.lastName ?? "",
         child: guest.isChild,
         familyId: family.id,
         invitedDay: guest.invitedDay,
         invitedEvening: guest.invitedEvening,
       },
     });
-  });
+  }
 
   return NextResponse.json(newFamily);
 }
@@ -78,7 +78,6 @@ function extractGuestsFromData(data: Record<string, unknown>): Guest[] {
     typeof g.firstName === "string" &&
     g.firstName.length > 0 &&
     typeof g.lastName === "string" &&
-    g.lastName.length > 0 &&
     typeof g.isChild === "boolean";
 
   return Object.keys(grouped)
