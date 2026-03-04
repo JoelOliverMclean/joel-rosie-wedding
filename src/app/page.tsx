@@ -2,6 +2,8 @@ import { Map } from "lucide-react";
 import Link from "next/link";
 import WeddingCountdown from "@/components/WeddingCountdown";
 
+const weddingDate = "2026-10-31T13:00:00Z";
+
 export default function HomePage() {
   return (
     <div className="stack">
@@ -18,7 +20,7 @@ export default function HomePage() {
               <span className="h1__sub">to celebrate with us in</span>
             </h1>
             <div className={"pt-5"}>
-              <WeddingCountdown targetIso={"2026-10-31T13:00:00Z"} />
+              <WeddingCountdown targetIso={weddingDate} />
             </div>
 
             {/*<p className="lead">*/}
