@@ -4,6 +4,7 @@ import "./globals.css";
 import Link from "next/link";
 import ThemeToggle from "@/app/theme-toggle";
 import MobileNav from "./mobile-nav";
+import { links } from "@/components/NavigationLinks";
 
 const metamorphous = Metamorphous({
   weight: "400",
@@ -36,12 +37,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const links = [
-    { href: "/story", label: "Our Story" },
-    { href: "/info", label: "Details" },
-    { href: "/gallery", label: "Photos" },
-  ];
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${metamorphous.className} antialiased`}>

@@ -79,20 +79,20 @@ export default function WeddingCountdown({
             </div>
           )}
         </div>
-        <div
-          className={["flex gap-2", smallerTextStyle].join(" ")}
-        >
-          {time.minutes > 0 && (
-            <div>
-              <span className={smallerNumStyle}>{time.minutes}</span> minutes
-            </div>
-          )}
-          {time.seconds > 0 && (
-            <div>
-              <span className={smallerNumStyle}>{time.seconds}</span> seconds
-            </div>
-          )}
-        </div>
+        { time.days < 1 && (
+          <div className={["flex gap-2", smallerTextStyle].join(" ")}>
+            {time.minutes > 0 && (
+              <div>
+                <span className={smallerNumStyle}>{time.minutes}</span> minutes
+              </div>
+            )}
+            {/*{time.seconds > 0 && (*/}
+            {/*  <div>*/}
+            {/*    <span className={smallerNumStyle}>{time.seconds}</span> seconds*/}
+            {/*  </div>*/}
+            {/*)}*/}
+          </div>
+        )}
       </div>
     </div>
   );
