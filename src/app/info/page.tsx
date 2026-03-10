@@ -9,8 +9,9 @@ import DietaryRequirementInfo from "@/app/info/sections/DietaryRequirements";
 function InfoPage() {
 
   const header = (name: string) => (
-    <div className={"pill-ish"}>
-      <span className={"text-2xl font-bold"}>{name}</span>
+    <div className={""}>
+      <div className={"text-2xl font-bold"}>{name}</div>
+      <div className={"h-1 bg-gradient-to-r from-[var(--fg)] to-transparent"}></div>
     </div>
   );
 
