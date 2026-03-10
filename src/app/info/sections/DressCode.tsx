@@ -2,7 +2,7 @@
 
 export default function DressCodeInfo() {
   return (
-    <div className={"flex flex-col gap-5 px-2"}>
+    <div className={"flex flex-col gap-5"}>
       <div>
         The Ceremony is classic Black Tie Formal, the groom and bridal party
         will be autumnal in theme, we ask that guests please avoid wearing the

@@ -9,7 +9,7 @@ const carPark = (
   <div className={"flex flex-col gap-5"}>
     <div className={"h2"}>Car Parking</div>
     <div>You can find directions to the car park here:</div>
-    <div className={"flex flex-wrap items-center gap-5 px-5"}>
+    <div className={"flex flex-wrap items-center gap-5"}>
       <a
         className={"link-text"}
         href="https://maps.app.goo.gl/QKJjUvdR4LGSwtK49"
@@ -82,9 +82,12 @@ const taxis = (
       It is recommended to pre-book a taxi if you need one. Here are some
       venue-recommended services:
     </div>
-    <div className={"flex flex-wrap gap-5 p-3"}>
+    <div className={"flex flex-wrap gap-5"}>
       {taxiData.map((taxi) => (
-        <div key={taxi.name} className={"pill flex gap-2"}>
+        <div
+          key={taxi.name}
+          className={"pill flex justify-center gap-2 w-full md:w-max"}
+        >
           {taxi.name}
           <a className={"link-text flex gap-2"} href={`tel:${taxi.phone}`}>
             <div className={"flex items-center gap-2"}>

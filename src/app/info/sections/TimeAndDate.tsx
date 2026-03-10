@@ -1,7 +1,7 @@
 ﻿import React from "react";
 
 export default function TimeAndDateInfo() {
-  return <div className={"flex flex-col gap-5 px-2"}>
+  return <div className={"flex flex-col gap-5"}>
     <div>
       The ceremony will take place at{" "}
       <span className={"font-bold"}>1pm</span> on the{" "}
