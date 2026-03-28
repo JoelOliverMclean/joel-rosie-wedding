@@ -38,6 +38,7 @@ model Guest {
   attendingEvening Boolean         @default(false)
   allergies        String          @default("")
   foodPreference   FoodPreference?
+  rsvpResponse     RSVPResponse?
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
 
@@ -48,4 +49,10 @@ enum FoodPreference {
   MEAT
   VEGETARIAN
   VEGAN
+}
+
+enum RSVPResponse {
+  FULL_DAY
+  EVENING_ONLY
+  NOT_ATTENDING
 }
