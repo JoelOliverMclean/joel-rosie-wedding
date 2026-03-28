@@ -22,6 +22,8 @@
     --primary: rgba(41, 66, 50, 0.92);
     --primary-hover: rgba(47, 74, 56, 1);
     --ghost: rgba(255, 255, 255, 0.35);
+    --link: rgba(47, 161, 30, 0.92);
+    --link-hover: rgba(37, 211, 11, 0.92);
 
     /* Background layers */
     --bg-base: radial-gradient(1400px circle at 30% 20%, rgba(120, 150, 120, 0.18), transparent 60%),
@@ -60,6 +62,8 @@
     --primary: rgba(62, 117, 76, 0.92);
     --primary-hover: rgb(59, 129, 83);
     --ghost: rgba(255, 255, 255, 0.06);
+    --link: rgb(195, 129, 35);
+    --link-hover: rgb(237, 156, 45);
 
     --bg-base: radial-gradient(1200px circle at 30% 20%, rgba(46, 74, 56, 0.55), transparent 60%),
     radial-gradient(1000px circle at 80% 10%, rgba(30, 50, 38, 0.55), transparent 60%),
@@ -267,7 +271,7 @@ body {
 }
 
 /* Typography */
-.h1 {
+h1, .h1 {
     margin: 0;
     font-size: clamp(40px, 5.2vw, 64px);
     letter-spacing: -0.03em;
@@ -281,7 +285,7 @@ body {
     color: var(--muted);
     font-weight: 600;
 }
-.h2 {
+h2, .h2 {
     margin: 0;
     font-size: 22px;
     letter-spacing: -0.015em;
@@ -313,7 +317,17 @@ body {
     backdrop-filter: blur(10px);
 }
 
+.pill-ish {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 10px 14px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+}
+
 .btn {
+    @apply cursor-pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -533,4 +547,24 @@ textarea {
 .checkbox {
     @apply border-[1.5px] border-[var(--border)] rounded-[12px] p-1;
     background: var(--ghost);
+}
+
+.link-text {
+    @apply duration-200;
+    color: var(--link);
+}
+
+.link-text:hover {
+    color: var(--link-hover);
+}
+
+textarea {
+    @apply rounded-lg;
+}
+
+select {
+    appearance: none;
+    padding-right: 32px;
+    background: url("down-arrow.png") no-repeat right #fff;
+    background-position-x: 92%;
 }

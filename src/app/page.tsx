@@ -1,5 +1,9 @@
 import { Map } from "lucide-react";
 import Link from "next/link";
+import WeddingCountdown from "@/components/WeddingCountdown";
+import { links } from "@/components/NavigationLinks";
+
+const weddingDate = "2026-10-31T13:00:00Z";
 
 export default function HomePage() {
   return (
@@ -14,8 +18,11 @@ export default function HomePage() {
           <div className="hero__left text-center">
             <h1 className="h1">
               You are invited
-              <span className="h1__sub">to celebrate with us</span>
+              <span className="h1__sub">to celebrate with us in</span>
             </h1>
+            <div className={"pt-5"}>
+              <WeddingCountdown targetIso={weddingDate} />
+            </div>
 
             {/*<p className="lead">*/}
             {/*  Join us beneath turning leaves for an evening of warmth,*/}
@@ -92,18 +99,11 @@ export default function HomePage() {
             "flex flex-col justify-center gap-5 text-center sm:flex-row sm:justify-around sm:gap-0"
           }
         >
-          <Link href={"/story"}>
-            <h2 className="h2 nav__link glow-hover-soft">Our Story</h2>
-          </Link>
-          <Link href={"/info"}>
-            <h2 className="h2 nav__link glow-hover-soft">Information</h2>
-          </Link>
-          <Link href={"/gallery"}>
-            <h2 className="h2 nav__link glow-hover-soft">Photos</h2>
-          </Link>
-          <Link href={"/rsvp"}>
-            <h2 className="h2 nav__link glow-hover-soft">RSVP</h2>
-          </Link>
+          {links.map((link) => (
+            <Link key={link.href} href={link.href}>
+              <h2 className="h2 nav__link glow-hover-soft">{link.label}</h2>
+            </Link>
+          ))}
         </div>
       </section>
     </div>
