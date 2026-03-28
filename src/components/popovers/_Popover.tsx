@@ -13,7 +13,7 @@ function Popover({
       onClick={onDismiss}
     >
       <div
-        className="max-w-[320px] rounded-3xl bg-green-900/80 p-4"
+        className="max-w-[320px] card"
         onClick={(e) => e.stopPropagation()}
       >
         {children}
