@@ -1,6 +1,8 @@
 ﻿import { prisma } from "@/lib/prisma";
 import { InviteSummary } from "@/app/rsvp/types";
 import { cookies } from "next/headers";
+import { $Enums, FamilyWithGuests, Guest } from "@/lib/prisma-types";
+import RSVPResponse = $Enums.RSVPResponse;
 
 const INVITE_COOKIE = "rsvp_invite";
 
@@ -38,15 +40,31 @@ export async function clearInviteCookie() {
 }
 
 export async function confirmRSVP(familyId: number) {
-  const family = prisma.family.findUnique({
+  const family: FamilyWithGuests | null = await prisma.family.findUnique({
     where: {
-      id: familyId,
-    }
-  })
+      id: familyId
+    },
+    include: {
+      guests: {
+        orderBy: {
+          id: "asc",
+        },
+      },
+    },
+  });
 
   if (!family) {
     console.log("Can't find fam")
     return Error("Cannot find family")
+  }
+
+  for (const guest of family.guests) {
+    if (!guest.rsvpResponse) {
+      return Error(`No attending choice selected for ${guest.firstName}`)
+    }
+    if (guest.rsvpResponse !== RSVPResponse.NOT_ATTENDING && !guest.foodPreference) {
+      return Error(`No food preference selected for ${guest.firstName}`)
+    }
   }
 
   await prisma.family.update({
@@ -55,4 +73,19 @@ export async function confirmRSVP(familyId: number) {
   })
 
   return null
+}
+
+export async function saveGuests(guests: Guest[]) {
+  "use server"
+
+  for (const guest of guests) {
+    await prisma.guest.update({
+      where: { id: guest.id },
+      data: {
+        ...guest
+      }
+    })
+  }
+
+  return true
 }
