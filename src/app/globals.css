@@ -271,7 +271,7 @@ body {
 }
 
 /* Typography */
-.h1 {
+h1, .h1 {
     margin: 0;
     font-size: clamp(40px, 5.2vw, 64px);
     letter-spacing: -0.03em;
@@ -285,7 +285,7 @@ body {
     color: var(--muted);
     font-weight: 600;
 }
-.h2 {
+h2, .h2 {
     margin: 0;
     font-size: 22px;
     letter-spacing: -0.015em;
@@ -327,6 +327,7 @@ body {
 }
 
 .btn {
+    @apply cursor-pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -555,4 +556,15 @@ textarea {
 
 .link-text:hover {
     color: var(--link-hover);
+}
+
+textarea {
+    @apply rounded-lg;
+}
+
+select {
+    appearance: none;
+    padding-right: 32px;
+    background: url("down-arrow.png") no-repeat right #fff;
+    background-position-x: 92%;
 }
