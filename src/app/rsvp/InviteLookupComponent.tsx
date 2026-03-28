@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { InviteSummary } from "@/app/rsvp/types";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { apiGet } from "@/utils/apiUtils";
 
 export default function InviteLookup(props: {
@@ -10,7 +10,7 @@ export default function InviteLookup(props: {
 }) {
   const [code, setCode] = useState(() => props.rsvpCode ?? "");
 
-  function handleSubmit() {
+  const handleSubmit = useCallback(() => {
     const value = code.trim();
     apiGet(`/api/family/by-code?code=${value}`).then(({ response, data }) => {
       if (response.ok) {
@@ -21,7 +21,13 @@ export default function InviteLookup(props: {
     }).catch((error) => {
       console.error(error);
     })
-  }
+  }, [code, props])
+
+  useEffect(() => {
+    if (props.rsvpCode) {
+      handleSubmit();
+    }
+  }, [handleSubmit, props.rsvpCode]);
 
   return (
     <div className="flex self-stretch items-center justify-center">

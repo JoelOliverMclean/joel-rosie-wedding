@@ -1,4 +1,5 @@
-﻿import { InviteSummary } from "@/app/rsvp/types";
+﻿import { prisma } from "@/lib/prisma";
+import { InviteSummary } from "@/app/rsvp/types";
 import { cookies } from "next/headers";
 
 const INVITE_COOKIE = "rsvp_invite";
@@ -34,4 +35,24 @@ export async function clearInviteCookie() {
 
   const jar = await cookies();
   jar.set(INVITE_COOKIE, "", { path: "/", maxAge: 0 });
+}
+
+export async function confirmRSVP(familyId: number) {
+  const family = prisma.family.findUnique({
+    where: {
+      id: familyId,
+    }
+  })
+
+  if (!family) {
+    console.log("Can't find fam")
+    return Error("Cannot find family")
+  }
+
+  await prisma.family.update({
+    where: { id: familyId },
+    data: { rsvpSubmitted: true },
+  })
+
+  return null
 }
