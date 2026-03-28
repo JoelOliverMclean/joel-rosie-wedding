@@ -189,12 +189,12 @@ export default function RsvpClient(props: {
             {error && <div className={"mt-10 text-red-500 font-bold text-center" +
               ""}>{error}</div>}
             <div className={"mt-10 flex flex-col gap-5 md:flex-row"}>
-              <button
-                onClick={() => updateGuests()}
-                className={"btn btn--ghost w-full"}
-              >
-                Save RSVP
-              </button>
+              {/*<button*/}
+              {/*  onClick={() => updateGuests()}*/}
+              {/*  className={"btn btn--ghost w-full"}*/}
+              {/*>*/}
+              {/*  Save RSVP*/}
+              {/*</button>*/}
               <button
                 onClick={() => setShowSubmitConfirm(true)}
                 className={"btn btn--primary w-full"}
