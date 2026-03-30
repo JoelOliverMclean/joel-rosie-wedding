@@ -12,7 +12,7 @@ export default function DressCodeInfo() {
         <div className={"h2"}>Colours to avoid</div>
         <div className={"flex gap-3 p-3"}>
           <div className={"pill bg-red-800! text-white!"}>Red</div>
-          <div className={"pill bg-green-700! text-white!"}>Green</div>
+          {/*<div className={"pill bg-green-700! text-white!"}>Green</div>*/}
           <div className={"pill bg-gray-50! text-black!"}>White</div>
         </div>
       </div>
