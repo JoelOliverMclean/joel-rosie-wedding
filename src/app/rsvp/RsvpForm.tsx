@@ -38,8 +38,8 @@ export default function RsvpForm(props: {
       <div className={"h2 font-bold"}>
         {props.guest.firstName} {props.guest.lastName}
       </div>
-      <div className={"flex flex-wrap items-center gap-5"}>
-        <label htmlFor="rsvpResponse">Attendance</label>
+      <div className={"flex flex-col gap-2"}>
+        <label htmlFor="rsvpResponse">Attendance *</label>
         <select
           name={"rsvpResponse"}
           value={props.guest.rsvpResponse ?? undefined}
@@ -57,8 +57,8 @@ export default function RsvpForm(props: {
       </div>
       {props.guest.rsvpResponse !== RSVPResponse.NOT_ATTENDING && (
         <>
-          <div className={"flex flex-wrap items-center gap-5"}>
-            <label htmlFor="foodPreference">Food Preference</label>
+          <div className={"flex flex-col gap-2"}>
+            <label htmlFor="foodPreference">Food Preference *</label>
             <select
               name={"foodPreference"}
               value={props.guest.foodPreference ?? undefined}
@@ -71,9 +71,13 @@ export default function RsvpForm(props: {
             </select>
           </div>
           <div className={"flex flex-col gap-2"}>
-            <label htmlFor="allergies">Allergies/Dietary Requirements</label>
+            <label htmlFor="allergies">
+              Allergies/Dietary Requirements{" "}
+              <span className={"muted small"}>(optional)</span>
+            </label>
             <input
               type="text"
+              placeholder={"e.g. Gluten free, nut allergy, etc..."}
               name={"allergies"}
               value={props.guest.allergies}
               onChange={(e) => onAllergiesUpdated(e.target.value)}
@@ -81,6 +85,7 @@ export default function RsvpForm(props: {
           </div>
         </>
       )}
+      <div className={"text-end muted small"}>* = required</div>
     </div>
   );
 }
