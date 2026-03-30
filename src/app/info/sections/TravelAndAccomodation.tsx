@@ -170,7 +170,7 @@ const hotels = (
 
 export default function TravelAndAccommodationInfo() {
   return (
-    <div className={"px-2 flex flex-col gap-5"}>
+    <div className={"flex flex-col gap-5"}>
       {carPark}
       {taxis}
       {hotels}
