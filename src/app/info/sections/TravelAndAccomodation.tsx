@@ -82,29 +82,38 @@ const taxis = (
       It is recommended to pre-book a taxi if you need one. Here are some
       venue-recommended services:
     </div>
-    <div className={"flex flex-wrap gap-5"}>
+    <div className={"grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"}>
       {taxiData.map((taxi) => (
-        <div
-          key={taxi.name}
-          className={"pill flex justify-center gap-2 w-full md:w-max"}
-        >
-          {taxi.name}
-          <a className={"link-text flex gap-2"} href={`tel:${taxi.phone}`}>
-            <div className={"flex items-center gap-2"}>
-              <PhoneCall /> Phone
-            </div>
-          </a>
-          {taxi.website && (
-            <a className={"link-text flex gap-2"} href={taxi.website}>
+        <div key={taxi.name} className={"card card--hero p-0!"}>
+          <div className={"p-2 text-center"}>{taxi.name}</div>
+          <div className={"flex"}>
+            <a
+              className={
+                "text-sm link-text flex w-full justify-center gap-2 bg-gradient-to-r from-black/10 to-black/20 p-2 duration-200 hover:from-black/20"
+              }
+              href={`tel:${taxi.phone}`}
+            >
               <div className={"flex items-center gap-2"}>
-                <Globe /> Web
+                <PhoneCall /> Phone
               </div>
             </a>
-          )}
+            {taxi.website && (
+              <a
+                className={
+                  "text-sm link-text flex w-full justify-center gap-2 bg-gradient-to-r from-black/10 to-black/20 duration-200 hover:from-black/20"
+                }
+                href={taxi.website}
+              >
+                <div className={"flex items-center gap-2"}>
+                  <Globe /> Web
+                </div>
+              </a>
+            )}
+          </div>
         </div>
       ))}
     </div>
-    <div className={"quote__text"}>
+    <div className={"quote__text pt-2"}>
       Taxis can be &quot;prebooked&quot; on apps like Uber or Bolt, however this
       does not reserve them for the time, it simply automatically requests one
       for you at the time you need it, meaning it is not totally guaranteed
@@ -116,40 +125,54 @@ const taxis = (
 type Hotel = {
   href: string;
   name: string;
-}
+  image?: any;
+};
+
+import maypoleHotelImg from "@/images/hotels/the-maypole-at-wellow.jpg"
+import dukeriesHotelImg from "@/images/hotels/dukeries.webp"
+import forestLodgeHotelImg from "@/images/hotels/forestlodge.jpg"
+import muthuHotelImg from "@/images/hotels/muthu.jpg"
+import travelodgeRetford from "@/images/hotels/travelodge_retford.webp"
+import travelodgeMansfield from "@/images/hotels/travelodge_mansfield.webp"
 
 const hotelData: Hotel[] = [
   {
     href: "https://maps.app.goo.gl/JXCcSUSHbxxHnZaF7",
     name: "The Maypole at Wellow",
+    image: maypoleHotelImg,
   },
   {
     href: "https://maps.app.goo.gl/6rZ7ifiUrbjzJgUXA",
     name: "The Dukeries Lodge Hotel",
+    image: dukeriesHotelImg,
   },
   {
     href: "https://maps.app.goo.gl/XzePgDVwAPSymgxP8",
     name: "The Forest Lodge Hotel",
+    image: forestLodgeHotelImg,
   },
   {
     href: "https://maps.app.goo.gl/hUK1V3Jsi6KrXkfu6",
     name: "Muthu Clumber Park Hotel & Spa",
+    image: muthuHotelImg,
   },
   {
-    href: "https://maps.app.goo.gl/NLJihJgTMTJuF9V466",
+    href: "https://www.travelodge.co.uk/hotels/171/Retford-Markham-Moor-hotel",
     name: "Travelodge (Retford Markham Moor)",
+    image: travelodgeRetford,
   },
   {
     href: "https://maps.app.goo.gl/a4sqbJ6ZMEzw7mao7",
     name: "Travelodge (Mansfield Town Centre)",
+    image: travelodgeMansfield,
   },
 ];
 
 const hotels = (
   <div className={"flex flex-col gap-5"}>
     <div className={"h2"}>Hotels</div>
-    <div>Here is a list of nearby hotels:</div>
-    <div className={"flex flex-col gap-2 px-3"}>
+    <div>Here are some nearby hotels:</div>
+    <div className={"grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3"}>
       {hotelData.map((hotel) => (
         <a
           className={"link-text"}
@@ -157,13 +180,22 @@ const hotels = (
           key={hotel.name}
           target={"_blank"}
         >
-          {hotel.name}
+          <div key={hotel.name} className={"card card--hero p-0!"}>
+            <div className={"h-[150px] overflow-hidden relative"}>
+              <Image src={hotel.image} alt={`Image of ${hotel.name}`}
+                     fill
+              style={{
+                objectFit: "cover",
+                objectPosition: "center",
+              }}/>
+            </div>
+            <div className={"p-2 text-center h-[4em] items-center justify-center flex"}>{hotel.name}</div>
+          </div>
         </a>
       ))}
     </div>
-    <div className={"quote__text"}>
-      You can also take advantage of services like AirBnB, Booking.com or even
-      spare room.
+    <div className={"quote__text pt-3"}>
+      You can also take advantage of services like AirBnB, Booking.com and others...
     </div>
   </div>
 );
