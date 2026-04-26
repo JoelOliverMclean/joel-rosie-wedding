@@ -16,7 +16,7 @@ export default function RsvpClient(props: {
   initialInvite: InviteSummary | null;
   setInviteAction: (invite: InviteSummary) => Promise<void>;
   clearInviteAction: () => Promise<void>;
-  submitRSVP: (familyId: number) => Promise<string>;
+  submitRSVP: (familyId: number, contact: string) => Promise<string>;
   saveGuests: (guests: Guest[]) => Promise<boolean>;
 }) {
   const router = useRouter();
@@ -29,6 +29,7 @@ export default function RsvpClient(props: {
   const [invite, setInvite] = React.useState<InviteSummary | null>(
     () => props.initialInvite,
   );
+  const [contact, setContact] = React.useState<string>(props.initialInvite?.family.contact ?? "");
   const [status, setStatus] = React.useState<
     "idle" | "saving" | "submitting" | "submitted" | "error"
   >("idle");
@@ -62,28 +63,11 @@ export default function RsvpClient(props: {
     }
   }
 
-  async function updateGuests() {
-    setError(null)
-    if (!invite) return;
-    setStatus("submitting");
-    try {
-      const result = await props.saveGuests(invite.family.guests);
-      if (!result) {
-        setStatus("error");
-      } else {
-        setStatus("submitted");
-        await props.setInviteAction(invite);
-      }
-    } catch {
-      setStatus("error");
-    }
-  }
-
   const onConfirmRSVP = async () => {
     if (!invite) return;
 
     await props.saveGuests(invite.family.guests)
-    const errorMsg = await props.submitRSVP(invite.family.id);
+    const errorMsg = await props.submitRSVP(invite.family.id, contact);
     setError(errorMsg);
     setShowSubmitConfirm(false);
   };
@@ -167,7 +151,11 @@ export default function RsvpClient(props: {
           />
         ) : (
           <div className={"flex w-full flex-col gap-5"}>
-            {status === "submitted" && <strong className={"italic text-center"}>RSVP saved - remember to submit before the deadline</strong>}
+            {status === "submitted" && (
+              <strong className={"text-center italic"}>
+                RSVP saved - remember to submit before the deadline
+              </strong>
+            )}
             {/*<div className={"flex flex-wrap items-center gap-5"}>*/}
             {/*  <h2 className={"font-bold"}>Guests</h2>*/}
             {/*</div>*/}
@@ -186,8 +174,18 @@ export default function RsvpClient(props: {
                 />
               ))}
             </div>
-            {error && <div className={"mt-10 text-red-500 font-bold text-center" +
-              ""}>{error}</div>}
+            <div className={"grid grid-cols-1 gap-5 lg:grid-cols-2"}>
+              <div className={"card shadow-none! flex flex-col gap-2"}>
+                <label className={"h2"} htmlFor="contact">Contact</label>
+                <p className={"small"}>Please enter an email or phone number we can contact you on if we need to</p>
+                <input type="text" defaultValue={contact} onChange={(e) => setContact(e.target.value)} />
+              </div>
+            </div>
+            {error && (
+              <div className={"mt-10 text-center font-bold text-red-500" + ""}>
+                {error}
+              </div>
+            )}
             <div className={"mt-10 flex flex-col gap-5 md:flex-row"}>
               {/*<button*/}
               {/*  onClick={() => updateGuests()}*/}

@@ -34,7 +34,7 @@ export default function RsvpForm(props: {
   }
 
   return (
-    <div key={props.guest.id} className={"card flex flex-col gap-5"}>
+    <div key={props.guest.id} className={"card shadow-none! flex flex-col gap-5"}>
       <div className={"h2 font-bold"}>
         {props.guest.firstName} {props.guest.lastName}
       </div>

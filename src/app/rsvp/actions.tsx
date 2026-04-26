@@ -39,7 +39,14 @@ export async function clearInviteCookie() {
   jar.set(INVITE_COOKIE, "", { path: "/", maxAge: 0 });
 }
 
-export async function confirmRSVP(familyId: number) {
+function isValidContact(contact: string): boolean {
+  const emailRegex = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
+  const phoneRegex = /^\+?[\d\s\-().]{7,20}$/;
+
+  return emailRegex.test(contact) || phoneRegex.test(contact);
+}
+
+export async function confirmRSVP(familyId: number, contact: string) {
   const family: FamilyWithGuests | null = await prisma.family.findUnique({
     where: {
       id: familyId
@@ -58,6 +65,16 @@ export async function confirmRSVP(familyId: number) {
     return Error("Cannot find family")
   }
 
+  if (!contact || contact.length === 0) {
+    console.log("No contact provided")
+    return Error("No contact provided")
+  }
+
+  if (!isValidContact(contact)) {
+    console.log("Contact not valid");
+    return Error("Contact not valid, please provide a phone number or email address");
+  }
+
   for (const guest of family.guests) {
     if (!guest.rsvpResponse) {
       return Error(`No attending choice selected for ${guest.firstName}`)
@@ -69,7 +86,7 @@ export async function confirmRSVP(familyId: number) {
 
   await prisma.family.update({
     where: { id: familyId },
-    data: { rsvpSubmitted: true },
+    data: { rsvpSubmitted: true, contact: contact },
   })
 
   return null
