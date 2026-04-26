@@ -28,9 +28,9 @@ export default async function Page({
     redirect("/rsvp/submitted");
   }
 
-  const onSubmitRSVP = async (familyId: number) => {
+  const onSubmitRSVP = async (familyId: number, contact: string) => {
     "use server"
-    const errorResponse = await confirmRSVP(familyId);
+    const errorResponse = await confirmRSVP(familyId, contact);
     if (errorResponse) {
       return errorResponse.message;
     } else {
