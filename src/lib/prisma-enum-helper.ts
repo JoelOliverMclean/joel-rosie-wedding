@@ -15,3 +15,17 @@ export function parseRSVPResponse(value: string): RSVPResponse {
 
   throw new Error("Invalid RSVPResponse: " + value);
 }
+
+export function rsvpResponseToString(rsvpResponse: RSVPResponse | null) {
+  if (!rsvpResponse) {
+    return "Waiting for response...";
+  }
+  switch (rsvpResponse) {
+    case RSVPResponse.FULL_DAY:
+      return "All Day";
+    case RSVPResponse.EVENING_ONLY:
+      return "Evening Only";
+    default:
+      return "Not Attending";
+  }
+}

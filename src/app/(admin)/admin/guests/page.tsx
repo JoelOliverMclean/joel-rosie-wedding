@@ -1,0 +1,15 @@
+import { getGuestList } from "@/app/(admin)/admin/guests/actions";
+import GuestTable from "@/app/(admin)/admin/guests/guest-table";
+
+export const dynamic = "force-dynamic";
+
+export default async function FamilyAdminPage() {
+  const guests = await getGuestList()
+
+  return (
+    <div className={"section flex flex-col gap-5"}>
+      <h1>Guests</h1>
+      <GuestTable guests={guests} />
+    </div>
+  );
+}
