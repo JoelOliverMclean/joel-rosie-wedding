@@ -112,6 +112,18 @@ export default function RsvpClient(props: {
     }
   }
 
+  function onHighchairRequiredUpdated(guest: Guest, required: boolean) {
+    if (invite) {
+      const index = invite.family.guests.indexOf(guest);
+      const newGuests = invite.family.guests.with(index, {
+        ...guest,
+        highchairRequired: required,
+      });
+      const newFamily = { ...invite.family, guests: newGuests };
+      setInvite({ ...invite, family: newFamily });
+    }
+  }
+
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
     if (params.has("rsvpCode")) {
@@ -168,6 +180,7 @@ export default function RsvpClient(props: {
                   onFoodPreferenceChange={onFoodPreferenceUpdated}
                   onAllergiesChange={onAllergiesUpdated}
                   onRSVPResponseChange={onRSVPResponseUpdated}
+                  onHighchairRequiredChange={onHighchairRequiredUpdated}
                   guestCount={invite.family.guests.length}
                   onSubmit={() => {}}
                   onNotYou={() => {}}
@@ -175,7 +188,9 @@ export default function RsvpClient(props: {
                 />
               ))}
             </div>
-            { (!invite.family.guests.every(g => g.rsvpResponse === RSVPResponse.NOT_ATTENDING)) &&
+            {!invite.family.guests.every(
+              (g) => g.rsvpResponse === RSVPResponse.NOT_ATTENDING,
+            ) && (
               <div className={"grid grid-cols-1 gap-5 lg:grid-cols-2"}>
                 <div className={"card flex flex-col gap-2 shadow-none!"}>
                   <label className={"h2"} htmlFor="contact">
@@ -192,7 +207,7 @@ export default function RsvpClient(props: {
                   />
                 </div>
               </div>
-            }
+            )}
             {error && (
               <div className={"mt-10 text-center font-bold text-red-500" + ""}>
                 {error}

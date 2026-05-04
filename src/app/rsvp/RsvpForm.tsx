@@ -6,6 +6,7 @@ import {
   parseFoodPreference,
   parseRSVPResponse,
 } from "@/lib/prisma-enum-helper";
+import { Check } from "lucide-react";
 
 export default function RsvpForm(props: {
   guest: Guest;
@@ -15,6 +16,7 @@ export default function RsvpForm(props: {
   ) => void;
   onRSVPResponseChange: (guest: Guest, rsvpResponse: RSVPResponse) => void;
   onAllergiesChange: (guest: Guest, allergies: string) => void;
+  onHighchairRequiredChange: (guest: Guest, required: boolean) => void;
   guestCount: number;
   onSubmit: (updatedGuest: Guest) => void;
   onNotYou: () => void;
@@ -60,6 +62,18 @@ export default function RsvpForm(props: {
       </div>
       {props.guest.rsvpResponse !== RSVPResponse.NOT_ATTENDING && (
         <>
+          { props.guest.child &&
+            <div className={"flex items-center gap-2 self-start"}>
+              <p>Highchair Required?</p>
+              <div className="checkbox" onClick={() => {}}>
+                <Check
+                  size={18}
+                  className={`${props.guest.highchairRequired ? "opacity-100" : "opacity-0"} duration-300`}
+                />
+              </div>
+              <div>{props.guest.highchairRequired && <Check />}</div>
+            </div>
+          }
           <div className={"flex flex-col gap-2"}>
             <label htmlFor="foodPreference">Food Preference *</label>
             <select
