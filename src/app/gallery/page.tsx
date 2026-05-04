@@ -1,6 +1,13 @@
 import React from "react";
+import { canAccessSite } from "@/utils/cookieUtils";
+import { redirect } from "next/navigation";
 
-function GalleryPage() {
+async function GalleryPage() {
+  const canAccess = await canAccessSite();
+  if (!canAccess) {
+    redirect("/rsvp");
+  }
+
   return (
     <div className={"section flex flex-col items-center lg:items-start gap-5"}>
       <h1>Gallery</h1>

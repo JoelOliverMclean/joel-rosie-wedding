@@ -3,6 +3,7 @@ import { InviteSummary } from "@/app/rsvp/types";
 import { cookies } from "next/headers";
 import { $Enums, FamilyWithGuests, Guest } from "@/lib/prisma-types";
 import RSVPResponse = $Enums.RSVPResponse;
+import { UNLOCKED_COOKIE } from "@/utils/cookieUtils";
 
 const INVITE_COOKIE = "rsvp_invite";
 
@@ -18,7 +19,6 @@ export async function getInviteFromCookie(): Promise<InviteSummary | null> {
   }
 }
 
-
 export async function setInviteCookie(invite: InviteSummary) {
   "use server";
 
@@ -30,6 +30,7 @@ export async function setInviteCookie(invite: InviteSummary) {
     path: "/",
     maxAge: 60 * 60 * 24 * 30,
   });
+  jar.set(UNLOCKED_COOKIE, "true")
 }
 
 export async function clearInviteCookie() {
@@ -37,6 +38,7 @@ export async function clearInviteCookie() {
 
   const jar = await cookies();
   jar.set(INVITE_COOKIE, "", { path: "/", maxAge: 0 });
+  jar.set(UNLOCKED_COOKIE, "false");
 }
 
 function isValidContact(contact: string): boolean {

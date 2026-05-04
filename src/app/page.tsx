@@ -7,8 +7,11 @@ import Image from "next/image";
 const weddingDate = "2026-10-31T13:00:00Z";
 
 import photo from "@/images/homepagephoto.jpeg"
+import { canAccessSite } from "@/utils/cookieUtils";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const canAccess = await canAccessSite();
+
   return (
     <div className="stack">
       <section className="hero flex flex-col gap-10 py-5">
@@ -40,7 +43,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="links" className={"section"}>
+      { canAccess && <section id="links" className={"section"}>
         <div
           className={
             "flex flex-col justify-center gap-5 text-center sm:flex-row sm:justify-around sm:gap-0"
@@ -52,7 +55,7 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
-      </section>
+      </section>}
     </div>
   );
 }

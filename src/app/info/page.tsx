@@ -5,8 +5,14 @@ import DietaryRequirementInfo from "@/app/info/sections/DietaryRequirements";
 import ContactInfo from "@/app/info/sections/ContactInfo";
 import WhereAndWhen from "@/app/info/sections/WhereAndWhen";
 import GiftInfo from "@/app/info/sections/GiftInfo";
+import { canAccessSite } from "@/utils/cookieUtils";
+import { redirect } from "next/navigation";
 
-function InfoPage() {
+async function InfoPage() {
+  const canAccess = await canAccessSite();
+  if (!canAccess) {
+    redirect("/rsvp");
+  }
 
   const header = (name: string) => (
     <div className={""}>
