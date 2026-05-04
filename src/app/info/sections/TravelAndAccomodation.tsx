@@ -40,9 +40,12 @@ const carPark = (
       </a>
     </div>
     <div>
-      <span className={"font-bold"}>Rufford Mill Car Park Terms:</span> All cars
-      left overnight are left at the persons own risk and discretion but must be
-      collected and offsite by 8.30am the following day.
+      <span className={"font-bold"}>Rufford Mill Car Park Terms:</span> Parking is
+      free for wedding guests on the day, they must enter their registration at
+      the venue otherwise risk being charged by the parking provider. If cars are
+      left overnight, a £1 charge is applicable if collected before 9am - any later
+      and guests must pay for a full days parking (£7). Cars are left at the persons
+      own risk and discretion.
     </div>
   </div>
 );
@@ -84,7 +87,7 @@ const taxis = (
     </div>
     <div className={"grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"}>
       {taxiData.map((taxi) => (
-        <div key={taxi.name} className={"card card--hero p-0!"}>
+        <div key={taxi.name} className={"card card--hero p-0! shadow-none!"}>
           <div className={"p-2 text-center"}>{taxi.name}</div>
           <div className={"flex"}>
             <a
@@ -157,7 +160,7 @@ const hotelData: Hotel[] = [
     image: muthuHotelImg,
   },
   {
-    href: "https://www.travelodge.co.uk/hotels/171/Retford-Markham-Moor-hotel",
+    href: "https://maps.app.goo.gl/UH9rta5KwQYNJDu1A",
     name: "Travelodge (Retford Markham Moor)",
     image: travelodgeRetford,
   },
@@ -172,7 +175,7 @@ const hotels = (
   <div className={"flex flex-col gap-5"}>
     <div className={"h2"}>Hotels</div>
     <div>Here are some nearby hotels:</div>
-    <div className={"grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3"}>
+    <div className={"grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3"}>
       {hotelData.map((hotel) => (
         <a
           className={"link-text"}
@@ -180,7 +183,7 @@ const hotels = (
           key={hotel.name}
           target={"_blank"}
         >
-          <div key={hotel.name} className={"card card--hero p-0!"}>
+          <div key={hotel.name} className={"card card--hero p-0! shadow-none!"}>
             <div className={"h-[150px] overflow-hidden relative"}>
               <Image src={hotel.image} alt={`Image of ${hotel.name}`}
                      fill

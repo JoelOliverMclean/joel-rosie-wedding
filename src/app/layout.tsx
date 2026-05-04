@@ -5,6 +5,7 @@ import Link from "next/link";
 import ThemeToggle from "@/app/theme-toggle";
 import MobileNav from "./mobile-nav";
 import { links } from "@/components/NavigationLinks";
+import { canAccessSite } from "@/utils/cookieUtils";
 
 const metamorphous = Metamorphous({
   weight: "400",
@@ -32,11 +33,13 @@ function ThemeScript() {
   return <script dangerouslySetInnerHTML={{ __html: code }} />;
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const canAccess = await canAccessSite();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${metamorphous.className} antialiased`}>
@@ -63,20 +66,22 @@ export default function RootLayout({
                 </span>
               </Link>
 
-              <nav className="nav nav--desktop" aria-label="Primary">
-                {links.map((l) => (
-                  <a
-                    key={l.href}
-                    className={"nav__link glow-hover-soft"}
-                    href={l.href}
-                  >
-                    {l.label}
-                  </a>
-                ))}
-              </nav>
+              {canAccess && (
+                <nav className="nav nav--desktop" aria-label="Primary">
+                  {links.map((l) => (
+                    <a
+                      key={l.href}
+                      className={"nav__link glow-hover-soft"}
+                      href={l.href}
+                    >
+                      {l.label}
+                    </a>
+                  ))}
+                </nav>
+              )}
 
               <div className="header__actions">
-                <MobileNav links={links} />
+                {canAccess && <MobileNav links={links} />}
 
                 <ThemeToggle />
 
@@ -94,9 +99,7 @@ export default function RootLayout({
           <footer className="footer">
             <div className="footer__inner container">
               <span className="muted">Joel & Rosie Wedding</span>
-              <span className="muted">
-                © 2026 Joel Mclean
-              </span>
+              <span className="muted">© 2026 Joel Mclean</span>
             </div>
           </footer>
         </div>

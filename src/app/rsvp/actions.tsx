@@ -3,6 +3,7 @@ import { InviteSummary } from "@/app/rsvp/types";
 import { cookies } from "next/headers";
 import { $Enums, FamilyWithGuests, Guest } from "@/lib/prisma-types";
 import RSVPResponse = $Enums.RSVPResponse;
+import { UNLOCKED_COOKIE } from "@/utils/cookieUtils";
 
 const INVITE_COOKIE = "rsvp_invite";
 
@@ -18,7 +19,6 @@ export async function getInviteFromCookie(): Promise<InviteSummary | null> {
   }
 }
 
-
 export async function setInviteCookie(invite: InviteSummary) {
   "use server";
 
@@ -30,6 +30,7 @@ export async function setInviteCookie(invite: InviteSummary) {
     path: "/",
     maxAge: 60 * 60 * 24 * 30,
   });
+  jar.set(UNLOCKED_COOKIE, "true")
 }
 
 export async function clearInviteCookie() {
@@ -37,6 +38,7 @@ export async function clearInviteCookie() {
 
   const jar = await cookies();
   jar.set(INVITE_COOKIE, "", { path: "/", maxAge: 0 });
+  jar.set(UNLOCKED_COOKIE, "false");
 }
 
 function isValidContact(contact: string): boolean {
@@ -65,16 +67,6 @@ export async function confirmRSVP(familyId: number, contact: string) {
     return Error("Cannot find family")
   }
 
-  if (!contact || contact.length === 0) {
-    console.log("No contact provided")
-    return Error("No contact provided")
-  }
-
-  if (!isValidContact(contact)) {
-    console.log("Contact not valid");
-    return Error("Contact not valid, please provide a phone number or email address");
-  }
-
   for (const guest of family.guests) {
     if (!guest.rsvpResponse) {
       return Error(`No attending choice selected for ${guest.firstName}`)
@@ -82,6 +74,20 @@ export async function confirmRSVP(familyId: number, contact: string) {
     if (guest.rsvpResponse !== RSVPResponse.NOT_ATTENDING && !guest.foodPreference) {
       return Error(`No food preference selected for ${guest.firstName}`)
     }
+  }
+
+  const fullNo = family.guests.every(guest => guest.rsvpResponse === RSVPResponse.NOT_ATTENDING)
+
+  if (!fullNo && (!contact || contact.length === 0)) {
+    console.log("No contact provided");
+    return Error("No contact provided");
+  }
+
+  if (!fullNo && !isValidContact(contact)) {
+    console.log("Contact not valid");
+    return Error(
+      "Contact not valid, please provide a phone number or email address",
+    );
   }
 
   await prisma.family.update({

@@ -1,12 +1,18 @@
 import React from "react";
-import LocationInfo from "@/app/info/sections/Location";
-import TimeAndDateInfo from "@/app/info/sections/TimeAndDate";
 import DressCodeInfo from "@/app/info/sections/DressCode";
 import TravelAndAccommodationInfo from "@/app/info/sections/TravelAndAccomodation";
 import DietaryRequirementInfo from "@/app/info/sections/DietaryRequirements";
+import ContactInfo from "@/app/info/sections/ContactInfo";
+import WhereAndWhen from "@/app/info/sections/WhereAndWhen";
+import GiftInfo from "@/app/info/sections/GiftInfo";
+import { canAccessSite } from "@/utils/cookieUtils";
+import { redirect } from "next/navigation";
 
-
-function InfoPage() {
+async function InfoPage() {
+  const canAccess = await canAccessSite();
+  if (!canAccess) {
+    redirect("/rsvp");
+  }
 
   const header = (name: string) => (
     <div className={""}>
@@ -17,22 +23,25 @@ function InfoPage() {
 
   return (
     <div className={"section flex flex-col gap-5"}>
-      <div className={"h1"}>Information</div>
+      <div className={"h1"}>FYI</div>
 
-      {header("Location")}
-      <LocationInfo />
+      {header("Where and When?")}
+      <WhereAndWhen />
 
-      {header("Time & Date")}
-      <TimeAndDateInfo />
-
-      {header("Dress Code")}
+      {header("What should I wear?")}
       <DressCodeInfo />
 
-      {header("Travel & Accommodation")}
+      {header("Gifts and Things")}
+      <GiftInfo />
+
+      {header("Getting here and staying here")}
       <TravelAndAccommodationInfo />
 
       {header("Dietary Requirements")}
       <DietaryRequirementInfo />
+
+      {header("Contact Us")}
+      <ContactInfo />
     </div>
   );
 }
