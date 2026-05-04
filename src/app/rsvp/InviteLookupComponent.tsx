@@ -23,6 +23,7 @@ export default function InviteLookup(props: {
         console.log(response)
       }
     }).catch((error) => {
+      setChecking(false);
       console.error(error);
     })
   }, [code, props])
