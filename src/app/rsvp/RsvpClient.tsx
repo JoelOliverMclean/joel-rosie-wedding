@@ -112,6 +112,18 @@ export default function RsvpClient(props: {
     }
   }
 
+  function onHighchairRequiredUpdated(guest: Guest, required: boolean) {
+    if (invite) {
+      const index = invite.family.guests.indexOf(guest);
+      const newGuests = invite.family.guests.with(index, {
+        ...guest,
+        highchairRequired: required,
+      });
+      const newFamily = { ...invite.family, guests: newGuests };
+      setInvite({ ...invite, family: newFamily });
+    }
+  }
+
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
     if (params.has("rsvpCode")) {
@@ -152,11 +164,7 @@ export default function RsvpClient(props: {
           />
         ) : (
           <div className={"flex w-full flex-col gap-5"}>
-            {status === "submitted" && (
-              <strong className={"text-center italic"}>
-                RSVP saved - remember to submit before the deadline
-              </strong>
-            )}
+            <div>Please submit your RSVP below before the <strong>8th August 2026</strong></div>
             {/*<div className={"flex flex-wrap items-center gap-5"}>*/}
             {/*  <h2 className={"font-bold"}>Guests</h2>*/}
             {/*</div>*/}
@@ -168,6 +176,7 @@ export default function RsvpClient(props: {
                   onFoodPreferenceChange={onFoodPreferenceUpdated}
                   onAllergiesChange={onAllergiesUpdated}
                   onRSVPResponseChange={onRSVPResponseUpdated}
+                  onHighchairRequiredChange={onHighchairRequiredUpdated}
                   guestCount={invite.family.guests.length}
                   onSubmit={() => {}}
                   onNotYou={() => {}}
@@ -175,7 +184,9 @@ export default function RsvpClient(props: {
                 />
               ))}
             </div>
-            { (!invite.family.guests.every(g => g.rsvpResponse === RSVPResponse.NOT_ATTENDING)) &&
+            {!invite.family.guests.every(
+              (g) => g.rsvpResponse === RSVPResponse.NOT_ATTENDING,
+            ) && (
               <div className={"grid grid-cols-1 gap-5 lg:grid-cols-2"}>
                 <div className={"card flex flex-col gap-2 shadow-none!"}>
                   <label className={"h2"} htmlFor="contact">
@@ -192,7 +203,7 @@ export default function RsvpClient(props: {
                   />
                 </div>
               </div>
-            }
+            )}
             {error && (
               <div className={"mt-10 text-center font-bold text-red-500" + ""}>
                 {error}

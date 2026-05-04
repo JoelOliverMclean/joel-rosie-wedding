@@ -7,6 +7,8 @@ import WhereAndWhen from "@/app/info/sections/WhereAndWhen";
 import GiftInfo from "@/app/info/sections/GiftInfo";
 import { canAccessSite } from "@/utils/cookieUtils";
 import { redirect } from "next/navigation";
+import ChildInfo from "@/app/info/sections/ChildInfo";
+
 
 async function InfoPage() {
   const canAccess = await canAccessSite();
@@ -25,14 +27,37 @@ async function InfoPage() {
     <div className={"section flex flex-col gap-5"}>
       <div className={"h1"}>FYI</div>
 
+      {header("RSVP")}
+      <div>
+        Please submit your RSVP before{" "}
+        <span className={"font-bold"}>8th August 2026</span>
+      </div>
+
       {header("Where and When?")}
       <WhereAndWhen />
 
       {header("What should I wear?")}
       <DressCodeInfo />
 
+      {header("Confetti")}
+      <div>
+        {
+          "Please don't bring your own confetti, it will be supplied as the venue has restrictions on the type of confetti and where we can throw it."
+        }
+      </div>
+
+      {header("Won't somebody think of the children?")}
+      <ChildInfo />
+
       {header("Gifts and Things")}
       <GiftInfo />
+
+      {header("Can I bring a plus one?")}
+      <div>
+        {
+          "Sadly due to venue restrictions on numbers, we're already maxed out, so only those on the RSVP can attend"
+        }
+      </div>
 
       {header("Getting here and staying here")}
       <TravelAndAccommodationInfo />

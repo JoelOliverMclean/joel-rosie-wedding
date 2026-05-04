@@ -4,7 +4,7 @@ import { useEffect, useId, useState } from "react";
 
 type Link = { href: string; label: string };
 
-export default function MobileNav({ links }: { links: Link[] }) {
+export default function MobileNav({ links, canAccess }: { links: Link[], canAccess: boolean }) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
 
@@ -24,6 +24,14 @@ export default function MobileNav({ links }: { links: Link[] }) {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  if (!canAccess) {
+    return (
+      <div>
+        <a href={"/rsvp"} className={"btn btn--primary"}>RSVP</a>
+      </div>
+    );
+  }
 
   return (
     <div className="mnav">
@@ -76,7 +84,7 @@ export default function MobileNav({ links }: { links: Link[] }) {
 
           <a
             className="btn btn--primary mnav__cta"
-            href="#rsvp"
+            href="/rsvp"
             onClick={() => setOpen(false)}
           >
             RSVP
