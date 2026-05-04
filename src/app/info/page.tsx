@@ -39,6 +39,13 @@ async function InfoPage() {
       {header("Gifts and Things")}
       <GiftInfo />
 
+      {header("Can I bring a plus one?")}
+      <div>
+        {
+          "Sadly due to venue restrictions on numbers, we're already maxed out, so only those on the RSVP can attend"
+        }
+      </div>
+
       {header("Getting here and staying here")}
       <TravelAndAccommodationInfo />
 
