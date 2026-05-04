@@ -1,8 +1,36 @@
 import React from "react";
 import whatsAppIcon from "@/images/whatsapp.png"
 import Image from "next/image";
+import notattending from "@/images/ron-swanson-not-attending.gif";
+import { getInviteFromCookie } from "@/app/rsvp/actions";
+import { InviteSummary } from "@/app/rsvp/types";
+import { FamilyWithGuests, RSVPResponse } from "@/lib/prisma-types";
+import { apiGet } from "@/utils/apiUtils";
+import { prisma } from "@/lib/prisma";
 
-export default function RSVPSubmittedPage() {
+function isNoOneComing(family: FamilyWithGuests | null) {
+  if (!family) return false;
+  return family.guests.every((guest) => {
+    return guest.rsvpResponse === RSVPResponse.NOT_ATTENDING;
+  });
+}
+
+export default async function RSVPSubmittedPage() {
+  const inviteCookie = await getInviteFromCookie();
+  const family = await prisma.family.findFirst({
+    where: {
+      rsvpCode: inviteCookie?.family.rsvpCode,
+    },
+    include: {
+      guests: {
+        orderBy: {
+          id: "asc",
+        },
+      },
+    },
+  });
+  const noOneComing = isNoOneComing(family)
+
   return (
     <>
       <div className={"section flex flex-col gap-5"}>
@@ -12,10 +40,15 @@ export default function RSVPSubmittedPage() {
         <div
           className={"h-1 bg-gradient-to-r from-[var(--fg)] to-transparent"}
         ></div>
-        <div className={"small muted flex flex-col items-center gap-1"}>
-          <p>
-            If you need to change anything or can no longer attend, get in touch
-            with Joel
+        {noOneComing ? (
+          <div className={"self-center card p-0! overflow-clip"}>
+            <Image src={notattending} alt={""} />
+          </div>
+          ) : (
+          <div className={"small muted flex flex-col items-center gap-1"}>
+            <p>
+              If you need to change anything or can no longer attend, get in touch
+              with Joel
             </p>
             <a
               className={"link-text flex items-center gap-1 p-1"}
@@ -33,7 +66,8 @@ export default function RSVPSubmittedPage() {
             <a className={"link-text underline"} href="tel:+447869177266">
               07869177266
             </a>
-        </div>
+          </div>
+        )}
       </div>
     </>
   );

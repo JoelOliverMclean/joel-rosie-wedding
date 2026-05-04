@@ -67,6 +67,7 @@ export default function RsvpClient(props: {
     if (!invite) return;
 
     await props.saveGuests(invite.family.guests)
+    await props.setInviteAction(invite);
     const errorMsg = await props.submitRSVP(invite.family.id, contact);
     setError(errorMsg);
     setShowSubmitConfirm(false);
@@ -174,13 +175,24 @@ export default function RsvpClient(props: {
                 />
               ))}
             </div>
-            <div className={"grid grid-cols-1 gap-5 lg:grid-cols-2"}>
-              <div className={"card shadow-none! flex flex-col gap-2"}>
-                <label className={"h2"} htmlFor="contact">Contact</label>
-                <p className={"small"}>Please enter an email or phone number we can contact you on if we need to</p>
-                <input type="text" defaultValue={contact} onChange={(e) => setContact(e.target.value)} />
+            { (!invite.family.guests.every(g => g.rsvpResponse === RSVPResponse.NOT_ATTENDING)) &&
+              <div className={"grid grid-cols-1 gap-5 lg:grid-cols-2"}>
+                <div className={"card flex flex-col gap-2 shadow-none!"}>
+                  <label className={"h2"} htmlFor="contact">
+                    Contact
+                  </label>
+                  <p className={"small"}>
+                    Please enter an email or phone number we can contact you on
+                    if we need to
+                  </p>
+                  <input
+                    type="text"
+                    defaultValue={contact}
+                    onChange={(e) => setContact(e.target.value)}
+                  />
+                </div>
               </div>
-            </div>
+            }
             {error && (
               <div className={"mt-10 text-center font-bold text-red-500" + ""}>
                 {error}
