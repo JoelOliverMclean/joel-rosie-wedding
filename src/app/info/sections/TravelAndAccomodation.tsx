@@ -157,7 +157,7 @@ const hotelData: Hotel[] = [
     image: muthuHotelImg,
   },
   {
-    href: "https://www.travelodge.co.uk/hotels/171/Retford-Markham-Moor-hotel",
+    href: "https://maps.app.goo.gl/UH9rta5KwQYNJDu1A",
     name: "Travelodge (Retford Markham Moor)",
     image: travelodgeRetford,
   },
