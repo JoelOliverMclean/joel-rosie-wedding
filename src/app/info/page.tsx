@@ -33,6 +33,13 @@ async function InfoPage() {
       {header("What should I wear?")}
       <DressCodeInfo />
 
+      {header("Confetti")}
+      <div>
+        {
+          "Please don't bring your own confetti, it will be supplied as the venue has restrictions on the type of confetti and where we can throw it."
+        }
+      </div>
+
       {header("Won't somebody think of the children?")}
       <ChildInfo />
 
