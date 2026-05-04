@@ -27,6 +27,12 @@ async function InfoPage() {
     <div className={"section flex flex-col gap-5"}>
       <div className={"h1"}>FYI</div>
 
+      {header("RSVP")}
+      <div>
+        Please submit your RSVP before{" "}
+        <span className={"font-bold"}>8th August 2026</span>
+      </div>
+
       {header("Where and When?")}
       <WhereAndWhen />
 
