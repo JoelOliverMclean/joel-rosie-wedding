@@ -2,11 +2,10 @@ import Link from "next/link";
 import WeddingCountdown from "@/components/WeddingCountdown";
 import { links } from "@/components/NavigationLinks";
 import Image from "next/image";
+import photo from "@/images/framed_portrait.png";
+import { canAccessSite } from "@/utils/cookieUtils";
 
 const weddingDate = "2026-10-31T13:00:00Z";
-
-import photo from "@/images/framed_portrait.png"
-import { canAccessSite } from "@/utils/cookieUtils";
 
 export default async function HomePage() {
   const canAccess = await canAccessSite();
