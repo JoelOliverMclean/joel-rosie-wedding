@@ -7,6 +7,8 @@ import WhereAndWhen from "@/app/info/sections/WhereAndWhen";
 import GiftInfo from "@/app/info/sections/GiftInfo";
 import { canAccessSite } from "@/utils/cookieUtils";
 import { redirect } from "next/navigation";
+import ChildInfo from "@/app/info/sections/ChildInfo";
+
 
 async function InfoPage() {
   const canAccess = await canAccessSite();
@@ -30,6 +32,9 @@ async function InfoPage() {
 
       {header("What should I wear?")}
       <DressCodeInfo />
+
+      {header("Won't somebody think of the children?")}
+      <ChildInfo />
 
       {header("Gifts and Things")}
       <GiftInfo />
