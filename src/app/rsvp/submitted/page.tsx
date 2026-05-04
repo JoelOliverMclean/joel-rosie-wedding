@@ -7,6 +7,7 @@ import { InviteSummary } from "@/app/rsvp/types";
 import { FamilyWithGuests, RSVPResponse } from "@/lib/prisma-types";
 import { apiGet } from "@/utils/apiUtils";
 import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 function isNoOneComing(family: FamilyWithGuests | null) {
   if (!family) return false;
@@ -17,6 +18,9 @@ function isNoOneComing(family: FamilyWithGuests | null) {
 
 export default async function RSVPSubmittedPage() {
   const inviteCookie = await getInviteFromCookie();
+  if (!inviteCookie) {
+    redirect("/rsvp")
+  }
   const family = await prisma.family.findFirst({
     where: {
       rsvpCode: inviteCookie?.family.rsvpCode,
