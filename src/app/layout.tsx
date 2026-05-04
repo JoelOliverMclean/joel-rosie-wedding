@@ -81,7 +81,7 @@ export default async function RootLayout({
               )}
 
               <div className="header__actions">
-                {canAccess && <MobileNav links={links} />}
+                <MobileNav links={links} canAccess={canAccess} />
 
                 <ThemeToggle />
 
