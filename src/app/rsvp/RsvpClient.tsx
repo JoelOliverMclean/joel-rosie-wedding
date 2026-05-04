@@ -164,11 +164,7 @@ export default function RsvpClient(props: {
           />
         ) : (
           <div className={"flex w-full flex-col gap-5"}>
-            {status === "submitted" && (
-              <strong className={"text-center italic"}>
-                RSVP saved - remember to submit before the deadline
-              </strong>
-            )}
+            <div>Please submit your RSVP below before the <strong>8th August 2026</strong></div>
             {/*<div className={"flex flex-wrap items-center gap-5"}>*/}
             {/*  <h2 className={"font-bold"}>Guests</h2>*/}
             {/*</div>*/}
