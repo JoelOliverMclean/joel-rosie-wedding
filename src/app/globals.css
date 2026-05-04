@@ -327,6 +327,10 @@ h2, .h2 {
     backdrop-filter: blur(10px);
 }
 
+button {
+    @apply cursor-pointer;
+}
+
 .btn {
     @apply cursor-pointer;
     display: inline-flex;
@@ -568,4 +572,12 @@ select {
     padding-right: 32px;
     background: url("down-arrow.png") no-repeat right #fff;
     background-position-x: 95%;
+}
+
+.table-header {
+    @apply p-2 border-b-1 border-[var(--fg)]/25;
+}
+
+.table-cell {
+    @apply p-2 border-b-1 border-[var(--fg)]/25;
 }
