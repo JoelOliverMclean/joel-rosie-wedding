@@ -4,38 +4,51 @@ import { cookies } from "next/headers";
 import { $Enums, FamilyWithGuests, Guest } from "@/lib/prisma-types";
 import RSVPResponse = $Enums.RSVPResponse;
 
-const INVITE_COOKIE = "rsvp_invite";
+const INVITE_CODE_COOKIE = "__Secure-invite-code";
 
-export async function getInviteFromCookie(): Promise<InviteSummary | null> {
+export async function getInviteCodeFromCookie(): Promise<string | null> {
   const jar = await cookies();
-  const raw = jar.get(INVITE_COOKIE)?.value;
-  if (!raw) return null;
-
-  try {
-    return JSON.parse(raw) as InviteSummary;
-  } catch {
-    return null;
-  }
+  return jar.get(INVITE_CODE_COOKIE)?.value ?? null;
 }
 
-export async function setInviteCookie(invite: InviteSummary) {
+export async function setInviteCodeCookie(code: string) {
   "use server";
 
   const jar = await cookies();
-  jar.set(INVITE_COOKIE, JSON.stringify(invite), {
-    httpOnly: true,
-    sameSite: "lax",
+  jar.set(INVITE_CODE_COOKIE, code, {
     secure: true,
+    httpOnly: true,
+    sameSite: "strict",
     path: "/",
     maxAge: 60 * 60 * 24 * 30,
   });
 }
 
-export async function clearInviteCookie() {
+export async function clearInviteCodeCookie() {
   "use server";
 
   const jar = await cookies();
-  jar.set(INVITE_COOKIE, "", { path: "/", maxAge: 0 });
+  jar.delete(INVITE_CODE_COOKIE)
+}
+
+export async function getInviteFromCookie(): Promise<InviteSummary | null> {
+  const inviteCode = await getInviteCodeFromCookie();
+  if (!inviteCode) return null;
+
+  try {
+    const family = await prisma.family.findFirst({
+      where: {
+        rsvpCode: inviteCode
+      },
+      include: {
+        guests: true
+      }
+    })
+    if (!family) return null;
+    return { family: family }
+  } catch {
+    return null;
+  }
 }
 
 function isValidContact(contact: string): boolean {

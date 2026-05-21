@@ -1,10 +1,10 @@
 ﻿import RsvpClient from "./RsvpClient";
 import {
-  clearInviteCookie,
+  clearInviteCodeCookie,
   confirmRSVP,
   getInviteFromCookie,
   saveGuests,
-  setInviteCookie,
+  setInviteCodeCookie,
 } from "@/app/rsvp/actions";
 import { redirect } from "next/navigation";
 
@@ -36,7 +36,6 @@ export default async function Page({
     } else {
       if (initialInvite) {
         initialInvite.family.rsvpSubmitted = true;
-        await setInviteCookie(initialInvite);
       }
       redirect("/rsvp/submitted");
     }
@@ -46,8 +45,8 @@ export default async function Page({
     <RsvpClient
       rsvpCode={rsvpCode ?? ""}
       initialInvite={initialInvite}
-      setInviteAction={setInviteCookie}
-      clearInviteAction={clearInviteCookie}
+      setInviteCodeAction={setInviteCodeCookie}
+      clearInviteCodeAction={clearInviteCodeCookie}
       submitRSVP={onSubmitRSVP}
       saveGuests={saveGuests}
     />

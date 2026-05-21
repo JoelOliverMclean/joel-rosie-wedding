@@ -14,8 +14,8 @@ import { saveGuests } from "@/app/rsvp/actions";
 export default function RsvpClient(props: {
   rsvpCode?: string;
   initialInvite: InviteSummary | null;
-  setInviteAction: (invite: InviteSummary) => Promise<void>;
-  clearInviteAction: () => Promise<void>;
+  setInviteCodeAction: (inviteCode: string) => Promise<void>;
+  clearInviteCodeAction: () => Promise<void>;
   submitRSVP: (familyId: number, contact: string) => Promise<string>;
   saveGuests: (guests: Guest[]) => Promise<boolean>;
 }) {
@@ -41,7 +41,7 @@ export default function RsvpClient(props: {
   async function handleInviteSelected(selected: InviteSummary) {
     setStatus("saving");
     try {
-      await props.setInviteAction(selected);
+      await props.setInviteCodeAction(selected.family.rsvpCode);
       if (selected.family.rsvpSubmitted) {
         redirect("/rsvp/submitted");
       }
@@ -55,7 +55,7 @@ export default function RsvpClient(props: {
   async function handleNotYou() {
     setStatus("saving");
     try {
-      await props.clearInviteAction();
+      await props.clearInviteCodeAction();
       setInvite(null);
       setStatus("idle");
     } catch {
@@ -67,7 +67,6 @@ export default function RsvpClient(props: {
     if (!invite) return;
 
     await props.saveGuests(invite.family.guests)
-    await props.setInviteAction(invite);
     const errorMsg = await props.submitRSVP(invite.family.id, contact);
     setError(errorMsg);
     setShowSubmitConfirm(false);
