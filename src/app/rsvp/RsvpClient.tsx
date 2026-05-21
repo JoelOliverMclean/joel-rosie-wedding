@@ -4,18 +4,15 @@ import React, { useEffect, useState } from "react";
 import InviteLookup from "@/app/rsvp/InviteLookupComponent";
 import { InviteSummary } from "@/app/rsvp/types";
 import RsvpForm from "@/app/rsvp/RsvpForm";
-import { apiPost } from "@/utils/apiUtils";
 import { FoodPreference, Guest, RSVPResponse } from "@/lib/prisma-types";
 import { redirect, usePathname, useRouter, useSearchParams } from "next/navigation";
 import ConfirmPopover from "@/components/popovers/ConfirmPopover";
-import { parseFoodPreference, parseRSVPResponse } from "@/lib/prisma-enum-helper";
-import { saveGuests } from "@/app/rsvp/actions";
 
 export default function RsvpClient(props: {
   rsvpCode?: string;
   initialInvite: InviteSummary | null;
-  setInviteAction: (invite: InviteSummary) => Promise<void>;
-  clearInviteAction: () => Promise<void>;
+  setInviteCodeAction: (inviteCode: string) => Promise<void>;
+  clearInviteCodeAction: () => Promise<void>;
   submitRSVP: (familyId: number, contact: string) => Promise<string>;
   saveGuests: (guests: Guest[]) => Promise<boolean>;
 }) {
@@ -30,44 +27,32 @@ export default function RsvpClient(props: {
     () => props.initialInvite,
   );
   const [contact, setContact] = React.useState<string>(props.initialInvite?.family.contact ?? "");
-  const [status, setStatus] = React.useState<
-    "idle" | "saving" | "submitting" | "submitted" | "error"
-  >("idle");
 
   // Ensures client doesn't swap the tree during hydration
   const [hydrated, setHydrated] = React.useState(false);
   React.useEffect(() => setHydrated(true), []);
 
   async function handleInviteSelected(selected: InviteSummary) {
-    setStatus("saving");
     try {
-      await props.setInviteAction(selected);
+      await props.setInviteCodeAction(selected.family.rsvpCode);
       if (selected.family.rsvpSubmitted) {
         redirect("/rsvp/submitted");
       }
       setInvite(selected);
-      setStatus("idle");
-    } catch {
-      setStatus("error");
-    }
+    } catch {}
   }
 
   async function handleNotYou() {
-    setStatus("saving");
     try {
-      await props.clearInviteAction();
+      await props.clearInviteCodeAction();
       setInvite(null);
-      setStatus("idle");
-    } catch {
-      setStatus("error");
-    }
+    } catch {}
   }
 
   const onConfirmRSVP = async () => {
     if (!invite) return;
 
     await props.saveGuests(invite.family.guests)
-    await props.setInviteAction(invite);
     const errorMsg = await props.submitRSVP(invite.family.id, contact);
     setError(errorMsg);
     setShowSubmitConfirm(false);

@@ -27,8 +27,10 @@ export default function MobileNav({ links, canAccess }: { links: Link[], canAcce
 
   if (!canAccess) {
     return (
-      <div>
-        <a href={"/rsvp"} className={"btn btn--primary"}>RSVP</a>
+      <div className="mnav">
+        <a href={"/rsvp"} className={"btn btn--primary"}>
+          RSVP
+        </a>
       </div>
     );
   }
