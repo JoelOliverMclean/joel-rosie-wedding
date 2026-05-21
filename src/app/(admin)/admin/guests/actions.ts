@@ -8,3 +8,21 @@ export async function getGuestList(): Promise<GuestsWithFamily[]> {
     },
   });
 }
+
+export async function deleteGuests(guests: GuestsWithFamily[]) {
+  const guestIds = guests.map((guest) => guest.id);
+  await prisma.guest.deleteMany({
+    where: {
+      id: {
+        in: guestIds
+      }
+    }
+  })
+  await prisma.family.deleteMany({
+    where: {
+      guests: {
+        none: {},
+      },
+    },
+  });
+}

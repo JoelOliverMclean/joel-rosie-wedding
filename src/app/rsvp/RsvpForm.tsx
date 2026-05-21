@@ -35,6 +35,10 @@ export default function RsvpForm(props: {
     props.onAllergiesChange(props.guest, allergies);
   }
 
+  function toggleHighchairRequiredUpdated() {
+    props.onHighchairRequiredChange(props.guest, !props.guest.highchairRequired);
+  }
+
   return (
     <div
       key={props.guest.id}
@@ -65,7 +69,7 @@ export default function RsvpForm(props: {
           { props.guest.child &&
             <div className={"flex items-center gap-2 self-start"}>
               <p>Highchair Required?</p>
-              <div className="checkbox" onClick={() => {}}>
+              <div className="checkbox" onClick={() => toggleHighchairRequiredUpdated()}>
                 <Check
                   size={18}
                   className={`${props.guest.highchairRequired ? "opacity-100" : "opacity-0"} duration-300`}
