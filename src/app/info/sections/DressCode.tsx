@@ -8,7 +8,7 @@ export default function DressCodeInfo() {
         <div className={"h2 flex gap-2"}>Ceremony</div>
         <div>
         The dress code is formal. The wedding party
-        will be autumnal in theme, we ask that guests please avoid wearing red
+        will be autumnal in theme, we ask that guests please avoid wearing red or white attire (white shirts with formal suits are perfectly fine), thanks!
         </div>
       </div>
       {/*<div>*/}
