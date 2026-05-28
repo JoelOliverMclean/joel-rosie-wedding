@@ -55,7 +55,7 @@ async function InfoPage() {
       {header("Can I bring a plus one?")}
       <div>
         {
-          "Sadly due to venue restrictions on numbers, we're already maxed out, so only those on the RSVP can attend"
+          "Only those on the RSVP can attend, we're limited on guest numbers due to venue restrictions."
         }
       </div>
 
@@ -65,7 +65,7 @@ async function InfoPage() {
       {header("Dietary Requirements")}
       <DietaryRequirementInfo />
 
-      {header("Contact Us")}
+      {header("Questions on the day")}
       <ContactInfo />
     </div>
   );

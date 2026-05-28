@@ -6,7 +6,7 @@ export default function WhereAndWhen() {
   return (
     <div className={"flex flex-col gap-5"}>
       <div>
-        Our wedding and the after party are both at{" "}
+        Our ceremony and evening reception are both at{" "}
         <a
           className={"link-text"}
           target={"_blank"}
@@ -26,7 +26,7 @@ export default function WhereAndWhen() {
         <span className={"font-bold"}>1.30pm</span>
       </div>
       <div>
-        The after party will begin at <span className={"font-bold"}>7pm</span>{" "}
+        The evening reception will begin at <span className={"font-bold"}>7pm</span>{" "}
         in the evening on the same day.
       </div>
       <div className={"card p-0! self-center overflow-clip"}>
