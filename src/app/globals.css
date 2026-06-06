@@ -272,8 +272,8 @@ body {
 
 /* Typography */
 h1, .h1 {
+    @apply text-3xl lg:text-5xl;
     margin: 0;
-    font-size: clamp(40px, 5.2vw, 64px);
     letter-spacing: -0.03em;
     line-height: 1.05;
     font-weight: 650;
@@ -286,8 +286,8 @@ h1, .h1 {
     font-weight: 600;
 }
 h2, .h2 {
+    @apply text-xl lg:text-3xl;
     margin: 0;
-    font-size: 22px;
     letter-spacing: -0.015em;
     font-weight: 600;
 }
