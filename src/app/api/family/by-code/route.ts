@@ -5,11 +5,7 @@ import { FamilyWithGuests } from "@/lib/prisma-types";
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
 
-  console.log(searchParams);
-
   const code: string = searchParams.get("code") ?? "";
-
-  console.log(code);
 
   if (code.length === 0) {
     return NextResponse.json(

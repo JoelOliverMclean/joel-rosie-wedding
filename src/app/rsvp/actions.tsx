@@ -4,7 +4,10 @@ import { cookies } from "next/headers";
 import { $Enums, FamilyWithGuests, Guest } from "@/lib/prisma-types";
 import RSVPResponse = $Enums.RSVPResponse;
 
-const INVITE_CODE_COOKIE = "__Secure-invite-code";
+const INVITE_CODE_COOKIE =
+  process.env.NODE_ENV === "production"
+    ? "__Secure-invite-code"
+    : "invite-code";
 
 export async function getInviteCodeFromCookie(): Promise<string | null> {
   const jar = await cookies();
@@ -16,7 +19,7 @@ export async function setInviteCodeCookie(code: string) {
 
   const jar = await cookies();
   jar.set(INVITE_CODE_COOKIE, code, {
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     httpOnly: true,
     sameSite: "strict",
     path: "/",
@@ -28,7 +31,7 @@ export async function clearInviteCodeCookie() {
   "use server";
 
   const jar = await cookies();
-  jar.delete(INVITE_CODE_COOKIE)
+  jar.delete(INVITE_CODE_COOKIE);
 }
 
 export async function getInviteFromCookie(): Promise<InviteSummary | null> {
@@ -38,14 +41,14 @@ export async function getInviteFromCookie(): Promise<InviteSummary | null> {
   try {
     const family = await prisma.family.findFirst({
       where: {
-        rsvpCode: inviteCode
+        rsvpCode: inviteCode,
       },
       include: {
-        guests: true
-      }
-    })
+        guests: true,
+      },
+    });
     if (!family) return null;
-    return { family: family }
+    return { family: family };
   } catch {
     return null;
   }
@@ -61,7 +64,7 @@ function isValidContact(contact: string): boolean {
 export async function confirmRSVP(familyId: number, contact: string) {
   const family: FamilyWithGuests | null = await prisma.family.findUnique({
     where: {
-      id: familyId
+      id: familyId,
     },
     include: {
       guests: {
@@ -73,20 +76,24 @@ export async function confirmRSVP(familyId: number, contact: string) {
   });
 
   if (!family) {
-    console.log("Can't find fam")
-    return Error("Cannot find family")
+    return Error("Cannot find family");
   }
 
   for (const guest of family.guests) {
     if (!guest.rsvpResponse) {
-      return Error(`No attending choice selected for ${guest.firstName}`)
+      return Error(`No attending choice selected for ${guest.firstName}`);
     }
-    if (guest.rsvpResponse !== RSVPResponse.NOT_ATTENDING && !guest.foodPreference) {
-      return Error(`No food preference selected for ${guest.firstName}`)
+    if (
+      guest.rsvpResponse !== RSVPResponse.NOT_ATTENDING &&
+      !guest.foodPreference
+    ) {
+      return Error(`No food preference selected for ${guest.firstName}`);
     }
   }
 
-  const fullNo = family.guests.every(guest => guest.rsvpResponse === RSVPResponse.NOT_ATTENDING)
+  const fullNo = family.guests.every(
+    (guest) => guest.rsvpResponse === RSVPResponse.NOT_ATTENDING,
+  );
 
   if (!fullNo && (!contact || contact.length === 0)) {
     console.log("No contact provided");
@@ -103,22 +110,22 @@ export async function confirmRSVP(familyId: number, contact: string) {
   await prisma.family.update({
     where: { id: familyId },
     data: { rsvpSubmitted: true, contact: contact },
-  })
+  });
 
-  return null
+  return null;
 }
 
 export async function saveGuests(guests: Guest[]) {
-  "use server"
+  "use server";
 
   for (const guest of guests) {
     await prisma.guest.update({
       where: { id: guest.id },
       data: {
-        ...guest
-      }
-    })
+        ...guest,
+      },
+    });
   }
 
-  return true
+  return true;
 }

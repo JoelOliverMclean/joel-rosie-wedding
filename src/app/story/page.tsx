@@ -5,7 +5,11 @@ import { redirect } from "next/navigation";
 export default async function StoryPage() {
   const canAccess = await canAccessSite();
   if (!canAccess) {
-    redirect("/rsvp")
+    redirect("/rsvp");
   }
-  return <div>Our Story Coming Soon</div>;
+  return (
+    <div className={"section"}>
+      <h1>Our Story</h1>
+    </div>
+  );
 }
