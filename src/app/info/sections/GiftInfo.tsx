@@ -13,12 +13,12 @@ export default function GiftInfo() {
       {/*</div>*/}
       <div>
         {
-          "We have everything we need, apart from money - but please don't feel any obligation."
+          "We have everything we need... besides perhaps a slightly healthier bank balance... but please don't feel any obligation to give a gift."
         }
       </div>
       <div>
         {
-          "However if you would like to give a gift, a contribution towards our future/honeymoon would be hugely appreciated."
+          "However if you would like to, a contribution towards our future and honeymoon would be hugely appreciated."
         }
       </div>
       <div className={"card self-center overflow-clip p-0!"}>
