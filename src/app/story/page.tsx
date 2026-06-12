@@ -13,7 +13,6 @@ import img9 from "@/images/story/img_9.jpg";
 import img10 from "@/images/story/img_10.jpg";
 import img11 from "@/images/story/img_11.jpg";
 import img12 from "@/images/story/img_12.jpg";
-import img13 from "@/images/story/img_13.jpg";
 import img14 from "@/images/story/img_14.jpg";
 import img15 from "@/images/story/img_15.jpg";
 import img16 from "@/images/story/img_16.jpg";
@@ -62,6 +61,8 @@ enum Tag {
   ENGAGEMENT = "ENGAGEMENT",
   NOW = "NOW",
 }
+
+const img13 = "https://story-images.joelandrosie.wedding/img_13.jpg";
 
 const images = [
   // { src: img20, label: "Asda days", tag: Tag.UNI },
@@ -130,17 +131,17 @@ const colsClass: Record<number, string> = {
 };
 
 const photoSection = (tag: Tag, maxColumns: number = 4) => (
-  <div className="flex w-full flex-wrap justify-center gap-0 overflow-clip">
+  <div className="flex w-full flex-wrap justify-center gap-10">
     {grouped[tag]?.map((image, i) => (
       <div
         key={i}
-        className="group relative aspect-square w-1/2 overflow-hidden md:w-1/3 lg:w-1/4"
+        className="group relative aspect-square w-1/2 md:w-1/3 lg:w-1/4"
       >
         <Image
           src={image.src}
           alt={image.label}
           fill
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          className={`${i % 2 == 0 ? "rotate-3 group-hover:-rotate-3" : "-rotate-3 group-hover:rotate-3"} z-10 border-20 border-amber-950 object-cover shadow-lg transition-transform duration-300 group-hover:scale-110`}
         />
       </div>
     ))}
@@ -173,7 +174,7 @@ export default async function StoryPage() {
   }
 
   return (
-    <div className={"section flex flex-col items-center gap-3 text-center"}>
+    <div className={"section flex flex-col items-center gap-5 text-center"}>
       {/*<h1>Our Story</h1>*/}
       <h1>Yep, that&apos;s us</h1>
       {photoSection(Tag.NOW)}
