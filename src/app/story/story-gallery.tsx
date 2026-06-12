@@ -150,7 +150,7 @@ const StoryGallery = () => {
               if (el) photoRefs.current.set(src, el);
               else photoRefs.current.delete(src);
             }}
-            className="group relative -m-2 aspect-square w-1/2 translate-y-4 cursor-pointer opacity-0 transition-all duration-500 md:w-1/3 lg:w-1/4"
+            className="group relative -m-2 aspect-square w-1/2 translate-y-4 cursor-pointer opacity-0 transition-all duration-500 hover:z-10 md:w-1/3 lg:w-1/4"
             style={{ transitionDelay: `${(i % 4) * 75}ms` }}
             onClick={() => setSelected(src)}
           >
@@ -158,7 +158,7 @@ const StoryGallery = () => {
               src={`${img_prefix}${src}`}
               alt={""}
               fill
-              className={`${i % 2 === 0 ? "rotate-5 group-hover:-rotate-2" : "-rotate-5 group-hover:rotate-2"} border-10 border-b-40 border-gray-200 ${cropClass[crop]} object-cover shadow-lg ring-2 ring-black transition-transform duration-300 group-hover:scale-110 hover:z-10`}
+              className={`${i % 2 === 0 ? "rotate-5 group-hover:-rotate-2" : "-rotate-5 group-hover:rotate-2"} border-10 border-b-40 border-gray-200 ${cropClass[crop]} object-cover shadow-lg ring-2 ring-black transition-transform duration-300 group-hover:scale-110`}
             />
           </div>
         );
