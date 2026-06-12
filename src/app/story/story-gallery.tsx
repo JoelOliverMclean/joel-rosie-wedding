@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import ronparty from "@/images/ron-party.gif";
 import bababooey from "@/images/bababooey-parks.gif";
-import { Heart } from "lucide-react";
 
 const img_prefix = "https://story-images.joelandrosie.wedding/";
 
