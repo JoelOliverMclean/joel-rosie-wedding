@@ -152,7 +152,6 @@ const StoryGallery = () => {
       )}
 
       <div className={"section flex flex-col items-center gap-10 text-center"}>
-        {/*<h1>Our Story</h1>*/}
         <h1>Yep, that&apos;s us</h1>
         {photoSection(now)}
         <p>You&apos;re probably wondering how we got here. Well...</p>
@@ -163,9 +162,7 @@ const StoryGallery = () => {
         <h2>
           Next thing you know we&apos;re doin&apos; halloween and christmas
         </h2>
-        {/*<div className={"grid max-w-2xl grid-cols-2"}>*/}
         {photoSection([...halloween, ...xmas])}
-        {/*</div>*/}
         <h2>And nerding out at MCM London</h2>
         {photoSection(comiccon)}
         <h2>We went on holidays together and hid from the sun</h2>
