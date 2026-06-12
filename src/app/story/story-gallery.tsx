@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import ronparty from "@/images/ron-party.gif";
 import bababooey from "@/images/bababooey-parks.gif";
@@ -111,6 +111,7 @@ const engagement: PhotoInput[] = [
 
 const StoryGallery = () => {
   const [selected, setSelected] = useState<string | null>(null);
+  const photoRefs = useRef<Map<string, HTMLDivElement>>(new Map());
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -120,6 +121,24 @@ const StoryGallery = () => {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("opacity-100", "translate-y-0");
+            entry.target.classList.remove("opacity-0", "translate-y-4");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 },
+    );
+
+    photoRefs.current.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   const photoSection = (images: PhotoInput[]) => (
     <div className="flex w-full flex-wrap justify-center gap-0">
       {images.map((raw, i) => {
@@ -127,7 +146,12 @@ const StoryGallery = () => {
         return (
           <div
             key={src}
-            className="group relative -m-2 aspect-square w-1/2 cursor-pointer md:w-1/3 lg:w-1/4"
+            ref={(el) => {
+              if (el) photoRefs.current.set(src, el);
+              else photoRefs.current.delete(src);
+            }}
+            className="group relative -m-2 aspect-square w-1/2 translate-y-4 cursor-pointer opacity-0 transition-all duration-500 md:w-1/3 lg:w-1/4"
+            style={{ transitionDelay: `${(i % 4) * 75}ms` }}
             onClick={() => setSelected(src)}
           >
             <Image
