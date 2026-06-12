@@ -7,7 +7,25 @@ import bababooey from "@/images/bababooey-parks.gif";
 
 const img_prefix = "https://story-images.joelandrosie.wedding/";
 
-const uni: string[] = [
+type PhotoConfig = {
+  src: string;
+  crop?: "center" | "top" | "bottom" | "left" | "right";
+};
+
+type PhotoInput = string | PhotoConfig;
+
+const normalise = (img: PhotoInput): PhotoConfig =>
+  typeof img === "string" ? { src: img } : img;
+
+const cropClass: Record<NonNullable<PhotoConfig["crop"]>, string> = {
+  center: "object-center",
+  top: "object-top",
+  bottom: "object-bottom",
+  left: "object-left",
+  right: "object-right",
+};
+
+const uni: PhotoInput[] = [
   "uni1.jpeg",
   "uni2.jpeg",
   "uni3.jpg",
@@ -19,51 +37,52 @@ const uni: string[] = [
   "uni9.jpg",
   "uni10.jpg",
 ];
-const now: string[] = [
+const now: PhotoInput[] = [
   "now2.jpg",
   "now9.jpg",
   "now4.jpg",
   "now5.jpg",
-  "now1.jpeg",
+  { src: "now1.jpeg", crop: "top" },
   "now3.jpg",
   "now11.jpg",
 ];
-const halloween: string[] = [
-  "halloween1.jpg",
-  "ghostcake.jpg",
-  "ghost.jpg",
-  "gandalf.jpg",
+const halloween: PhotoInput[] = [
+  { src: "halloween1.jpg", crop: "top" },
+  { src: "ghostcake.jpg", crop: "top" },
+  { src: "cupcake.jpg" },
+  { src: "ghost.jpg", crop: "top" },
+  { src: "gandalf.jpg", crop: "top" },
 ];
-const xmas: string[] = ["christmas1.jpg"];
-const comiccon: string[] = [
+const xmas: PhotoInput[] = ["christmas1.jpg"];
+const comiccon: PhotoInput[] = [
   "comiccon1.jpg",
   "queen.jpg",
   "king.jpg",
   "negan.jpg",
 ];
-const holidays: string[] = [
-  "holiday1.jpeg",
+const holidays: PhotoInput[] = [
+  { src: "holiday1.jpeg" },
   "holiday2.jpeg",
   "holiday3.jpg",
   "watermelon.jpg",
 ];
-const cats: string[] = ["cats2.jpg", "cats1.jpg"];
-const house: string[] = [
+const cats: PhotoInput[] = ["cats2.jpg", "cats1.jpg"];
+const house: PhotoInput[] = [
   "frontdoor.jpg",
   "fireplace.jpg",
   "house_christmas.jpg",
 ];
-const dog: string[] = [
+const dog: PhotoInput[] = [
   "ridehome.jpg",
   "spadedog.jpg",
   "dogwalk.jpg",
   "beach_dog.jpg",
-  "highdog.jpg",
+  { src: "highdog.jpg", crop: "top" },
   "dogsandcats.jpg",
   "joelanddog.jpg",
   "dogback.jpg",
 ];
-const gigs: string[] = [
+const gigs: PhotoInput[] = [
   "acaster.jpg",
   "edgamble.jpg",
   "brassholes.jpg",
@@ -84,17 +103,15 @@ const gigs: string[] = [
   "magnoliapark.jpg",
   "paparoach.jpg",
 ];
-const engagement: string[] = [
+const engagement: PhotoInput[] = [
   "engagement1.jpg",
   "engagement2.jpg",
   "engagement3.jpg",
 ];
 
 const StoryGallery = () => {
-  // null = closed, string = the image filename currently open
   const [selected, setSelected] = useState<string | null>(null);
 
-  // Close on Escape key — good UX, easy to miss without a reminder
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setSelected(null);
@@ -103,36 +120,38 @@ const StoryGallery = () => {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const photoSection = (images: string[]) => (
+  const photoSection = (images: PhotoInput[]) => (
     <div className="flex w-full flex-wrap justify-center gap-0">
-      {images.map((image, i) => (
-        <div
-          key={image}
-          className="group relative -m-2 aspect-square w-1/2 cursor-pointer md:w-1/3 lg:w-1/4"
-          onClick={() => setSelected(image)}
-        >
-          <Image
-            src={`${img_prefix}${image}`}
-            alt={""}
-            fill
-            className={`${i % 2 == 0 ? "rotate-5 group-hover:-rotate-2" : "-rotate-5 group-hover:rotate-2"} border-10 border-b-40 border-gray-200 object-cover shadow-lg ring-2 ring-black transition-transform duration-300 group-hover:scale-110 hover:z-10`}
-          />
-        </div>
-      ))}
+      {images.map((raw, i) => {
+        const { src, crop = "center" } = normalise(raw);
+        return (
+          <div
+            key={src}
+            className="group relative -m-2 aspect-square w-1/2 cursor-pointer md:w-1/3 lg:w-1/4"
+            onClick={() => setSelected(src)}
+          >
+            <Image
+              src={`${img_prefix}${src}`}
+              alt={""}
+              fill
+              className={`${i % 2 === 0 ? "rotate-5 group-hover:-rotate-2" : "-rotate-5 group-hover:rotate-2"} border-10 border-b-40 border-gray-200 ${cropClass[crop]} object-cover shadow-lg ring-2 ring-black transition-transform duration-300 group-hover:scale-110 hover:z-10`}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 
   return (
     <>
-      {/* Lightbox overlay */}
       {selected && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
-          onClick={() => setSelected(null)} // click backdrop to close
+          onClick={() => setSelected(null)}
         >
           <div
             className="relative max-h-[90vh] max-w-[90vw]"
-            onClick={(e) => e.stopPropagation()} // don't close when clicking the image itself
+            onClick={(e) => e.stopPropagation()}
           >
             <Image
               src={`${img_prefix}${selected}`}
