@@ -5,7 +5,12 @@ import InviteLookup from "@/app/rsvp/InviteLookupComponent";
 import { InviteSummary } from "@/app/rsvp/types";
 import RsvpForm from "@/app/rsvp/RsvpForm";
 import { FoodPreference, Guest, RSVPResponse } from "@/lib/prisma-types";
-import { redirect, usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  redirect,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import ConfirmPopover from "@/components/popovers/ConfirmPopover";
 
 export default function RsvpClient(props: {
@@ -26,7 +31,9 @@ export default function RsvpClient(props: {
   const [invite, setInvite] = React.useState<InviteSummary | null>(
     () => props.initialInvite,
   );
-  const [contact, setContact] = React.useState<string>(props.initialInvite?.family.contact ?? "");
+  const [contact, setContact] = React.useState<string>(
+    props.initialInvite?.family.contact ?? "",
+  );
 
   // Ensures client doesn't swap the tree during hydration
   const [hydrated, setHydrated] = React.useState(false);
@@ -52,7 +59,7 @@ export default function RsvpClient(props: {
   const onConfirmRSVP = async () => {
     if (!invite) return;
 
-    await props.saveGuests(invite.family.guests)
+    await props.saveGuests(invite.family.guests);
     const errorMsg = await props.submitRSVP(invite.family.id, contact);
     setError(errorMsg);
     setShowSubmitConfirm(false);
@@ -149,7 +156,16 @@ export default function RsvpClient(props: {
           />
         ) : (
           <div className={"flex w-full flex-col gap-5"}>
-            <div>Please submit your RSVP below before the <strong>8th August 2026</strong></div>
+            <div>
+              Please submit your RSVP below before the{" "}
+              <strong>8th August 2026</strong>
+            </div>
+            {invite.family.guests.some((g) => g.child) && (
+              <div className={"muted small"}>
+                Please note, invited kids are optional but welcome. If you want
+                to come without them that&apos;s fine with us.
+              </div>
+            )}
             {/*<div className={"flex flex-wrap items-center gap-5"}>*/}
             {/*  <h2 className={"font-bold"}>Guests</h2>*/}
             {/*</div>*/}
