@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { GuestsWithFamily } from "@/lib/prisma-types";
 import { Check, SquareArrowDown, SquareArrowUp } from "lucide-react";
@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 type SortBy = {
   property: string;
   direction: string;
-}
+};
 
 const defaultSortBy = { property: "id", direction: "asc" };
 
@@ -125,9 +125,7 @@ export default function GuestTable(props: {
 
         return sortBy.direction === "asc" ? order : -order;
       });
-      setGuests(
-        sorted,
-      );
+      setGuests(sorted);
     },
     [],
   );
@@ -167,6 +165,9 @@ export default function GuestTable(props: {
                 {tableHeader("Family", "family")}
               </th>
               <th className={"table-header"}>
+                {tableHeader("Is Child", "child")}
+              </th>
+              <th className={"table-header"}>
                 {tableHeader("Day", "invitedDay")}
               </th>
               <th className={"table-header"}>
@@ -198,7 +199,22 @@ export default function GuestTable(props: {
                 </td>
                 <td className={"table-cell"}>{guest.firstName}</td>
                 <td className={"table-cell"}>
-                  <div className={"cursor-pointer"} onClick={() => router.push(`/admin/family/${guest.family.id}`)}>{guest.family.familyName}</div>
+                  <div
+                    className={"cursor-pointer"}
+                    onClick={() =>
+                      router.push(`/admin/family/${guest.family.id}`)
+                    }
+                  >
+                    {guest.family.familyName}
+                  </div>
+                </td>
+                <td className={"table-cell"}>
+                  <div>
+                    <Check
+                      size={18}
+                      className={`${guest.child ? "opacity-100" : "opacity-0"} duration-300`}
+                    />
+                  </div>
                 </td>
                 <td className={"table-cell"}>
                   <div>
