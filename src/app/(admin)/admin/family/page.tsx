@@ -33,15 +33,22 @@ export default async function FamilyAdminPage() {
       ) : (
         <>
           <div className={"flex flex-col"}>
+            <div
+              className={
+                "grid grid-cols-3 gap-5 border-b-2 border-white p-2 text-xl font-bold"
+              }
+            >
+              <p>Family</p>
+              <p>Members</p>
+              <p>RSVP Code</p>
+            </div>
             {families.map((family, i) => (
               <div
                 key={i}
-                className={`grid grid-cols-4 gap-5 p-2 ${i < families.length - 1 ? "border-b-1 border-white" : ""}`}
+                className={`grid grid-cols-3 gap-5 p-2 ${i < families.length - 1 ? "border-b-1 border-white/50" : ""}`}
               >
-                <h2 className={"h2"}>
-                  {family.id} - {family.familyName}
-                </h2>
-                <div className={"col-span-2 flex flex-wrap gap-2"}>
+                <h3 className={"text-xl font-bold"}>{family.familyName}</h3>
+                <div className={"flex flex-wrap gap-2"}>
                   <p>{family.guests.map((g) => g.firstName).join(", ")}</p>
                 </div>
                 <p>{family.rsvpCode}</p>
