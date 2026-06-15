@@ -6,6 +6,7 @@ import ThemeToggle from "@/app/theme-toggle";
 import MobileNav from "./mobile-nav";
 import { links } from "@/components/NavigationLinks";
 import { canAccessSite } from "@/utils/cookieUtils";
+import DesktopLinks from "@/app/desktop-links";
 
 const metamorphous = Metamorphous({
   weight: "400",
@@ -16,7 +17,6 @@ export const metadata: Metadata = {
   title: "Joel & Rosie's Wedding",
   description: "For the wedding of Joel and Rosie",
 };
-
 
 function ThemeScript() {
   const code = `
@@ -67,29 +67,10 @@ export default async function RootLayout({
               </Link>
 
               {canAccess && (
-                <nav className="nav nav--desktop" aria-label="Primary">
-                  {links.map((l) => (
-                    <a
-                      key={l.href}
-                      className={"nav__link glow-hover-soft"}
-                      href={l.href}
-                    >
-                      {l.label}
-                    </a>
-                  ))}
-                </nav>
+                <DesktopLinks links={links} canAccess={canAccess} />
               )}
-
-              <div className="header__actions">
-                <MobileNav links={links} canAccess={canAccess} />
-
-                <ThemeToggle />
-
-                <a className="btn btn--primary rsvp--desktop" href="/rsvp">
-                  RSVP
-                </a>
-              </div>
             </div>
+            <MobileNav links={links} canAccess={canAccess} />
           </header>
 
           {/* Page content */}
@@ -97,9 +78,16 @@ export default async function RootLayout({
 
           {/* Footer (persistent) */}
           <footer className="footer">
-            <div className="footer__inner container">
+            <div className="footer__inner container md:items-center">
               <span className="muted">Joel & Rosie Wedding</span>
-              <span className="muted">© 2026 Joel Mclean</span>
+              <div
+                className={
+                  "flex flex-col items-end gap-5 md:flex-row md:items-center"
+                }
+              >
+                <span className="muted text-end">© 2026 Joel Mclean</span>
+                <ThemeToggle />
+              </div>
             </div>
           </footer>
         </div>
