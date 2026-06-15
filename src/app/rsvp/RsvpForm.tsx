@@ -22,9 +22,11 @@ export default function RsvpForm(props: {
   onNotYou: () => void;
   onBackToGuests: () => void;
 }) {
-
   function onFoodPreferenceUpdated(foodPreference: string) {
-    props.onFoodPreferenceChange(props.guest, parseFoodPreference(foodPreference))
+    props.onFoodPreferenceChange(
+      props.guest,
+      parseFoodPreference(foodPreference),
+    );
   }
 
   function onRSVPResponseUpdated(rsvpResponse: string) {
@@ -36,7 +38,10 @@ export default function RsvpForm(props: {
   }
 
   function toggleHighchairRequiredUpdated() {
-    props.onHighchairRequiredChange(props.guest, !props.guest.highchairRequired);
+    props.onHighchairRequiredChange(
+      props.guest,
+      !props.guest.highchairRequired,
+    );
   }
 
   return (
@@ -44,9 +49,11 @@ export default function RsvpForm(props: {
       key={props.guest.id}
       className={"card flex flex-col gap-5 shadow-none!"}
     >
-      <div className={"h2 font-bold"}>
-        {props.guest.firstName} {props.guest.lastName}
-      </div>
+      {props.guestCount > 1 && (
+        <div className={"h2 font-bold"}>
+          {props.guest.firstName} {props.guest.lastName}
+        </div>
+      )}
       <div className={"flex flex-col gap-2"}>
         <label htmlFor="rsvpResponse">Attendance *</label>
         <select
@@ -66,10 +73,13 @@ export default function RsvpForm(props: {
       </div>
       {props.guest.rsvpResponse !== RSVPResponse.NOT_ATTENDING && (
         <>
-          { props.guest.child &&
+          {props.guest.child && (
             <div className={"flex items-center gap-2 self-start"}>
               <p>Highchair Required?</p>
-              <div className="checkbox" onClick={() => toggleHighchairRequiredUpdated()}>
+              <div
+                className="checkbox"
+                onClick={() => toggleHighchairRequiredUpdated()}
+              >
                 <Check
                   size={18}
                   className={`${props.guest.highchairRequired ? "opacity-100" : "opacity-0"} duration-300`}
@@ -77,7 +87,7 @@ export default function RsvpForm(props: {
               </div>
               <div>{props.guest.highchairRequired && <Check />}</div>
             </div>
-          }
+          )}
           <div className={"flex flex-col gap-2"}>
             <label htmlFor="foodPreference">Food Preference *</label>
             <select
