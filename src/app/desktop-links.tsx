@@ -17,9 +17,9 @@ export default function DesktopLinks({
 
   return (
     <>
-      {canAccess && (
-        <nav className="nav nav--desktop" aria-label="Primary">
-          {links.map((l) => (
+      <nav className="nav nav--desktop items-center" aria-label="Primary">
+        {canAccess &&
+          links.map((l) => (
             <a
               key={l.href}
               className={`nav__link ${pathname.includes(l.href) ? "nav__link-hover glow-soft" : "glow-hover-soft"} px-2`}
@@ -28,16 +28,18 @@ export default function DesktopLinks({
               {l.label}
             </a>
           ))}
-        </nav>
-      )}
+        <a className="btn btn--primary rsvp--desktop" href="/rsvp">
+          RSVP
+        </a>
+      </nav>
 
-      {!pathname.includes("rsvp") && (
-        <div className="header__actions">
-          <a className="btn btn--primary rsvp--desktop" href="/rsvp">
-            RSVP
-          </a>
-        </div>
-      )}
+      {/*{!pathname.includes("rsvp") && (*/}
+      {/*  <div className="header__actions">*/}
+      {/*    <a className="btn btn--primary rsvp--desktop" href="/rsvp">*/}
+      {/*      RSVP*/}
+      {/*    </a>*/}
+      {/*  </div>*/}
+      {/*)}*/}
     </>
   );
 }

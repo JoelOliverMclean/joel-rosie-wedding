@@ -48,6 +48,9 @@ export default async function HomePage() {
                 <h2 className={`h2 nav__link glow-hover-soft`}>{link.label}</h2>
               </a>
             ))}
+            <a key={"rsvp"} href={"/rsvp"}>
+              <h2 className={`h2 nav__link glow-hover-soft`}>RSVP</h2>
+            </a>
           </div>
         </section>
       )}
