@@ -152,7 +152,7 @@ export default function RsvpClient(props: {
                 : invite.family.guests[0].firstName}
             </div>
             <button className={"btn btn--ghost"} onClick={handleNotYou}>
-              Not you{invite.family.guests.length > 1 && " guys"}?
+              {"Not you?"}
             </button>
           </div>
         )}
