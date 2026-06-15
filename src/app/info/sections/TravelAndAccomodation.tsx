@@ -40,12 +40,12 @@ const carPark = (
       </a>
     </div>
     <div>
-      <span className={"font-bold"}>Rufford Mill Car Park Terms:</span> Parking is
-      free for wedding guests on the day, they must enter their registration at
-      the venue otherwise risk being charged by the parking provider. If cars are
-      left overnight, a £1 charge is applicable if collected before 9am - any later
-      and guests must pay for a full days parking (£7). Cars are left at the persons
-      own risk and discretion.
+      <span className={"font-bold"}>Rufford Mill Car Park Terms:</span> Parking
+      is free for wedding guests on the day, they must enter their registration
+      at the venue otherwise risk being charged by the parking provider. If cars
+      are left overnight, a £1 charge is applicable if collected before 9am -
+      any later and guests must pay for a full days parking (£7). Cars are left
+      at the persons own risk and discretion.
     </div>
   </div>
 );
@@ -54,7 +54,7 @@ type Taxi = {
   name: string;
   phone: string;
   website?: string;
-}
+};
 
 const taxiData: Taxi[] = [
   {
@@ -92,7 +92,7 @@ const taxis = (
           <div className={"flex"}>
             <a
               className={
-                "text-sm link-text flex w-full justify-center gap-2 bg-gradient-to-r from-black/10 to-black/20 p-2 duration-200 hover:from-black/20"
+                "link-text flex w-full justify-center gap-2 bg-gradient-to-r from-black/10 to-black/20 p-2 text-sm duration-200 hover:from-black/20"
               }
               href={`tel:${taxi.phone}`}
             >
@@ -103,7 +103,7 @@ const taxis = (
             {taxi.website && (
               <a
                 className={
-                  "text-sm link-text flex w-full justify-center gap-2 bg-gradient-to-r from-black/10 to-black/20 duration-200 hover:from-black/20"
+                  "link-text flex w-full justify-center gap-2 bg-gradient-to-r from-black/10 to-black/20 text-sm duration-200 hover:from-black/20"
                 }
                 href={taxi.website}
               >
@@ -116,11 +116,8 @@ const taxis = (
         </div>
       ))}
     </div>
-    <div className={"quote__text pt-2"}>
-      Taxis can be &quot;prebooked&quot; on apps like Uber or Bolt, however this
-      does not reserve them for the time, it simply automatically requests one
-      for you at the time you need it, meaning it is not totally guaranteed
-      (reliant on a driver accepting your ride at the time)
+    <div className={"pt-2"}>
+      Taxis can be also be prebooked on apps like Uber or Bolt.
     </div>
   </div>
 );
@@ -131,12 +128,12 @@ type Hotel = {
   image?: any;
 };
 
-import maypoleHotelImg from "@/images/hotels/the-maypole-at-wellow.jpg"
-import dukeriesHotelImg from "@/images/hotels/dukeries.webp"
-import forestLodgeHotelImg from "@/images/hotels/forestlodge.jpg"
-import muthuHotelImg from "@/images/hotels/muthu.jpg"
-import travelodgeRetford from "@/images/hotels/travelodge_retford.webp"
-import travelodgeMansfield from "@/images/hotels/travelodge_mansfield.webp"
+import maypoleHotelImg from "@/images/hotels/the-maypole-at-wellow.jpg";
+import dukeriesHotelImg from "@/images/hotels/dukeries.webp";
+import forestLodgeHotelImg from "@/images/hotels/forestlodge.jpg";
+import muthuHotelImg from "@/images/hotels/muthu.jpg";
+import travelodgeRetford from "@/images/hotels/travelodge_retford.webp";
+import travelodgeMansfield from "@/images/hotels/travelodge_mansfield.webp";
 
 const hotelData: Hotel[] = [
   {
@@ -184,21 +181,31 @@ const hotels = (
           target={"_blank"}
         >
           <div key={hotel.name} className={"card card--hero p-0! shadow-none!"}>
-            <div className={"h-[150px] overflow-hidden relative"}>
-              <Image src={hotel.image} alt={`Image of ${hotel.name}`}
-                     fill
-              style={{
-                objectFit: "cover",
-                objectPosition: "center",
-              }}/>
+            <div className={"relative h-[150px] overflow-hidden"}>
+              <Image
+                src={hotel.image}
+                alt={`Image of ${hotel.name}`}
+                fill
+                style={{
+                  objectFit: "cover",
+                  objectPosition: "center",
+                }}
+              />
             </div>
-            <div className={"p-2 text-center h-[4em] items-center justify-center flex"}>{hotel.name}</div>
+            <div
+              className={
+                "flex h-[4em] items-center justify-center p-2 text-center"
+              }
+            >
+              {hotel.name}
+            </div>
           </div>
         </a>
       ))}
     </div>
     <div className={"quote__text pt-3"}>
-      You can also take advantage of services like AirBnB, Booking.com and others...
+      You can also take advantage of services like AirBnB, Booking.com and
+      others...
     </div>
   </div>
 );
