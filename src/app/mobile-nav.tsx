@@ -36,11 +36,8 @@ export default function MobileNav({
   if (!canAccess) {
     if (pathname.includes("rsvp")) return;
     return (
-      <div className="mnav flex w-full justify-around pb-2">
-        <a
-          href={"/rsvp"}
-          className={"nav__link glow-hover-soft btn--ghost btn"}
-        >
+      <div className="mnav flex w-full flex-col px-4 pb-2">
+        <a href={"/rsvp"} className="btn btn--primary">
           RSVP
         </a>
       </div>
@@ -48,16 +45,28 @@ export default function MobileNav({
   }
 
   return (
-    <div className="mnav flex w-full justify-evenly pb-2">
-      {links.map((l) => (
+    <div>
+      <div className="mnav flex w-full justify-evenly pb-2">
+        {links.map((l) => (
+          <a
+            key={l.href}
+            className={`nav__link ${pathname.includes(l.href) ? "glow-soft btn--ghost-selected" : "glow-hover-soft"} btn btn--ghost`}
+            href={l.href}
+          >
+            {l.label}
+          </a>
+        ))}
         <a
-          key={l.href}
-          className={`nav__link ${pathname.includes(l.href) ? "glow-soft btn--ghost-selected" : "glow-hover-soft"} btn btn--ghost`}
-          href={l.href}
+          className="btn btn--primary"
+          href="/rsvp"
+          onClick={() => setOpen(false)}
         >
-          {l.label}
+          RSVP
         </a>
-      ))}
+      </div>
+      {/*<div className={"flex w-full items-center justify-center p-2"}>*/}
+
+      {/*</div>*/}
       {/*<button*/}
       {/*  type="button"*/}
       {/*  className="btn btn--ghost btn--icon mnav__btn"*/}

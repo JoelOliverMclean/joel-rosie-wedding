@@ -7,6 +7,7 @@ import MobileNav from "./mobile-nav";
 import { links } from "@/components/NavigationLinks";
 import { canAccessSite } from "@/utils/cookieUtils";
 import DesktopLinks from "@/app/desktop-links";
+import WebsiteHeader from "@/app/website-header";
 
 const metamorphous = Metamorphous({
   weight: "400",
@@ -56,20 +57,7 @@ export default async function RootLayout({
           </div>
 
           {/* Header (persistent) */}
-          <header className="header">
-            <div className="header__inner container">
-              <Link className={"brand"} href={"/"}>
-                <span className={"brand__prefix"}>The Wedding of</span>
-                <span className="brand__name">Joel &amp; Rosie</span>
-                <span className="brand__tag">
-                  A Party of Special Magnificence
-                </span>
-              </Link>
-
-              <DesktopLinks links={links} canAccess={canAccess} />
-            </div>
-            <MobileNav links={links} canAccess={canAccess} />
-          </header>
+          <WebsiteHeader canAccess={canAccess} />
 
           {/* Page content */}
           <main className="main container">{children}</main>
