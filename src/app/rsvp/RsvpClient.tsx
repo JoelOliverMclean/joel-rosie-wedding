@@ -139,10 +139,18 @@ export default function RsvpClient(props: {
   return (
     <>
       <main className="section flex flex-col items-start gap-5">
-        <h1>RSVP</h1>
+        {/*<h1 className={"w-full text-center sm:w-auto"}>RSVP</h1>*/}
         {invite && (
-          <div className={"flex items-center gap-3"}>
-            <div className={"text-4xl"}>{invite.family.familyName}</div>
+          <div
+            className={
+              "flex w-full items-center justify-between gap-5 sm:justify-start"
+            }
+          >
+            <div className={"text-4xl"}>
+              {invite.family.guests.length > 1
+                ? invite.family.familyName
+                : invite.family.guests[0].firstName}
+            </div>
             <button className={"btn btn--ghost"} onClick={handleNotYou}>
               Not you{invite.family.guests.length > 1 && " guys"}?
             </button>

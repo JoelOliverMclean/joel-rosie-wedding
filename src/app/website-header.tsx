@@ -10,7 +10,7 @@ export default function WebsiteHeader({ canAccess }: { canAccess: boolean }) {
   const pathname = usePathname();
 
   return (
-    <header className="header">
+    <header className="header pb-2">
       <div className="header__inner container">
         <Link className={"brand"} href={"/"}>
           <span className={"brand__prefix"}>The Wedding of</span>

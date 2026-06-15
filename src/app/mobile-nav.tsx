@@ -46,7 +46,7 @@ export default function MobileNav({
 
   return (
     <div>
-      <div className="mnav flex w-full justify-evenly pb-2">
+      <div className="mnav flex w-full justify-evenly p-2">
         {links.map((l) => (
           <a
             key={l.href}
