@@ -17,17 +17,19 @@ export default function DesktopLinks({
 
   return (
     <>
-      <nav className="nav nav--desktop" aria-label="Primary">
-        {links.map((l) => (
-          <a
-            key={l.href}
-            className={`nav__link ${pathname.includes(l.href) ? "nav__link-hover glow-soft" : "glow-hover-soft"} px-2`}
-            href={l.href}
-          >
-            {l.label}
-          </a>
-        ))}
-      </nav>
+      {canAccess && (
+        <nav className="nav nav--desktop" aria-label="Primary">
+          {links.map((l) => (
+            <a
+              key={l.href}
+              className={`nav__link ${pathname.includes(l.href) ? "nav__link-hover glow-soft" : "glow-hover-soft"} px-2`}
+              href={l.href}
+            >
+              {l.label}
+            </a>
+          ))}
+        </nav>
+      )}
 
       {!pathname.includes("rsvp") && (
         <div className="header__actions">

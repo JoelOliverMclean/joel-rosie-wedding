@@ -15,18 +15,20 @@ export default function InviteLookup(props: {
   const handleSubmit = useCallback(() => {
     setChecking(true);
     const value = code.trim();
-    apiGet(`/api/family/by-code?code=${value}`).then(({ response, data }) => {
-      setChecking(false);
-      if (response.ok) {
-        props.onInviteSelected(data)
-      } else {
-        console.log(response)
-      }
-    }).catch((error) => {
-      setChecking(false);
-      console.error(error);
-    })
-  }, [code, props])
+    apiGet(`/api/family/by-code?code=${value}`)
+      .then(({ response, data }) => {
+        setChecking(false);
+        if (response.ok) {
+          props.onInviteSelected(data);
+        } else {
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        setChecking(false);
+        console.error(error);
+      });
+  }, [code, props]);
 
   useEffect(() => {
     if (props.rsvpCode) {
@@ -35,26 +37,35 @@ export default function InviteLookup(props: {
   }, [handleSubmit, props.rsvpCode]);
 
   return (
-    <div className="flex self-stretch items-center justify-center">
+    <div className="flex items-center justify-center self-stretch">
       <div className="card flex flex-col gap-5">
-        { checking ? (<>
-          <Loader2 className={"animate-spin"} />
-        </>) : (<>
-          <div>Enter the RSVP code on your invite</div>
+        {checking ? (
+          <>
+            <Loader2 className={"animate-spin"} />
+          </>
+        ) : (
+          <>
+            <div>Enter the RSVP code on your invite</div>
 
-          <input
-            className="text-center"
-            type="text"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            autoComplete="off"
-            inputMode="text"
-          />
+            <input
+              className="text-center"
+              type="text"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              autoComplete="off"
+              inputMode="text"
+              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+            />
 
-          <button className="btn btn--primary" onClick={handleSubmit}>
-            Find Invite
-          </button>
-        </>)}
+            <button
+              type={"submit"}
+              className="btn btn--primary"
+              onClick={handleSubmit}
+            >
+              Find Invite
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

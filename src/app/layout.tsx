@@ -66,9 +66,7 @@ export default async function RootLayout({
                 </span>
               </Link>
 
-              {canAccess && (
-                <DesktopLinks links={links} canAccess={canAccess} />
-              )}
+              <DesktopLinks links={links} canAccess={canAccess} />
             </div>
             <MobileNav links={links} canAccess={canAccess} />
           </header>
