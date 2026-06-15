@@ -1,10 +1,18 @@
 ﻿"use client";
 
 import { useEffect, useId, useState } from "react";
+import { usePathname } from "next/navigation";
 
 type Link = { href: string; label: string };
 
-export default function MobileNav({ links, canAccess }: { links: Link[], canAccess: boolean }) {
+export default function MobileNav({
+  links,
+  canAccess,
+}: {
+  links: Link[];
+  canAccess: boolean;
+}) {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const panelId = useId();
 
@@ -26,9 +34,13 @@ export default function MobileNav({ links, canAccess }: { links: Link[], canAcce
   }, [open]);
 
   if (!canAccess) {
+    if (pathname.includes("rsvp")) return;
     return (
-      <div className="mnav">
-        <a href={"/rsvp"} className={"btn btn--primary"}>
+      <div className="mnav flex w-full justify-around pb-2">
+        <a
+          href={"/rsvp"}
+          className={"nav__link glow-hover-soft btn--ghost btn"}
+        >
           RSVP
         </a>
       </div>
@@ -36,63 +48,72 @@ export default function MobileNav({ links, canAccess }: { links: Link[], canAcce
   }
 
   return (
-    <div className="mnav">
-      <button
-        type="button"
-        className="btn btn--ghost btn--icon mnav__btn"
-        aria-label="Open menu"
-        aria-expanded={open}
-        aria-controls={panelId}
-        onClick={() => setOpen((v) => !v)}
-      >
-        <span className="mnav__icon" aria-hidden="true">
-          {/* simple hamburger / close */}
-          {open ? "✕" : "☰"}
-        </span>
-        <span className="btn__text">Menu</span>
-      </button>
+    <div className="mnav flex w-full justify-evenly pb-2">
+      {links.map((l) => (
+        <a
+          key={l.href}
+          className={`nav__link ${pathname.includes(l.href) ? "glow-soft btn--ghost-selected" : "glow-hover-soft"} btn btn--ghost`}
+          href={l.href}
+        >
+          {l.label}
+        </a>
+      ))}
+      {/*<button*/}
+      {/*  type="button"*/}
+      {/*  className="btn btn--ghost btn--icon mnav__btn"*/}
+      {/*  aria-label="Open menu"*/}
+      {/*  aria-expanded={open}*/}
+      {/*  aria-controls={panelId}*/}
+      {/*  onClick={() => setOpen((v) => !v)}*/}
+      {/*>*/}
+      {/*  <span className="mnav__icon" aria-hidden="true">*/}
+      {/*    /!* simple hamburger / close *!/*/}
+      {/*    {open ? "✕" : "☰"}*/}
+      {/*  </span>*/}
+      {/*  <span className="btn__text">Menu</span>*/}
+      {/*</button>*/}
 
-      {/* Scrim */}
-      {open && (
-        <button
-          type="button"
-          className="mnav__scrim"
-          aria-label="Close menu"
-          onClick={() => setOpen(false)}
-        />
-      )}
+      {/*/!* Scrim *!/*/}
+      {/*{open && (*/}
+      {/*  <button*/}
+      {/*    type="button"*/}
+      {/*    className="mnav__scrim"*/}
+      {/*    aria-label="Close menu"*/}
+      {/*    onClick={() => setOpen(false)}*/}
+      {/*  />*/}
+      {/*)}*/}
 
-      <div
-        id={panelId}
-        className={`mnav__panel ${open ? "mnav__panel--open" : ""}`}
-        role="dialog"
-        aria-modal="true"
-      >
-        <div className="mnav__panelInner">
-          <div className="mnav__title">Navigation</div>
+      {/*<div*/}
+      {/*  id={panelId}*/}
+      {/*  className={`mnav__panel ${open ? "mnav__panel--open" : ""}`}*/}
+      {/*  role="dialog"*/}
+      {/*  aria-modal="true"*/}
+      {/*>*/}
+      {/*  <div className="mnav__panelInner">*/}
+      {/*    <div className="mnav__title">Navigation</div>*/}
 
-          <nav className="mnav__links" aria-label="Mobile">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                className="mnav__link"
-                href={l.href}
-                onClick={() => setOpen(false)}
-              >
-                {l.label}
-              </a>
-            ))}
-          </nav>
+      {/*    <nav className="mnav__links" aria-label="Mobile">*/}
+      {/*      {links.map((l) => (*/}
+      {/*        <a*/}
+      {/*          key={l.href}*/}
+      {/*          className="mnav__link"*/}
+      {/*          href={l.href}*/}
+      {/*          onClick={() => setOpen(false)}*/}
+      {/*        >*/}
+      {/*          {l.label}*/}
+      {/*        </a>*/}
+      {/*      ))}*/}
+      {/*    </nav>*/}
 
-          <a
-            className="btn btn--primary mnav__cta"
-            href="/rsvp"
-            onClick={() => setOpen(false)}
-          >
-            RSVP
-          </a>
-        </div>
-      </div>
+      {/*    <a*/}
+      {/*      className="btn btn--primary mnav__cta"*/}
+      {/*      href="/rsvp"*/}
+      {/*      onClick={() => setOpen(false)}*/}
+      {/*    >*/}
+      {/*      RSVP*/}
+      {/*    </a>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
     </div>
   );
 }
