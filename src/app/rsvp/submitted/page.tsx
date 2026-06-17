@@ -1,5 +1,5 @@
 import React from "react";
-import whatsAppIcon from "@/images/whatsapp.png"
+import whatsAppIcon from "@/images/whatsapp.png";
 import Image from "next/image";
 import notattending from "@/images/ron-swanson-not-attending.gif";
 import { getInviteFromCookie } from "@/app/rsvp/actions";
@@ -19,7 +19,7 @@ function isNoOneComing(family: FamilyWithGuests | null) {
 export default async function RSVPSubmittedPage() {
   const inviteCookie = await getInviteFromCookie();
   if (!inviteCookie) {
-    redirect("/rsvp")
+    redirect("/rsvp");
   }
   const family = await prisma.family.findFirst({
     where: {
@@ -33,7 +33,7 @@ export default async function RSVPSubmittedPage() {
       },
     },
   });
-  const noOneComing = isNoOneComing(family)
+  const noOneComing = isNoOneComing(family);
 
   return (
     <>
@@ -41,18 +41,24 @@ export default async function RSVPSubmittedPage() {
         <div className={"h2 text-center"}>
           Thank you for submitting your RSVP
         </div>
+        {!noOneComing && (
+          <div>
+            Feel free to check out the other pages and if you need any more
+            information, the info page specifically is your friend
+          </div>
+        )}
         <div
           className={"h-1 bg-gradient-to-r from-[var(--fg)] to-transparent"}
         ></div>
         {noOneComing ? (
-          <div className={"self-center card p-0! overflow-clip"}>
+          <div className={"card self-center overflow-clip p-0!"}>
             <Image src={notattending} alt={""} />
           </div>
-          ) : (
+        ) : (
           <div className={"small muted flex flex-col items-center gap-1"}>
             <p>
-              If you need to change anything or can no longer attend, get in touch
-              with Joel
+              If you need to change anything or can no longer attend, get in
+              touch with Joel
             </p>
             <a
               className={"link-text flex items-center gap-1 p-1"}
