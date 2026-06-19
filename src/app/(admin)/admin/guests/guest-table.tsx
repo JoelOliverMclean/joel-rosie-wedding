@@ -144,8 +144,8 @@ export default function GuestTable(props: {
         {guests.length} guests -{" "}
         {[...new Set(guests.map((g) => g.familyId))].length} families
       </div>
-      <div className={"card p-2"}>
-        <table className={"w-full"}>
+      <div className={"card overflow-x-scroll p-2"}>
+        <table className={"w-full min-w-6xl lg:min-w-auto"}>
           <thead className="sticky top-0 z-10">
             <tr>
               <th className={"table-header"}>
