@@ -1,6 +1,7 @@
 import { FamilyWithGuests, Guest } from "@/lib/prisma-types";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { NewGuest } from "@/app/(admin)/admin/family/[id]/AddNewGuest";
 
 export async function getFamily(id: string): Promise<FamilyWithGuests | null> {
   return prisma.family.findUnique({
@@ -43,6 +44,36 @@ export async function updateRSVPCode(
   await prisma.family.update({
     where: { id: familyId },
     data: { rsvpCode: newCode },
+  });
+
+  revalidatePath("/admin/family");
+  revalidatePath(`/admin/family/${familyId}`);
+  revalidatePath("/admin/guests");
+}
+
+export async function addNewGuest(
+  familyId: number,
+  newGuest: NewGuest,
+): Promise<void> {
+  const family = await prisma.family.findFirst({
+    where: {
+      id: familyId,
+    },
+  });
+
+  if (!family) {
+    throw new Error("Family not found");
+  }
+
+  await prisma.guest.create({
+    data: {
+      firstName: newGuest.firstName,
+      lastName: family.familyName,
+      child: newGuest.isChild,
+      invitedDay: newGuest.invitedDay,
+      invitedEvening: newGuest.invitedEvening,
+      familyId: familyId,
+    },
   });
 
   revalidatePath("/admin/family");

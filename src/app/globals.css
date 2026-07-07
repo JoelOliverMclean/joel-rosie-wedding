@@ -291,6 +291,12 @@ h2, .h2 {
     letter-spacing: -0.015em;
     font-weight: 600;
 }
+h3, .h3 {
+    @apply text-lg lg:text-xl;
+    margin: 0;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+}
 .lead {
     margin: 14px 0 0;
     max-width: 60ch;

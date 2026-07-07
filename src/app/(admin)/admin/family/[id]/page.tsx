@@ -1,4 +1,5 @@
 import {
+  addNewGuest,
   getFamily,
   updateGuest,
   updateRSVPCode,
@@ -6,6 +7,10 @@ import {
 import { Guest } from "@/lib/prisma-types";
 import EditGuestForm from "./guest-form";
 import EditRSVPForm from "@/app/(admin)/admin/family/[id]/edit-rsvp-form";
+import { Plus } from "lucide-react";
+import AddNewGuest, {
+  NewGuest,
+} from "@/app/(admin)/admin/family/[id]/AddNewGuest";
 
 export default async function FamilyPage({
   params,
@@ -25,6 +30,10 @@ export default async function FamilyPage({
     "use server";
     if (family) await updateRSVPCode(family.id, rsvpCode);
   };
+  const saveNewGuest = async (newGuest: NewGuest) => {
+    "use server";
+    if (family) await addNewGuest(family.id, newGuest);
+  };
 
   return (
     <div className={"section flex flex-col gap-5"}>
@@ -37,6 +46,7 @@ export default async function FamilyPage({
           onUpdateGuest={onUpdateGuest}
         />
       ))}
+      <AddNewGuest saveNewGuest={saveNewGuest} />
       <EditRSVPForm
         rsvpCode={family?.rsvpCode}
         onUpdateRSVPCode={onUpdateRSVPCode}

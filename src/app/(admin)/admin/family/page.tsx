@@ -1,6 +1,7 @@
 ﻿import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { regenerateRSVPCodes } from "@/app/(admin)/admin/family/actions";
+import { FamilyWithGuests } from "@/lib/prisma-types";
 
 export const dynamic = "force-dynamic";
 
@@ -47,7 +48,12 @@ export default async function FamilyAdminPage() {
                 key={i}
                 className={`grid grid-cols-3 gap-5 p-2 ${i < families.length - 1 ? "border-b-1 border-white/50" : ""}`}
               >
-                <h3 className={"text-xl font-bold"}>{family.familyName}</h3>
+                <Link
+                  href={`/admin/family/${family.id}`}
+                  className={"text-xl font-bold"}
+                >
+                  {family.familyName}
+                </Link>
                 <div className={"flex flex-wrap gap-2"}>
                   <p>{family.guests.map((g) => g.firstName).join(", ")}</p>
                 </div>
