@@ -143,6 +143,10 @@ export default function GuestTable(props: {
     ).length;
   };
 
+  const getRepliedCount = (guests: GuestsWithFamily[]) => {
+    return guests.filter((g) => g.rsvpResponse).length;
+  };
+
   useEffect(() => {
     sortGuests(props.guests, sortBy);
   }, []);
@@ -156,6 +160,7 @@ export default function GuestTable(props: {
       <div>
         {`${guests.length} guests (${getAttendingCount(guests)} attending) - ${getFamilyCount(guests)} families`}
       </div>
+      <div>{`${getRepliedCount(guests)}/${guests.length} responded`}</div>
       <div className={"card overflow-x-scroll p-2"}>
         <table className={"w-full min-w-6xl lg:min-w-auto"}>
           <thead className="sticky top-0 z-10">
