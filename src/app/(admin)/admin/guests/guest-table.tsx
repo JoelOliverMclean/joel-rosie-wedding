@@ -154,7 +154,7 @@ export default function GuestTable(props: {
   return (
     <>
       <div>
-        {`${guests.length} guests (${getAttendingCount(guests)}) - ${getFamilyCount(guests)} families`}
+        {`${guests.length} guests (${getAttendingCount(guests)} attending) - ${getFamilyCount(guests)} families`}
       </div>
       <div className={"card overflow-x-scroll p-2"}>
         <table className={"w-full min-w-6xl lg:min-w-auto"}>
