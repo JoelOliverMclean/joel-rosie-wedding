@@ -1,10 +1,11 @@
 "use client";
 
-import { GuestsWithFamily } from "@/lib/prisma-types";
+import { $Enums, GuestsWithFamily } from "@/lib/prisma-types";
 import { Check, SquareArrowDown, SquareArrowUp } from "lucide-react";
 import { rsvpResponseToString } from "@/lib/prisma-enum-helper";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import RSVPResponse = $Enums.RSVPResponse;
 
 type SortBy = {
   property: string;
@@ -130,6 +131,18 @@ export default function GuestTable(props: {
     [],
   );
 
+  const getFamilyCount = (guests: GuestsWithFamily[]) => {
+    return [...new Set(guests.map((g) => g.familyId))].length;
+  };
+
+  const getAttendingCount = (guests: GuestsWithFamily[]) => {
+    return guests.filter(
+      (g) =>
+        g.rsvpResponse == RSVPResponse.FULL_DAY ||
+        g.rsvpResponse == RSVPResponse.EVENING_ONLY,
+    ).length;
+  };
+
   useEffect(() => {
     sortGuests(props.guests, sortBy);
   }, []);
@@ -141,8 +154,7 @@ export default function GuestTable(props: {
   return (
     <>
       <div>
-        {guests.length} guests -{" "}
-        {[...new Set(guests.map((g) => g.familyId))].length} families
+        {`${guests.length} guests (${getAttendingCount(guests)}) - ${getFamilyCount(guests)} families`}
       </div>
       <div className={"card overflow-x-scroll p-2"}>
         <table className={"w-full min-w-6xl lg:min-w-auto"}>
