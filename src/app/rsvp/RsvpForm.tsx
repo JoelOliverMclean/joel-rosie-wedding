@@ -50,9 +50,7 @@ export default function RsvpForm(props: {
       className={"card flex flex-col gap-5 shadow-none!"}
     >
       {props.guestCount > 1 && (
-        <div className={"h2 font-bold"}>
-          {props.guest.firstName} {props.guest.lastName}
-        </div>
+        <div className={"h2 font-bold"}>{props.guest.firstName}</div>
       )}
       <div className={"flex flex-col gap-2"}>
         <label htmlFor="rsvpResponse">Attendance *</label>
