@@ -12,6 +12,7 @@ import {
   useSearchParams,
 } from "next/navigation";
 import ConfirmPopover from "@/components/popovers/ConfirmPopover";
+import TooLateToRSVP, { rsvpDeadline } from "@/app/rsvp/TooLateToRSVP";
 
 export default function RsvpClient(props: {
   rsvpCode?: string;
@@ -136,6 +137,10 @@ export default function RsvpClient(props: {
 
   const rsvpCode = props.rsvpCode ?? "";
 
+  if (rsvpDeadline <= new Date()) {
+    return <TooLateToRSVP />;
+  }
+
   return (
     <>
       <main className="section flex flex-col items-start gap-5">
@@ -174,9 +179,6 @@ export default function RsvpClient(props: {
                 to come without them that&apos;s fine with us.
               </div>
             )}
-            {/*<div className={"flex flex-wrap items-center gap-5"}>*/}
-            {/*  <h2 className={"font-bold"}>Guests</h2>*/}
-            {/*</div>*/}
             <div className={"grid grid-cols-1 gap-5 lg:grid-cols-2"}>
               {invite.family.guests.map((guest: Guest) => (
                 <RsvpForm
@@ -219,12 +221,6 @@ export default function RsvpClient(props: {
               </div>
             )}
             <div className={"mt-10 flex flex-col gap-5 md:flex-row"}>
-              {/*<button*/}
-              {/*  onClick={() => updateGuests()}*/}
-              {/*  className={"btn btn--ghost w-full"}*/}
-              {/*>*/}
-              {/*  Save RSVP*/}
-              {/*</button>*/}
               <button
                 onClick={() => setShowSubmitConfirm(true)}
                 className={"btn btn--primary w-full"}
