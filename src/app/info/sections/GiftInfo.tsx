@@ -1,0 +1,29 @@
+import React from "react";
+import Image from "next/image";
+
+import moneyplease from "@/images/moneyplease.gif";
+
+export default function GiftInfo() {
+  return (
+    <div className={"flex flex-col items-start gap-5"}>
+      {/*<div>*/}
+      {/*  {*/}
+      {/*    "We weren't quite sure how to word this without it sounding awkward, so let's just pretend this isn't a strange thing to put on a website."*/}
+      {/*  }*/}
+      {/*</div>*/}
+      <div>
+        {
+          "We have everything we need... besides perhaps a slightly healthier bank balance... but please don't feel any obligation to give a gift."
+        }
+      </div>
+      <div>
+        {
+          "However if you would like to, a contribution towards our future and honeymoon would be hugely appreciated."
+        }
+      </div>
+      <div className={"card -z-10 self-center overflow-clip p-0!"}>
+        <Image src={moneyplease} alt={""} />
+      </div>
+    </div>
+  );
+}

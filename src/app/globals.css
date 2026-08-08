@@ -253,7 +253,7 @@ body {
     color: var(--muted);
     font-size: 14px;
 }
-.nav__link:hover { color: var(--fg); }
+.nav__link:hover, .nav__link-hover { color: var(--fg); }
 
 @media (min-width: 780px) {
     .nav { display: flex; }
@@ -272,8 +272,8 @@ body {
 
 /* Typography */
 h1, .h1 {
+    @apply text-3xl lg:text-5xl;
     margin: 0;
-    font-size: clamp(40px, 5.2vw, 64px);
     letter-spacing: -0.03em;
     line-height: 1.05;
     font-weight: 650;
@@ -286,9 +286,16 @@ h1, .h1 {
     font-weight: 600;
 }
 h2, .h2 {
+    @apply text-xl lg:text-3xl;
     margin: 0;
-    font-size: 22px;
     letter-spacing: -0.015em;
+    font-weight: 600;
+}
+h3, .h3 {
+    @apply text-lg lg:text-xl;
+    margin: 0;
+    letter-spacing: -0.015em;
+    font-weight: 600;
 }
 .lead {
     margin: 14px 0 0;
@@ -326,6 +333,10 @@ h2, .h2 {
     backdrop-filter: blur(10px);
 }
 
+button {
+    @apply cursor-pointer;
+}
+
 .btn {
     @apply cursor-pointer;
     display: inline-flex;
@@ -349,12 +360,13 @@ h2, .h2 {
     border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
 }
 .btn--primary:hover { background: var(--primary-hover); }
+.btn--primary:disabled { background: var(--primary); opacity: 0.6; }
 
 .btn--ghost {
     background: var(--ghost);
     color: var(--fg);
 }
-.btn--ghost:hover { background: color-mix(in srgb, var(--ghost) 80%, white 10%); }
+.btn--ghost:hover, .btn--ghost-selected { background: color-mix(in srgb, var(--ghost) 80%, white 10%); }
 
 .hero { position: relative; z-index: 1; }
 .hero__grid {
@@ -449,6 +461,12 @@ h2, .h2 {
 .section {
     position: relative;
     z-index: 1;
+}
+
+.glow-soft {
+    text-shadow:
+            0 0 4px rgba(255, 255, 255, 0.5),
+            0 0 12px rgba(255, 255, 255, 0.3);
 }
 
 .glow-hover-soft {
@@ -566,5 +584,13 @@ select {
     appearance: none;
     padding-right: 32px;
     background: url("down-arrow.png") no-repeat right #fff;
-    background-position-x: 92%;
+    background-position-x: 95%;
+}
+
+.table-header {
+    @apply p-2 border-b-1 border-[var(--fg)]/25;
+}
+
+.table-cell {
+    @apply p-2 border-b-1 border-[var(--fg)]/25;
 }

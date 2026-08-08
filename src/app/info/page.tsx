@@ -1,12 +1,20 @@
 import React from "react";
-import LocationInfo from "@/app/info/sections/Location";
-import TimeAndDateInfo from "@/app/info/sections/TimeAndDate";
 import DressCodeInfo from "@/app/info/sections/DressCode";
 import TravelAndAccommodationInfo from "@/app/info/sections/TravelAndAccomodation";
 import DietaryRequirementInfo from "@/app/info/sections/DietaryRequirements";
+import ContactInfo from "@/app/info/sections/ContactInfo";
+import WhereAndWhen from "@/app/info/sections/WhereAndWhen";
+import GiftInfo from "@/app/info/sections/GiftInfo";
+import { canAccessSite } from "@/utils/cookieUtils";
+import { redirect } from "next/navigation";
+import ChildInfo from "@/app/info/sections/ChildInfo";
 
 
-function InfoPage() {
+async function InfoPage() {
+  const canAccess = await canAccessSite();
+  if (!canAccess) {
+    redirect("/rsvp");
+  }
 
   const header = (name: string) => (
     <div className={""}>
@@ -17,22 +25,48 @@ function InfoPage() {
 
   return (
     <div className={"section flex flex-col gap-5"}>
-      <div className={"h1"}>Information</div>
+      <div className={"h1"}>FYI</div>
 
-      {header("Location")}
-      <LocationInfo />
+      {header("RSVP")}
+      <div>
+        Please submit your RSVP before{" "}
+        <span className={"font-bold"}>8th August 2026</span>
+      </div>
 
-      {header("Time & Date")}
-      <TimeAndDateInfo />
+      {header("Where and When?")}
+      <WhereAndWhen />
 
-      {header("Dress Code")}
+      {header("What should I wear?")}
       <DressCodeInfo />
 
-      {header("Travel & Accommodation")}
+      {header("Confetti")}
+      <div>
+        {
+          "Please don't bring your own confetti, it will be supplied as the venue has restrictions on the type of confetti and where we can throw it."
+        }
+      </div>
+
+      {header("Won't somebody think of the children?")}
+      <ChildInfo />
+
+      {header("Gifts and Things")}
+      <GiftInfo />
+
+      {header("Can I bring a plus one?")}
+      <div>
+        {
+          "Only those on the RSVP can attend, we're limited on guest numbers due to venue restrictions."
+        }
+      </div>
+
+      {header("Getting here and staying here")}
       <TravelAndAccommodationInfo />
 
       {header("Dietary Requirements")}
       <DietaryRequirementInfo />
+
+      {header("Questions on the day")}
+      <ContactInfo />
     </div>
   );
 }

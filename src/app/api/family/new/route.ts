@@ -4,6 +4,14 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   const data = await request.json();
 
+  const validCode = await checkRSVPCode(data.rsvpCode);
+  if (!validCode) {
+    return NextResponse.json(
+      { ok: false, message: "RSVP Code taken, generate new" },
+      { status: 400 },
+    );
+  }
+
   const newFamily: {
     familyName: string;
     rsvpCode: string;
@@ -95,4 +103,14 @@ function toBool(v: unknown): boolean {
     return s === "true" || s === "1" || s === "yes" || s === "y";
   }
   return false;
+}
+
+async function checkRSVPCode(code: string): Promise<boolean> {
+  const conflict = await prisma.family.findFirst({
+    where: {
+      rsvpCode: code,
+    },
+  });
+
+  return !conflict;
 }

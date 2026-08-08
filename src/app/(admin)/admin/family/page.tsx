@@ -1,5 +1,7 @@
 ﻿import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { regenerateRSVPCodes } from "@/app/(admin)/admin/family/actions";
+import { FamilyWithGuests } from "@/lib/prisma-types";
 
 export const dynamic = "force-dynamic";
 
@@ -14,30 +16,52 @@ export default async function FamilyAdminPage() {
     },
   });
 
+  const regenerateCodes = async () => {
+    "use server";
+    await regenerateRSVPCodes();
+  };
+
   return (
     <div className={"section flex flex-col gap-5"}>
-      <h1 className={"h1"}>Families</h1>
+      <div className={"flex items-center justify-between"}>
+        <h1 className={"h1"}>Families</h1>
+        <button onClick={regenerateCodes} className={"btn btn--ghost"}>
+          Regenerate Codes
+        </button>
+      </div>
       {!families ? (
-        <div>Waiting...</div>
+        <div>Loading...</div>
       ) : (
-        <div
-          className={
-            "grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
-          }
-        >
-          {families.map((family) => (
-            <div key={family.id} className={"pill flex flex-col gap-2"}>
-              <h2 className={"h2 text-center"}>{family.familyName}</h2>
-              <div className={"flex flex-wrap justify-center gap-2"}>
-                <div>-</div>
-                {family.guests.map((guest) => (
-                  <div key={guest.id} className={""}>
-                    {guest.firstName} -
-                  </div>
-                ))}
-              </div>
+        <>
+          <div className={"flex flex-col"}>
+            <div
+              className={
+                "grid grid-cols-3 gap-5 border-b-2 border-white p-2 text-xl font-bold"
+              }
+            >
+              <p>Family</p>
+              <p>Members</p>
+              <p>RSVP Code</p>
             </div>
-          ))}
+            {families.map((family, i) => (
+              <div
+                key={i}
+                className={`grid grid-cols-3 gap-5 p-2 ${i < families.length - 1 ? "border-b-1 border-white/50" : ""}`}
+              >
+                <Link
+                  href={`/admin/family/${family.id}`}
+                  className={"text-xl font-bold"}
+                >
+                  {family.familyName}
+                </Link>
+                <div className={"flex flex-wrap gap-2"}>
+                  <p>{family.guests.map((g) => g.firstName).join(", ")}</p>
+                </div>
+                <p>{family.rsvpCode}</p>
+              </div>
+            ))}
+          </div>
+
           <Link
             href={"/admin/family/new"}
             key={-1}
@@ -45,7 +69,7 @@ export default async function FamilyAdminPage() {
           >
             Add new
           </Link>
-        </div>
+        </>
       )}
     </div>
   );

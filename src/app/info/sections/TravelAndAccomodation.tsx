@@ -40,9 +40,12 @@ const carPark = (
       </a>
     </div>
     <div>
-      <span className={"font-bold"}>Rufford Mill Car Park Terms:</span> All cars
-      left overnight are left at the persons own risk and discretion but must be
-      collected and offsite by 8.30am the following day.
+      <span className={"font-bold"}>Rufford Mill Car Park Terms:</span> Parking
+      is free for wedding guests on the day, they must enter their registration
+      at the venue otherwise risk being charged by the parking provider. If cars
+      are left overnight, a £1 charge is applicable if collected before 9am -
+      any later and guests must pay for a full days parking (£7). Cars are left
+      at the persons own risk and discretion.
     </div>
   </div>
 );
@@ -51,7 +54,7 @@ type Taxi = {
   name: string;
   phone: string;
   website?: string;
-}
+};
 
 const taxiData: Taxi[] = [
   {
@@ -82,33 +85,39 @@ const taxis = (
       It is recommended to pre-book a taxi if you need one. Here are some
       venue-recommended services:
     </div>
-    <div className={"flex flex-wrap gap-5"}>
+    <div className={"grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"}>
       {taxiData.map((taxi) => (
-        <div
-          key={taxi.name}
-          className={"pill flex justify-center gap-2 w-full md:w-max"}
-        >
-          {taxi.name}
-          <a className={"link-text flex gap-2"} href={`tel:${taxi.phone}`}>
-            <div className={"flex items-center gap-2"}>
-              <PhoneCall /> Phone
-            </div>
-          </a>
-          {taxi.website && (
-            <a className={"link-text flex gap-2"} href={taxi.website}>
+        <div key={taxi.name} className={"card card--hero p-0! shadow-none!"}>
+          <div className={"p-2 text-center"}>{taxi.name}</div>
+          <div className={"flex"}>
+            <a
+              className={
+                "link-text flex w-full justify-center gap-2 bg-gradient-to-r from-black/10 to-black/20 p-2 text-sm duration-200 hover:from-black/20"
+              }
+              href={`tel:${taxi.phone}`}
+            >
               <div className={"flex items-center gap-2"}>
-                <Globe /> Web
+                <PhoneCall /> Phone
               </div>
             </a>
-          )}
+            {taxi.website && (
+              <a
+                className={
+                  "link-text flex w-full justify-center gap-2 bg-gradient-to-r from-black/10 to-black/20 text-sm duration-200 hover:from-black/20"
+                }
+                href={taxi.website}
+              >
+                <div className={"flex items-center gap-2"}>
+                  <Globe /> Web
+                </div>
+              </a>
+            )}
+          </div>
         </div>
       ))}
     </div>
-    <div className={"quote__text"}>
-      Taxis can be &quot;prebooked&quot; on apps like Uber or Bolt, however this
-      does not reserve them for the time, it simply automatically requests one
-      for you at the time you need it, meaning it is not totally guaranteed
-      (reliant on a driver accepting your ride at the time)
+    <div className={"pt-2"}>
+      Taxis can be also be prebooked on apps like Uber or Bolt.
     </div>
   </div>
 );
@@ -116,40 +125,54 @@ const taxis = (
 type Hotel = {
   href: string;
   name: string;
-}
+  image?: any;
+};
+
+import maypoleHotelImg from "@/images/hotels/the-maypole-at-wellow.jpg";
+import dukeriesHotelImg from "@/images/hotels/dukeries.webp";
+import forestLodgeHotelImg from "@/images/hotels/forestlodge.jpg";
+import muthuHotelImg from "@/images/hotels/muthu.jpg";
+import travelodgeRetford from "@/images/hotels/travelodge_retford.webp";
+import travelodgeMansfield from "@/images/hotels/travelodge_mansfield.webp";
 
 const hotelData: Hotel[] = [
   {
     href: "https://maps.app.goo.gl/JXCcSUSHbxxHnZaF7",
     name: "The Maypole at Wellow",
+    image: maypoleHotelImg,
   },
   {
     href: "https://maps.app.goo.gl/6rZ7ifiUrbjzJgUXA",
     name: "The Dukeries Lodge Hotel",
+    image: dukeriesHotelImg,
   },
   {
     href: "https://maps.app.goo.gl/XzePgDVwAPSymgxP8",
     name: "The Forest Lodge Hotel",
+    image: forestLodgeHotelImg,
   },
   {
     href: "https://maps.app.goo.gl/hUK1V3Jsi6KrXkfu6",
     name: "Muthu Clumber Park Hotel & Spa",
+    image: muthuHotelImg,
   },
   {
-    href: "https://maps.app.goo.gl/NLJihJgTMTJuF9V466",
+    href: "https://maps.app.goo.gl/UH9rta5KwQYNJDu1A",
     name: "Travelodge (Retford Markham Moor)",
+    image: travelodgeRetford,
   },
   {
     href: "https://maps.app.goo.gl/a4sqbJ6ZMEzw7mao7",
     name: "Travelodge (Mansfield Town Centre)",
+    image: travelodgeMansfield,
   },
 ];
 
 const hotels = (
   <div className={"flex flex-col gap-5"}>
     <div className={"h2"}>Hotels</div>
-    <div>Here is a list of nearby hotels:</div>
-    <div className={"flex flex-col gap-2 px-3"}>
+    <div>Here are some nearby hotels:</div>
+    <div className={"grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3"}>
       {hotelData.map((hotel) => (
         <a
           className={"link-text"}
@@ -157,20 +180,39 @@ const hotels = (
           key={hotel.name}
           target={"_blank"}
         >
-          {hotel.name}
+          <div key={hotel.name} className={"card card--hero p-0! shadow-none!"}>
+            <div className={"relative h-[150px] overflow-hidden"}>
+              <Image
+                src={hotel.image}
+                alt={`Image of ${hotel.name}`}
+                fill
+                style={{
+                  objectFit: "cover",
+                  objectPosition: "center",
+                }}
+              />
+            </div>
+            <div
+              className={
+                "flex h-[4em] items-center justify-center p-2 text-center"
+              }
+            >
+              {hotel.name}
+            </div>
+          </div>
         </a>
       ))}
     </div>
-    <div className={"quote__text"}>
-      You can also take advantage of services like AirBnB, Booking.com or even
-      spare room.
+    <div className={"quote__text pt-3"}>
+      You can also take advantage of services like AirBnB, Booking.com and
+      others...
     </div>
   </div>
 );
 
 export default function TravelAndAccommodationInfo() {
   return (
-    <div className={"px-2 flex flex-col gap-5"}>
+    <div className={"flex flex-col gap-5"}>
       {carPark}
       {taxis}
       {hotels}

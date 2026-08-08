@@ -17,7 +17,7 @@ interface Guest {
 function FamilyForm() {
   const router = useRouter();
 
-  const [rsvpCode, setRsvpCode] = useState(random(10));
+  const [rsvpCode, setRsvpCode] = useState(random(6));
   const [guests, setGuests] = useState<Guest[]>([]);
 
   const submitNewFamilyForm = (

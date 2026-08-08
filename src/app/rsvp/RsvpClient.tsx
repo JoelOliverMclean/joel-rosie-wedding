@@ -4,94 +4,121 @@ import React, { useEffect, useState } from "react";
 import InviteLookup from "@/app/rsvp/InviteLookupComponent";
 import { InviteSummary } from "@/app/rsvp/types";
 import RsvpForm from "@/app/rsvp/RsvpForm";
-import { apiPost } from "@/utils/apiUtils";
-import { Guest } from "@/lib/prisma-types";
-import { redirect, usePathname, useRouter, useSearchParams } from "next/navigation";
+import { FoodPreference, Guest, RSVPResponse } from "@/lib/prisma-types";
+import {
+  redirect,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import ConfirmPopover from "@/components/popovers/ConfirmPopover";
+import TooLateToRSVP, { rsvpDeadline } from "@/app/rsvp/TooLateToRSVP";
 
 export default function RsvpClient(props: {
   rsvpCode?: string;
   initialInvite: InviteSummary | null;
-  setInviteAction: (invite: InviteSummary) => Promise<void>;
-  clearInviteAction: () => Promise<void>;
-  submitRSVP: (familyId: number) => Promise<boolean>;
+  setInviteCodeAction: (inviteCode: string) => Promise<void>;
+  clearInviteCodeAction: () => Promise<void>;
+  submitRSVP: (familyId: number, contact: string) => Promise<string>;
+  saveGuests: (guests: Guest[]) => Promise<boolean>;
 }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [invite, setInvite] = React.useState<InviteSummary | null>(
     () => props.initialInvite,
   );
-  const [status, setStatus] = React.useState<
-    "idle" | "saving" | "submitting" | "submitted" | "error"
-  >("idle");
-  const [guest, setGuest] = React.useState<Guest | null>(null);
+  const [contact, setContact] = React.useState<string>(
+    props.initialInvite?.family.contact ?? "",
+  );
 
   // Ensures client doesn't swap the tree during hydration
   const [hydrated, setHydrated] = React.useState(false);
   React.useEffect(() => setHydrated(true), []);
 
   async function handleInviteSelected(selected: InviteSummary) {
-    setStatus("saving");
     try {
-      await props.setInviteAction(selected);
+      await props.setInviteCodeAction(selected.family.rsvpCode);
       if (selected.family.rsvpSubmitted) {
-        redirect("/rsvp/submitted")
+        redirect("/rsvp/submitted");
       }
       setInvite(selected);
-      setStatus("idle");
-    } catch {
-      setStatus("error");
-    }
+    } catch {}
   }
 
   async function handleNotYou() {
-    setStatus("saving");
     try {
-      await props.clearInviteAction();
+      await props.clearInviteCodeAction();
       setInvite(null);
-      setStatus("idle");
-    } catch {
-      setStatus("error");
-    }
-  }
-
-  async function handleSubmit(updatedGuest: Guest) {
-    if (!invite) return;
-    setStatus("submitting");
-    try {
-      const result = await apiPost(`/api/rsvp`, { rsvpCode: invite.family.rsvpCode, ...updatedGuest })
-      if (!result.response.ok) {
-        setStatus("error");
-      } else {
-        setStatus("submitted");
-        setInvite({ family: result.data.family });
-        await props.setInviteAction({ family: result.data.family });
-        setGuest(null);
-      }
-    } catch {
-      setStatus("error");
-    }
+    } catch {}
   }
 
   const onConfirmRSVP = async () => {
-    const submitted = await props.submitRSVP(invite?.family?.id ?? -1);
-    if (submitted) {
-      setShowSubmitConfirm(false);
+    if (!invite) return;
+
+    await props.saveGuests(invite.family.guests);
+    const errorMsg = await props.submitRSVP(invite.family.id, contact);
+    setError(errorMsg);
+    setShowSubmitConfirm(false);
+  };
+
+  function onFoodPreferenceUpdated(
+    guest: Guest,
+    foodPreference: FoodPreference,
+  ) {
+    if (invite) {
+      const index = invite.family.guests.indexOf(guest);
+      const newGuests = invite.family.guests.with(index, {
+        ...guest,
+        foodPreference: foodPreference,
+      });
+      const newFamily = { ...invite.family, guests: newGuests };
+      setInvite({ ...invite, family: newFamily });
     }
   }
 
-  React.useEffect(() => {
-    if (invite?.family?.guests?.length === 1) {
-      setGuest(invite?.family.guests[0]);
+  function onRSVPResponseUpdated(guest: Guest, rsvpResponse: RSVPResponse) {
+    if (invite) {
+      const index = invite.family.guests.indexOf(guest);
+      const newGuests = invite.family.guests.with(index, {
+        ...guest,
+        rsvpResponse: rsvpResponse,
+      });
+      const newFamily = { ...invite.family, guests: newGuests };
+      setInvite({ ...invite, family: newFamily });
     }
-  }, [invite?.family.guests]);
+  }
+
+  function onAllergiesUpdated(guest: Guest, allergies: string) {
+    if (invite) {
+      const index = invite.family.guests.indexOf(guest);
+      const newGuests = invite.family.guests.with(index, {
+        ...guest,
+        allergies: allergies,
+      });
+      const newFamily = { ...invite.family, guests: newGuests };
+      setInvite({ ...invite, family: newFamily });
+    }
+  }
+
+  function onHighchairRequiredUpdated(guest: Guest, required: boolean) {
+    if (invite) {
+      const index = invite.family.guests.indexOf(guest);
+      const newGuests = invite.family.guests.with(index, {
+        ...guest,
+        highchairRequired: required,
+      });
+      const newFamily = { ...invite.family, guests: newGuests };
+      setInvite({ ...invite, family: newFamily });
+    }
+  }
 
   useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString())
+    const params = new URLSearchParams(searchParams.toString());
     if (params.has("rsvpCode")) {
       params.delete("rsvpCode");
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
@@ -103,22 +130,34 @@ export default function RsvpClient(props: {
     return (
       <main className="flex flex-col gap-10">
         <h1>RSVP</h1>
-        <div className="h-8 w-8 self-center animate-spin rounded-full border-4 border-[var(--primary-hover)] border-t-transparent" />
+        <div className="h-8 w-8 animate-spin self-center rounded-full border-4 border-[var(--primary-hover)] border-t-transparent" />
       </main>
     );
   }
 
   const rsvpCode = props.rsvpCode ?? "";
 
+  if (rsvpDeadline <= new Date()) {
+    return <TooLateToRSVP />;
+  }
+
   return (
     <>
       <main className="section flex flex-col items-start gap-5">
-        <h1>RSVP</h1>
+        {/*<h1 className={"w-full text-center sm:w-auto"}>RSVP</h1>*/}
         {invite && (
-          <div className={"flex items-center gap-3"}>
-            <div className={"text-3xl"}>{invite.family.familyName}</div>
+          <div
+            className={
+              "flex w-full items-center justify-between gap-5 sm:justify-start"
+            }
+          >
+            <div className={"text-4xl"}>
+              {invite.family.guests.length > 1
+                ? invite.family.familyName
+                : invite.family.guests[0].firstName}
+            </div>
             <button className={"btn btn--ghost"} onClick={handleNotYou}>
-              Not you?
+              {"Not you?"}
             </button>
           </div>
         )}
@@ -128,38 +167,68 @@ export default function RsvpClient(props: {
             rsvpCode={rsvpCode}
             onInviteSelected={handleInviteSelected}
           />
-        ) : guest == null ? (
-          <div className={"card flex flex-col flex-wrap items-start gap-5"}>
-            {status === "submitted" && <strong>Thanks — RSVP saved.</strong>}
-            <div className={"flex flex-wrap items-center gap-5"}>
-              <h2 className={"font-bold"}>Guests</h2>
+        ) : (
+          <div className={"flex w-full flex-col gap-5"}>
+            <div>
+              Please submit your RSVP below before the{" "}
+              <strong>8th August 2026</strong>
             </div>
-            <div className={"flex flex-wrap gap-5"}>
+            {invite.family.guests.some((g) => g.child) && (
+              <div className={"muted small"}>
+                Please note, invited kids are optional but welcome. If you want
+                to come without them that&apos;s fine with us.
+              </div>
+            )}
+            <div className={"grid grid-cols-1 gap-5 lg:grid-cols-2"}>
               {invite.family.guests.map((guest: Guest) => (
-                <button
-                  onClick={() => setGuest(guest)}
-                  className={"btn btn--ghost"}
+                <RsvpForm
                   key={guest.id}
-                >
-                  {guest.firstName} {guest.lastName}
-                </button>
+                  guest={guest}
+                  onFoodPreferenceChange={onFoodPreferenceUpdated}
+                  onAllergiesChange={onAllergiesUpdated}
+                  onRSVPResponseChange={onRSVPResponseUpdated}
+                  onHighchairRequiredChange={onHighchairRequiredUpdated}
+                  guestCount={invite.family.guests.length}
+                  onSubmit={() => {}}
+                  onNotYou={() => {}}
+                  onBackToGuests={() => {}}
+                />
               ))}
             </div>
-            <button
-              onClick={() => setShowSubmitConfirm(true)}
-              className={"btn btn--primary w-full"}
-            >
-              Submit RSVP
-            </button>
+            {!invite.family.guests.every(
+              (g) => g.rsvpResponse === RSVPResponse.NOT_ATTENDING,
+            ) && (
+              <div className={"grid grid-cols-1 gap-5 lg:grid-cols-2"}>
+                <div className={"card flex flex-col gap-2 shadow-none!"}>
+                  <label className={"h2"} htmlFor="contact">
+                    Contact
+                  </label>
+                  <p className={"small"}>
+                    Please enter an email or phone number we can contact you on
+                    if we need to
+                  </p>
+                  <input
+                    type="text"
+                    defaultValue={contact}
+                    onChange={(e) => setContact(e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
+            {error && (
+              <div className={"mt-10 text-center font-bold text-red-500" + ""}>
+                {error}
+              </div>
+            )}
+            <div className={"mt-10 flex flex-col gap-5 md:flex-row"}>
+              <button
+                onClick={() => setShowSubmitConfirm(true)}
+                className={"btn btn--primary w-full"}
+              >
+                Submit RSVP
+              </button>
+            </div>
           </div>
-        ) : (
-          <RsvpForm
-            guest={guest}
-            guestCount={invite?.family?.guests?.length ?? 0}
-            onSubmit={handleSubmit}
-            onNotYou={handleNotYou}
-            onBackToGuests={() => setGuest(null)}
-          />
         )}
       </main>
       {showSubmitConfirm && (

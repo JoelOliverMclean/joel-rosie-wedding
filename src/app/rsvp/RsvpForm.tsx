@@ -1,116 +1,120 @@
 ﻿"use client";
 
-import { FoodPreference, Guest } from "@/lib/prisma-types";
+import { FoodPreference, Guest, RSVPResponse } from "@/lib/prisma-types";
 import React from "react";
-import { parseFoodPreference } from "@/lib/prisma-enum-helper";
+import {
+  parseFoodPreference,
+  parseRSVPResponse,
+} from "@/lib/prisma-enum-helper";
+import { Check } from "lucide-react";
 
 export default function RsvpForm(props: {
   guest: Guest;
+  onFoodPreferenceChange: (
+    guest: Guest,
+    foodPreference: FoodPreference,
+  ) => void;
+  onRSVPResponseChange: (guest: Guest, rsvpResponse: RSVPResponse) => void;
+  onAllergiesChange: (guest: Guest, allergies: string) => void;
+  onHighchairRequiredChange: (guest: Guest, required: boolean) => void;
   guestCount: number;
   onSubmit: (updatedGuest: Guest) => void;
   onNotYou: () => void;
   onBackToGuests: () => void;
 }) {
-  const [updatedGuest, setUpdatedGuest] = React.useState<Guest>({
-    ...props.guest,
-  });
-
-  function onAttendingDayUpdated(attendingDay: boolean) {
-    setUpdatedGuest({ ...updatedGuest, attendingDay: attendingDay });
-  }
-
-  function onAttendingEveningUpdated(attendingEvening: boolean) {
-    setUpdatedGuest({ ...updatedGuest, attendingEvening: attendingEvening });
-  }
-
   function onFoodPreferenceUpdated(foodPreference: string) {
-    setUpdatedGuest({
-      ...updatedGuest,
-      foodPreference: parseFoodPreference(foodPreference),
-    });
+    props.onFoodPreferenceChange(
+      props.guest,
+      parseFoodPreference(foodPreference),
+    );
+  }
+
+  function onRSVPResponseUpdated(rsvpResponse: string) {
+    props.onRSVPResponseChange(props.guest, parseRSVPResponse(rsvpResponse));
   }
 
   function onAllergiesUpdated(allergies: string) {
-    setUpdatedGuest({
-      ...updatedGuest,
-      allergies: allergies,
-    });
+    props.onAllergiesChange(props.guest, allergies);
   }
 
-  function onSubmitPressed() {
-    props.onSubmit(updatedGuest);
+  function toggleHighchairRequiredUpdated() {
+    props.onHighchairRequiredChange(
+      props.guest,
+      !props.guest.highchairRequired,
+    );
   }
 
   return (
-    <div className={"flex flex-col items-start gap-5"}>
-      <div key={props.guest.id} className={"card flex flex-col gap-5"}>
-        { props.guestCount > 1 &&
-          <button className={"btn btn--ghost"} onClick={props.onBackToGuests}>
-            ← Back to guests
-          </button>
-        }
-        <div className={"h2 font-bold"}>
-          {props.guest.firstName} {props.guest.lastName}
-        </div>
-        {props.guest.invitedDay && (
-          <div className={"flex items-center gap-5"}>
-            <label htmlFor="attendingDay">Attending Ceremony?</label>
-            <div
-              className={
-                "flex h-[24px] w-[24px] cursor-pointer rounded-md border-[1.5px] border-[var(--fg)] p-[2px]"
-              }
-              onClick={() => onAttendingDayUpdated(!updatedGuest.attendingDay)}
-            >
-              {updatedGuest.attendingDay && (
-                <div className={"flex-1 rounded-sm bg-white"}></div>
-              )}
-            </div>
-          </div>
-        )}
-        {props.guest.invitedEvening && (
-          <div className={"flex items-center gap-5"}>
-            <label htmlFor="attendingEvening">Attending Party?</label>
-            <div
-              className={
-                "flex h-[24px] w-[24px] cursor-pointer rounded-md border-[1.5px] border-[var(--fg)] p-[2px]"
-              }
-              onClick={() =>
-                onAttendingEveningUpdated(!updatedGuest.attendingEvening)
-              }
-            >
-              {updatedGuest.attendingEvening && (
-                <div className={"flex-1 rounded-sm bg-white"}></div>
-              )}
-            </div>
-          </div>
-        )}
-        <div className={"flex flex-wrap items-center gap-5"}>
-          <label htmlFor="foodPreference">Food Preference</label>
-          <select
-            name={"foodPreference"}
-            value={updatedGuest.foodPreference ?? FoodPreference.MEAT}
-            onChange={(e) => onFoodPreferenceUpdated(e.target.value)}
-          >
-            <option value={FoodPreference.MEAT}>Meat</option>
-            <option value={FoodPreference.VEGETARIAN}>Vegetarian</option>
-            <option value={FoodPreference.VEGAN}>Vegan</option>
-          </select>
-        </div>
-        <div className={"flex flex-col gap-2"}>
-          <label htmlFor="allergies">Allergies/Dietary Requirements</label>
-          <input
-            type="text"
-            name={"allergies"}
-            value={updatedGuest.allergies}
-            onChange={(e) => onAllergiesUpdated(e.target.value)}
-          />
-        </div>
-        <div className={"flex items-center justify-center"}>
-          <button onClick={onSubmitPressed} className={"btn btn--primary"}>
-            Update RSVP
-          </button>
-        </div>
+    <div
+      key={props.guest.id}
+      className={"card flex flex-col gap-5 shadow-none!"}
+    >
+      {props.guestCount > 1 && (
+        <div className={"h2 font-bold"}>{props.guest.firstName}</div>
+      )}
+      <div className={"flex flex-col gap-2"}>
+        <label htmlFor="rsvpResponse">Attendance *</label>
+        <select
+          name={"rsvpResponse"}
+          value={props.guest.rsvpResponse ?? undefined}
+          onChange={(e) => onRSVPResponseUpdated(e.target.value)}
+        >
+          <option value={undefined}>Choose one...</option>
+          {props.guest.invitedDay && (
+            <option value={RSVPResponse.FULL_DAY}>Whole Day</option>
+          )}
+          <option value={RSVPResponse.EVENING_ONLY}>
+            Evening{props.guest.invitedDay && " Only"}
+          </option>
+          <option value={RSVPResponse.NOT_ATTENDING}>Not attending</option>
+        </select>
       </div>
+      {props.guest.rsvpResponse !== RSVPResponse.NOT_ATTENDING && (
+        <>
+          {props.guest.child && (
+            <div className={"flex items-center gap-2 self-start"}>
+              <p>Highchair Required?</p>
+              <div
+                className="checkbox"
+                onClick={() => toggleHighchairRequiredUpdated()}
+              >
+                <Check
+                  size={18}
+                  className={`${props.guest.highchairRequired ? "opacity-100" : "opacity-0"} duration-300`}
+                />
+              </div>
+              <div>{props.guest.highchairRequired && <Check />}</div>
+            </div>
+          )}
+          <div className={"flex flex-col gap-2"}>
+            <label htmlFor="foodPreference">Food Preference *</label>
+            <select
+              name={"foodPreference"}
+              value={props.guest.foodPreference ?? undefined}
+              onChange={(e) => onFoodPreferenceUpdated(e.target.value)}
+            >
+              <option value={undefined}>Choose one...</option>
+              <option value={FoodPreference.MEAT}>Meat</option>
+              <option value={FoodPreference.VEGETARIAN}>Vegetarian</option>
+              <option value={FoodPreference.VEGAN}>Vegan</option>
+            </select>
+          </div>
+          <div className={"flex flex-col gap-2"}>
+            <label htmlFor="allergies">
+              Allergies/Dietary Requirements{" "}
+              <span className={"muted small"}>(optional)</span>
+            </label>
+            <input
+              type="text"
+              placeholder={"e.g. Gluten free, nut allergy, etc..."}
+              name={"allergies"}
+              value={props.guest.allergies}
+              onChange={(e) => onAllergiesUpdated(e.target.value)}
+            />
+          </div>
+        </>
+      )}
+      <div className={"muted small text-end"}>* = required</div>
     </div>
   );
 }
