@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
       },
       { protocol: "https", hostname: "pixabay.com" },
       { protocol: "https", hostname: "cdn.pixabay.com" },
+      {
+        protocol: "https",
+        hostname: `${process.env.R2_GALLERY_BUCKET_NAME}.${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+      },
     ],
   },
 };

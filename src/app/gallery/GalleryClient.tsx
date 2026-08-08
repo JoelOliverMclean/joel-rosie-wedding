@@ -3,11 +3,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 
-type PixabayHit = {
+type GalleryPhoto = {
   id: number;
-  pageURL: string;
-  tags: string;
-  webformatURL: string;
+  url: string;
+  alt: string;
 };
 
 function mulberry32(seed: number) {
@@ -39,10 +38,12 @@ function randomThreeWithMinSeeded(
 export default function GalleryClient({
   initialHits,
 }: {
-  initialHits: PixabayHit[];
+  initialHits: GalleryPhoto[];
 }) {
-  const [hits, setHits] = useState<PixabayHit[]>(initialHits);
-  const [page, setPage] = useState(1);
+  const [hits, setHits] = useState<GalleryPhoto[]>(initialHits);
+  const [cursor, setCursor] = useState<number | null>(
+    initialHits.length > 0 ? initialHits[initialHits.length - 1].id : null,
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [fullScreenImageIndex, setFullScreenImageIndex] = useState(-1);
@@ -50,12 +51,9 @@ export default function GalleryClient({
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   const MIN = 0.25;
-  // derived
   const groupsOfThree = Math.ceil(hits.length / 3);
 
-  // seed based on initial data so it matches server + client for the first render
   const seed = useMemo(() => {
-    // stable across server/client because initialHits is identical
     const first = hits[0]?.id ?? 1;
     const last = hits[hits.length - 1]?.id ?? 1;
     return (first * 1000003) ^ last ^ groupsOfThree;
@@ -63,7 +61,6 @@ export default function GalleryClient({
 
   const [rowWeights, setRowWeights] = useState<[number, number, number][]>(
     () => {
-      // initial weights for initial rows
       const initialRows = Math.ceil(initialHits.length / 3);
       return Array.from({ length: initialRows }, (_, i) =>
         randomThreeWithMinSeeded(MIN, mulberry32(seed + i * 1013)),
@@ -92,10 +89,9 @@ export default function GalleryClient({
     if (fullScreenImageIndex < 0) return;
 
     setIsImgVisible(false);
-    const t = window.setTimeout(() => setIsImgVisible(true), 20); // next tick
+    const t = window.setTimeout(() => setIsImgVisible(true), 20);
     return () => window.clearTimeout(t);
   }, [fullScreenImageIndex]);
-
 
   const closeModal = () => setFullScreenImageIndex(-1);
 
@@ -127,7 +123,6 @@ export default function GalleryClient({
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-    // hits.length is needed so ArrowRight respects new items after loadMore
   }, [fullScreenImageIndex, hits.length, showNext]);
 
   useEffect(() => {
@@ -150,14 +145,15 @@ export default function GalleryClient({
 
     setIsLoading(true);
     try {
-      const nextPage = page + 1;
-      const res = await fetch(
-        `/api/pixabay?q=wedding&page=${nextPage}&per_page=17`,
-      );
+      const url = cursor
+        ? `/api/photos/gallery?cursor=${cursor}`
+        : `/api/photos/gallery`;
+      const res = await fetch(url);
       if (!res.ok) throw new Error("Failed to load more images");
       const data = (await res.json()) as {
-        hits: PixabayHit[];
+        hits: GalleryPhoto[];
         hasMore: boolean;
+        nextCursor: number | null;
       };
 
       setHits((prev) => {
@@ -167,7 +163,7 @@ export default function GalleryClient({
         return merged;
       });
 
-      setPage(nextPage);
+      setCursor(data.nextCursor);
       setHasMore(data.hasMore);
     } finally {
       setIsLoading(false);
@@ -188,14 +184,13 @@ export default function GalleryClient({
     obs.observe(el);
     return () => obs.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, hasMore, isLoading]);
+  }, [cursor, hasMore, isLoading]);
 
   return (
     <>
       {/* Desktop */}
       <section className="mt-6 hidden flex-col gap-3 md:flex">
         {Array.from({ length: groupsOfThree }).map((_, i) => {
-          // 3) Use memoised weights instead of calling randomThreeWithMin() in render
           const weights = rowWeights[i] ?? [0.33, 0.33, 0.34];
 
           return (
@@ -212,8 +207,8 @@ export default function GalleryClient({
                         ].join(" ")}
                       >
                         <Image
-                          src={hit.webformatURL}
-                          alt={hit.tags || "Wedding photo"}
+                          src={hit.url}
+                          alt={hit.alt}
                           fill
                           className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                           sizes="(min-width: 768px) 33vw, 50vw"
@@ -224,7 +219,7 @@ export default function GalleryClient({
                             setFullScreenImageIndex(index);
                           }}
                           className="absolute inset-0 cursor-pointer"
-                          aria-label="Open source on Pixabay"
+                          aria-label="View photo"
                         />
                       </figure>
                     ) : null}
@@ -246,8 +241,8 @@ export default function GalleryClient({
             ].join(" ")}
           >
             <Image
-              src={hit.webformatURL}
-              alt={hit.tags || "Wedding photo"}
+              src={hit.url}
+              alt={hit.alt}
               fill
               className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
               sizes="(min-width: 768px) 33vw, 50vw"
@@ -258,19 +253,21 @@ export default function GalleryClient({
                 setFullScreenImageIndex(i);
               }}
               className="absolute inset-0 cursor-pointer"
-              aria-label="Open source on Pixabay"
+              aria-label="View photo"
             />
           </figure>
         ))}
       </section>
 
       <div ref={sentinelRef} className="h-1" />
-      <div className="mt-6 text-sm text-neutral-600">
+      <div className="mt-6 text-sm">
         {isLoading
           ? "Loading more…"
           : hasMore
             ? "Scroll to load more"
-            : "No more images"}
+            : hits.length > 0
+              ? "No more images"
+              : "No images"}
       </div>
 
       <section>
@@ -285,7 +282,6 @@ export default function GalleryClient({
             }}
           >
             <div className="relative w-full max-w-6xl">
-              {/* Close */}
               <button
                 type="button"
                 onClick={closeModal}
@@ -295,7 +291,6 @@ export default function GalleryClient({
                 ×
               </button>
 
-              {/* Prev */}
               <button
                 type="button"
                 onClick={(e) => {
@@ -309,7 +304,6 @@ export default function GalleryClient({
                 ←
               </button>
 
-              {/* Next */}
               <button
                 type="button"
                 onClick={(e) => {
@@ -323,7 +317,6 @@ export default function GalleryClient({
                 →
               </button>
 
-              {/* Image container */}
               <div
                 className="relative mx-auto flex max-h-[calc(100dvh-env(safe-area-inset-top)-env(safe-area-inset-bottom)-1.5rem)] w-full items-center justify-center overflow-hidden rounded-2xl bg-black"
                 style={{
@@ -339,8 +332,8 @@ export default function GalleryClient({
                 >
                   <Image
                     key={hits[fullScreenImageIndex].id}
-                    src={hits[fullScreenImageIndex].webformatURL}
-                    alt={hits[fullScreenImageIndex].tags || "Wedding photo"}
+                    src={hits[fullScreenImageIndex].url}
+                    alt={hits[fullScreenImageIndex].alt}
                     fill
                     sizes="100vw"
                     className="object-contain"

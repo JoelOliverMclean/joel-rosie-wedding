@@ -25,6 +25,7 @@ model Family {
   updatedAt     DateTime @updatedAt
 
   guests Guest[]
+  photos Photo[]
 }
 
 model Guest {
@@ -57,4 +58,22 @@ enum RSVPResponse {
   FULL_DAY
   EVENING_ONLY
   NOT_ATTENDING
+}
+
+model Photo {
+  id         Int         @id @default(autoincrement())
+  key        String      @unique
+  status     PhotoStatus @default(PENDING)
+  familyId   Int?
+  caption    String?
+  createdAt  DateTime    @default(now())
+  reviewedAt DateTime?
+
+  family Family? @relation(fields: [familyId], references: [id])
+}
+
+enum PhotoStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
