@@ -26,10 +26,13 @@ export default function WhereAndWhen() {
         <span className={"font-bold"}>1.30pm</span>
       </div>
       <div>
-        The evening reception will begin at <span className={"font-bold"}>7pm</span>{" "}
-        in the evening on the same day.
+        The evening reception will begin at{" "}
+        <span className={"font-bold"}>7pm</span> in the evening on the same day.
       </div>
-      <div className={"card p-0! self-center overflow-clip"}>
+      <div className={"font-bold"}>
+        Last orders are at 11:30 and the reception ends at midnight.
+      </div>
+      <div className={"card -z-10 self-center overflow-clip p-0!"}>
         <Image src={ronparty} alt={""} />
       </div>
     </div>

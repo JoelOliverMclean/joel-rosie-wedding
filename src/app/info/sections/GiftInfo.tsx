@@ -21,7 +21,7 @@ export default function GiftInfo() {
           "However if you would like to, a contribution towards our future and honeymoon would be hugely appreciated."
         }
       </div>
-      <div className={"card self-center overflow-clip p-0!"}>
+      <div className={"card -z-10 self-center overflow-clip p-0!"}>
         <Image src={moneyplease} alt={""} />
       </div>
     </div>
