@@ -8,12 +8,16 @@ export default function ContactInfo() {
   return (
     <div className={"flex flex-col gap-5"}>
       <div
-        className={"card flex flex-col gap-0 self-center overflow-clip p-0!"}
+        className={
+          "card -z-10 flex flex-col gap-0 self-center overflow-clip p-0!"
+        }
       >
-          <Image src={needanything} alt={""} />
-          <Image src={dealwithproblems} alt={""} />
+        <Image src={needanything} alt={""} />
+        <Image src={dealwithproblems} alt={""} />
       </div>
-      <div className={"small muted self-center"}>or talk to the best men or women</div>
+      <div className={"small muted self-center"}>
+        or talk to the best men or women
+      </div>
     </div>
   );
 }
