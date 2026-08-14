@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export const rsvpDeadline = new Date("2026-08-15");
+export const rsvpDeadline = new Date("2026-08-23");
 
 import cry from "@/images/david-tennant-cry.gif";
 
