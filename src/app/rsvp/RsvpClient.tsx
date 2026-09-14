@@ -137,10 +137,6 @@ export default function RsvpClient(props: {
 
   const rsvpCode = props.rsvpCode ?? "";
 
-  if (rsvpDeadline <= new Date()) {
-    return <TooLateToRSVP />;
-  }
-
   return (
     <>
       <main className="section flex flex-col items-start gap-5">
@@ -167,6 +163,8 @@ export default function RsvpClient(props: {
             rsvpCode={rsvpCode}
             onInviteSelected={handleInviteSelected}
           />
+        ) : rsvpDeadline <= new Date() ? (
+          <TooLateToRSVP />
         ) : (
           <div className={"flex w-full flex-col gap-5"}>
             <div>
