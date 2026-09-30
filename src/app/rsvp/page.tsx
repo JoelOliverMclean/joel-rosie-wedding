@@ -14,13 +14,18 @@ export default async function Page({
   searchParams: Promise<{ [_: string]: string | string[] | undefined }>;
 }) {
   const params = await searchParams;
+  const redirectParam = params?.redirect;
   const rsvpCodeParam = params?.rsvpCode;
   const rsvpCode =
     typeof rsvpCodeParam === "string"
       ? rsvpCodeParam
       : Array.isArray(rsvpCodeParam)
         ? rsvpCodeParam[0]
-        : undefined
+        : undefined;
+  const redirectTo =
+    typeof redirectParam === "string" && redirectParam.length > 0
+      ? redirectParam
+      : null;
 
   const initialInvite = await getInviteFromCookie();
 
@@ -29,7 +34,7 @@ export default async function Page({
   }
 
   const onSubmitRSVP = async (familyId: number, contact: string) => {
-    "use server"
+    "use server";
     const errorResponse = await confirmRSVP(familyId, contact);
     if (errorResponse) {
       return errorResponse.message;
@@ -39,7 +44,7 @@ export default async function Page({
       }
       redirect("/rsvp/submitted");
     }
-  }
+  };
 
   return (
     <RsvpClient
@@ -49,6 +54,7 @@ export default async function Page({
       clearInviteCodeAction={clearInviteCodeCookie}
       submitRSVP={onSubmitRSVP}
       saveGuests={saveGuests}
+      redirectTo={redirectTo}
     />
   );
 }

@@ -21,6 +21,7 @@ export default function RsvpClient(props: {
   clearInviteCodeAction: () => Promise<void>;
   submitRSVP: (familyId: number, contact: string) => Promise<string>;
   saveGuests: (guests: Guest[]) => Promise<boolean>;
+  redirectTo?: string | null;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -41,12 +42,18 @@ export default function RsvpClient(props: {
   React.useEffect(() => setHydrated(true), []);
 
   async function handleInviteSelected(selected: InviteSummary) {
+    console.log("Selected invite");
     try {
       await props.setInviteCodeAction(selected.family.rsvpCode);
       if (selected.family.rsvpSubmitted) {
-        redirect("/rsvp/submitted");
+        if (props.redirectTo) {
+          router.replace(`/${props.redirectTo}`);
+        } else {
+          router.replace(`/rsvp/submitted`);
+        }
+      } else {
+        setInvite(selected);
       }
-      setInvite(selected);
     } catch {}
   }
 

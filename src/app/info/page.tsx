@@ -9,17 +9,18 @@ import { canAccessSite } from "@/utils/cookieUtils";
 import { redirect } from "next/navigation";
 import ChildInfo from "@/app/info/sections/ChildInfo";
 
-
 async function InfoPage() {
   const canAccess = await canAccessSite();
   if (!canAccess) {
-    redirect("/rsvp");
+    redirect("/rsvp?redirect=info");
   }
 
   const header = (name: string) => (
     <div className={""}>
       <div className={"text-2xl font-bold"}>{name}</div>
-      <div className={"h-1 bg-gradient-to-r from-[var(--fg)] to-transparent"}></div>
+      <div
+        className={"h-1 bg-gradient-to-r from-[var(--fg)] to-transparent"}
+      ></div>
     </div>
   );
 
