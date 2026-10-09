@@ -6,7 +6,7 @@ import StoryGallery from "@/app/story/story-gallery";
 export default async function StoryPage() {
   const canAccess = await canAccessSite();
   if (!canAccess) {
-    redirect("/rsvp");
+    redirect("/rsvp?redirect=story");
   }
 
   return <StoryGallery />;
