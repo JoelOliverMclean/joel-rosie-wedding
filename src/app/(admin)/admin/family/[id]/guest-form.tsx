@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Guest } from "@/lib/prisma-types";
 import { FormEvent, useEffect, useState } from "react";
@@ -12,7 +12,9 @@ export default function EditGuestForm(props: {
   const router = useRouter();
 
   const [invitedDay, setInvitedDay] = useState(props.guest.invitedDay);
-  const [invitedEvening, setInvitedEvening] = useState(props.guest.invitedEvening);
+  const [invitedEvening, setInvitedEvening] = useState(
+    props.guest.invitedEvening,
+  );
   const [isChild, setIsChild] = useState(props.guest.child);
 
   const updateGuest = (formEvent: FormEvent<HTMLFormElement>) => {
@@ -25,17 +27,18 @@ export default function EditGuestForm(props: {
       child: values.isChild === "true",
       invitedDay: values.invitedDay === "true",
       invitedEvening: values.invitedEvening === "true",
+      tableName: values.tableName as string,
     };
     props.onUpdateGuest(guest).then(() => {
-      console.log("Updated!")
-      router.refresh()
+      console.log("Updated!");
+      router.refresh();
     });
-  }
+  };
 
   useEffect(() => {
-    setInvitedDay(props.guest.invitedDay)
-    setInvitedEvening(props.guest.invitedEvening)
-    setIsChild(props.guest.child)
+    setInvitedDay(props.guest.invitedDay);
+    setInvitedEvening(props.guest.invitedEvening);
+    setIsChild(props.guest.child);
   }, [props.guest]);
 
   return (
@@ -102,6 +105,16 @@ export default function EditGuestForm(props: {
                 type="text"
                 name="invitedEvening"
                 value={invitedEvening ? "true" : "false"}
+              />
+            </div>
+          </div>
+          <div>
+            <div className={"flex items-center gap-2"}>
+              <label htmlFor="firstName">Table Name</label>
+              <input
+                type="text"
+                defaultValue={props.guest.tableName}
+                name="tableName"
               />
             </div>
           </div>

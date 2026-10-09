@@ -1,10 +1,11 @@
 "use client";
 
 import { $Enums, GuestsWithFamily } from "@/lib/prisma-types";
-import { Check, SquareArrowDown, SquareArrowUp } from "lucide-react";
+import { Check, Download, SquareArrowDown, SquareArrowUp } from "lucide-react";
 import { rsvpResponseToString } from "@/lib/prisma-enum-helper";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { exportGuestsToPdf } from "@/lib/export-guests-pdf";
 import RSVPResponse = $Enums.RSVPResponse;
 
 type SortBy = {
@@ -94,6 +95,22 @@ export default function GuestTable(props: {
     });
   }, [props, router, selectedGuests]);
 
+  // Exports whatever is currently ticked; falls back to the full
+  // (currently sorted) list when nothing is selected.
+  const exportSelected = useCallback(() => {
+    exportGuestsToPdf(
+      selectedGuests.length > 0 ? selectedGuests : guests,
+      false,
+    );
+  }, [guests, selectedGuests]);
+
+  const exportMealOnly = useCallback(() => {
+    exportGuestsToPdf(
+      selectedGuests.length > 0 ? selectedGuests : guests,
+      true,
+    );
+  }, [guests, selectedGuests]);
+
   const sortGuests = useCallback(
     (guestList: GuestsWithFamily[], sortBy: SortBy) => {
       const sorted = [...guestList].sort((a, b) => {
@@ -157,10 +174,32 @@ export default function GuestTable(props: {
 
   return (
     <>
-      <div>
-        {`${guests.length} guests (${getAttendingCount(guests)} attending) - ${getFamilyCount(guests)} families`}
+      <div className={"flex items-center justify-between"}>
+        <div>
+          <div>
+            {`${guests.length} guests (${getAttendingCount(guests)} attending) - ${getFamilyCount(guests)} families`}
+          </div>
+          <div>{`${getRepliedCount(guests)}/${guests.length} responded`}</div>
+        </div>
+        <div className={"flex flex-row gap-2"}>
+          <button
+            className={"btn btn--ghost flex items-center gap-2"}
+            onClick={exportSelected}
+          >
+            <Download size={16} />
+            {selectedGuests.length > 0
+              ? `Download PDF (${selectedGuests.length} selected)`
+              : "Download PDF"}
+          </button>
+          <button
+            className={"btn btn--ghost flex items-center gap-2"}
+            onClick={exportMealOnly}
+          >
+            <Download size={16} />
+            {"Download Meal PDF"}
+          </button>
+        </div>
       </div>
-      <div>{`${getRepliedCount(guests)}/${guests.length} responded`}</div>
       <div className={"card overflow-x-scroll p-2"}>
         <table className={"w-full min-w-6xl lg:min-w-auto"}>
           <thead className="sticky top-0 z-10">

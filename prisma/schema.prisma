@@ -44,6 +44,7 @@ model Guest {
   highchairRequired Boolean         @default(false)
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
+  tableName         String          @default("")
 
   family Family @relation(fields: [familyId], references: [id])
 }
