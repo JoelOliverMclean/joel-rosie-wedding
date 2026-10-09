@@ -11,8 +11,10 @@ type DocWithAutoTable = jsPDF & { lastAutoTable: { finalY: number } };
 
 // Same "Foo" capitalization used for meal names throughout — pulled out
 // once so the guest rows and the summary breakdown can't drift apart.
-const formatEnumLabel = (value: string) =>
-  value.substring(0, 1) + value.substring(1).toLowerCase();
+const formatEnumLabel = (value: string) => {
+  const pref = value == "VEGETARIAN" ? "VEGAN" : value;
+  return pref.substring(0, 1) + pref.substring(1).toLowerCase();
+};
 
 /**
  * Builds a landscape-orientation PDF of the given guests — a full guest
