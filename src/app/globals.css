@@ -360,7 +360,9 @@ button {
     border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
 }
 .btn--primary:hover { background: var(--primary-hover); }
-.btn--primary:disabled { background: var(--primary); opacity: 0.6; }
+.btn--primary:disabled {
+    @apply cursor-auto; background: var(--primary); opacity: 0.6; transform: translateY(0px);
+}
 
 .btn--ghost {
     background: var(--ghost);
