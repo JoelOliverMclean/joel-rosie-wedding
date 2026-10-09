@@ -14,3 +14,9 @@ export async function canAccessSite(): Promise<boolean> {
   console.log("canAccess", canAccess);
   return canAccess;
 }
+
+export async function getFamilyFromCookie() {
+  const inviteCode = await getInviteCodeFromCookie();
+  if (inviteCode === null) return null;
+  return prisma.family.findFirst({ where: { rsvpCode: inviteCode } });
+}
