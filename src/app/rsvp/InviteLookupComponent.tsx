@@ -8,6 +8,7 @@ import { Loader2 } from "lucide-react";
 export default function InviteLookup(props: {
   rsvpCode?: string;
   onInviteSelected: (invite: InviteSummary) => void;
+  redirectTo?: string | null;
 }) {
   const [code, setCode] = useState(() => props.rsvpCode ?? "");
   const [checking, setChecking] = useState(false);
@@ -45,7 +46,10 @@ export default function InviteLookup(props: {
           </>
         ) : (
           <>
-            <div>Enter the RSVP code on your invite</div>
+            <div>
+              Enter the RSVP code on your invite{" "}
+              {props.redirectTo && `to access ${props.redirectTo}`}
+            </div>
 
             <input
               className="text-center"

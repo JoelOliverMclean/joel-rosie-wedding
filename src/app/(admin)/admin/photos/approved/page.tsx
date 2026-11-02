@@ -19,7 +19,7 @@ export default async function ApprovedPhotosPage() {
   );
 
   return (
-    <div className="section grid grid-cols-2 gap-4 p-6 md:grid-cols-3">
+    <div className="section grid grid-cols-1 gap-4 p-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {photosWithUrls.length === 0 && <p>No approved photos yet.</p>}
 
       {photosWithUrls.map((photo) => (

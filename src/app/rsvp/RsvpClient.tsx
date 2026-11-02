@@ -169,6 +169,7 @@ export default function RsvpClient(props: {
           <InviteLookup
             rsvpCode={rsvpCode}
             onInviteSelected={handleInviteSelected}
+            redirectTo={props.redirectTo}
           />
         ) : rsvpDeadline <= new Date() ? (
           <TooLateToRSVP />

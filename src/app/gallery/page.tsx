@@ -4,10 +4,17 @@ import UploadComponent from "@/app/gallery/UploadComponent";
 import { prisma } from "@/lib/prisma";
 import { getSignedPhotoUrl } from "@/lib/r2";
 import GalleryClient from "@/app/gallery/GalleryClient";
+import { canAccessSite } from "@/utils/cookieUtils";
+import { redirect } from "next/navigation";
 
 const weddingMidnight = new Date("2026-11-01T00:00:00Z");
 
 export default async function GalleryPage() {
+  const canAccess = await canAccessSite();
+  if (!canAccess) {
+    redirect("/rsvp?redirect=gallery");
+  }
+
   const initialPhotos = await prisma.photo.findMany({
     where: { status: "APPROVED" },
     orderBy: { id: "desc" },
