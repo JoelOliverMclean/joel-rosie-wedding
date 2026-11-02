@@ -1,8 +1,10 @@
 "use client";
 import Popover from "@/components/popovers/_Popover";
 import { FormEvent, useEffect, useState } from "react";
-import { ImagePlus, UploadCloud, X } from "lucide-react";
+import { ImagePlus, LoaderCircle, UploadCloud, X } from "lucide-react";
 import Image from "next/image";
+import { canAccessSite } from "@/utils/cookieUtils";
+import { redirect } from "next/navigation";
 
 type UploadItem = {
   file: File;
@@ -22,7 +24,6 @@ export default function UploadPopover({
     return () => {
       items.forEach((item) => URL.revokeObjectURL(item.previewUrl));
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleFilesSelected(fileList: FileList | null) {
@@ -184,7 +185,16 @@ export default function UploadPopover({
               disabled={items.length === 0 || anyUploading}
               className="btn btn--primary flex gap-2"
             >
-              Upload {items.length > 0 && `(${items.length})`} <UploadCloud />
+              {anyUploading ? (
+                <>
+                  Uploading <LoaderCircle />
+                </>
+              ) : (
+                <>
+                  Upload {items.length > 0 && `(${items.length})`}{" "}
+                  <UploadCloud />
+                </>
+              )}
             </button>
           </>
         )}
